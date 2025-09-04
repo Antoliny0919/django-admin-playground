@@ -22,7 +22,7 @@ X_FRAME_OPTIONS = 'ALLOWALL'
 
 # Application definition
 
-INSTALLED_APPS = [
+CORE_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -31,6 +31,12 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "compare",
 ]
+
+ADMIN_APPS = [
+    "inline",
+]
+
+INSTALLED_APPS = CORE_APPS + ADMIN_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
