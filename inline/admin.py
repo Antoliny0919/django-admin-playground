@@ -10,6 +10,8 @@ from .models import (
     ManyToManyInline,
 )
 
+from main.utility import register
+
 
 class TabularInline(admin.TabularInline):
     model = Inline
@@ -111,21 +113,6 @@ class FieldsetStackedInline(admin.StackedInline):
     extra = 1
 
 
-class FormErrorTabularInline(admin.TabularInline):
-    model = ErrorInline
-    verbose_name = "Form Error Tabular Inline"
-    extra = 1
-
-    def get_formset(self, request, obj=None, **kwargs):
-        FormSet = super().get_formset(request, obj, **kwargs)
-
-        class CustomFormSet(FormSet):
-            def clean(self):
-                raise ValidationError("Non Form Errors")
-
-        return CustomFormSet
-
-
 class CustomWidgetTabularInline(admin.TabularInline):
     model = CustomWidgetInline
     verbose_name = "Custom Widget Tabular Inline"
@@ -166,6 +153,21 @@ class HelpTextStackedInline(admin.StackedInline):
     extra = 1
 
 
+class FormErrorTabularInline(admin.TabularInline):
+    model = ErrorInline
+    verbose_name = "Form Error Tabular Inline"
+    extra = 1
+
+    def get_formset(self, request, obj=None, **kwargs):
+        FormSet = super().get_formset(request, obj, **kwargs)
+
+        class CustomFormSet(FormSet):
+            def clean(self):
+                raise ValidationError("Non Form Errors")
+
+        return CustomFormSet
+
+
 class FormErrorStackedInline(admin.StackedInline):
     model = ErrorInline
     verbose_name = "Form Error Stacked Inline"
@@ -181,10 +183,10 @@ class FormErrorStackedInline(admin.StackedInline):
         return CustomFormSet
 
 
-admin.site.register(Inline, inlines=[TabularInline, StackedInline, LinkTabularInline, LinkStackedInline, CollapseTabularInline, CollapseStackedInline])
-admin.site.register(LongInline, inlines=[ReadonlyTabularInline, ReadonlyStackedInline, CustomFieldsetsTabularInline, CustomFieldsetsStackedInline, LongTabularInline, LongStackedInline,])
-admin.site.register(FieldsetInline, inlines=[FieldsetTabularInline, FieldsetStackedInline])
-admin.site.register(CustomWidgetInline, inlines=[CustomWidgetTabularInline, CustomWidgetStackedInline])
-admin.site.register(ManyToManyInline, inlines=[ManyToManyFieldTabularInline, ManyToManyFieldStackedInline])
-admin.site.register(HelpTextInline, inlines=[HelpTextTabularInline, HelpTextStackedInline])
-admin.site.register(ErrorInline, inlines=[FormErrorTabularInline, FormErrorStackedInline])
+register(Inline, inlines=[TabularInline, StackedInline, LinkTabularInline, LinkStackedInline, CollapseTabularInline, CollapseStackedInline])
+register(LongInline, inlines=[ReadonlyTabularInline, ReadonlyStackedInline, CustomFieldsetsTabularInline, CustomFieldsetsStackedInline, LongTabularInline, LongStackedInline,])
+register(FieldsetInline, inlines=[FieldsetTabularInline, FieldsetStackedInline])
+register(CustomWidgetInline, inlines=[CustomWidgetTabularInline, CustomWidgetStackedInline])
+register(ManyToManyInline, inlines=[ManyToManyFieldTabularInline, ManyToManyFieldStackedInline])
+register(HelpTextInline, inlines=[HelpTextTabularInline, HelpTextStackedInline])
+register(ErrorInline, inlines=[FormErrorTabularInline, FormErrorStackedInline])
