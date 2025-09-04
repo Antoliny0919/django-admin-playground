@@ -1,0 +1,108 @@
+import uuid
+
+from django.db import models
+
+
+class BaseModel(models.Model):
+    char = models.CharField(max_length=128)
+    boolean = models.BooleanField(default=False, verbose_name="very long long long long long long long long long long long verbose name.")
+    integer = models.IntegerField(null=True, blank=True)
+    file = models.FileField(null=True, blank=True)
+    url = models.URLField(null=True, blank=True)
+    date = models.DateField(auto_now_add=True)
+    datetime = models.DateTimeField()
+    fk = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
+
+    def __str__(self):
+        return self.char
+
+
+class Pagination(BaseModel):
+    pass
+
+
+class ListFilter(BaseModel):
+    pass
+
+
+class AllLink(BaseModel):
+    pass
+
+
+class ColumnSort(BaseModel):
+    pass
+
+
+class DateHierarchy(BaseModel):
+    pass
+
+
+class ListEditAble(BaseModel):
+    pass
+
+
+class ReadOnly(BaseModel):
+    pass
+
+
+class Search(BaseModel):
+    pass
+
+
+class Action(BaseModel):
+    pass
+
+
+class FullFilter(BaseModel):
+    pass
+
+
+class ForOneToOneField(models.Model):
+    char = models.CharField(max_length=128)
+
+    def __str__(self):
+        return self.char
+
+
+class ForFk2Field(models.Model):
+    char = models.CharField(max_length=128, verbose_name="for fk2 verbose name")
+
+
+class ForFkField(models.Model):
+    char = models.CharField(max_length=128, verbose_name="for fk verbose name")
+    fk = models.ForeignKey(ForFk2Field, on_delete=models.CASCADE)
+
+
+class ForManyToManyField(models.Model):
+    char = models.CharField(max_length=128, verbose_name="for mtm verbose name")
+
+
+class Related(models.Model):
+    char = models.CharField(max_length=128)
+    oto = models.OneToOneField(ForOneToOneField, on_delete=models.CASCADE, null=True, blank=True)
+    fk = models.ForeignKey(ForFkField, on_delete=models.CASCADE, null=True, blank=True)
+    mtm = models.ManyToManyField(ForManyToManyField, blank=True)
+
+    def __str__(self):
+        return self.char
+
+
+class HelpText(models.Model):
+    char = models.CharField(max_length=128, help_text="char help text..")
+    boolean = models.BooleanField(default=False, help_text="boolean help text..")
+    time = models.TimeField(auto_now=True)
+    datetime = models.DateTimeField(auto_now_add=True, help_text="datetime help text..")
+
+    def __str__(self):
+        return self.char
+
+
+class VerboseName(models.Model):
+    char = models.CharField(max_length=128, verbose_name="char verbose name")
+    boolean = models.BooleanField(default=False, verbose_name="boolean verbose name")
+    time = models.TimeField(auto_now=True)
+    datetime = models.DateTimeField(auto_now_add=True, verbose_name="datetime verbose name")
+
+    class Meta:
+        verbose_name = "very" + "long " * 40 + "verbose_name"
+        verbose_name_plural = "changelist verbose name plural"

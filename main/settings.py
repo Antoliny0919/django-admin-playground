@@ -34,6 +34,7 @@ CORE_APPS = [
 
 ADMIN_APPS = [
     "inline",
+    "changelist",
 ]
 
 INSTALLED_APPS = CORE_APPS + ADMIN_APPS
