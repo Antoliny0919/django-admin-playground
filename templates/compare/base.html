@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
   </head>
   <body>
+    {% with params=request.resolver_match.kwargs %}
     <div class="compare">
       <div class="view">
         <iframe id="before"  src="{% block before_url %}{% endblock %}"></iframe>
@@ -17,5 +18,6 @@
         <iframe id="after" src="{% block after_url %}{% endblock %}"></iframe>
       </div>
     </div>
+    {% endwith %}
   </body>
 </html>
