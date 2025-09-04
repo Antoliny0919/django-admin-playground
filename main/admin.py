@@ -37,7 +37,7 @@ class CustomAdminSite(AdminSite):
         return template_name
 
 
-before_site = CustomAdminSite(template_prefix="before_admin")
+before_site = CustomAdminSite(name="before_admin", template_prefix="before_admin")
 before_site.register(User, UserAdmin)
 before_site.register(Group, GroupAdmin)
 before_site.register(Permission)
