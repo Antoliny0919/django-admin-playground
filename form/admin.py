@@ -14,7 +14,7 @@ from .models import (
     FieldError,
 )
 
-from main.utility import register
+from main.utils import register
 
 
 class BaseFormAdmin(admin.ModelAdmin):

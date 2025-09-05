@@ -19,7 +19,7 @@ from .models import (
     VerboseName,
 )
 
-from main.utility import register
+from main.utils import register
 
 
 class PaginationAdmin(admin.ModelAdmin):

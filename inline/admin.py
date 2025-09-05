@@ -10,7 +10,7 @@ from .models import (
     ManyToManyInline,
 )
 
-from main.utility import register
+from main.utils import register
 
 
 class TabularInline(admin.TabularInline):
