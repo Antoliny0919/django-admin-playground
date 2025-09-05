@@ -15,7 +15,6 @@ from .models import (
     ForFk2Field,
     ForManyToManyField,
     Related,
-    HelpText,
     VerboseName,
 )
 
@@ -81,10 +80,6 @@ class RelatedChangeListAdmin(admin.ModelAdmin):
     list_display = ("id", "char", "oto__char", "fk__char", "fk__fk__char", "mtm__char",)
 
 
-class HelpTextAdmin(admin.ModelAdmin):
-    list_display = ("id", "char", "boolean", "time", "datetime",)
-
-
 class VerboseNameAdmin(admin.ModelAdmin):
     list_display = ("id", "char", "boolean", "time", "datetime",)
 
@@ -104,5 +99,4 @@ register(ForFkField)
 register(ForFk2Field)
 register(ForManyToManyField)
 register(Related, RelatedChangeListAdmin)
-register(HelpText, HelpTextAdmin)
 register(VerboseName, VerboseNameAdmin)

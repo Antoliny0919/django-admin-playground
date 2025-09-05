@@ -1,5 +1,3 @@
-import uuid
-
 from django.db import models
 
 
@@ -82,16 +80,6 @@ class Related(models.Model):
     oto = models.OneToOneField(ForOneToOneField, on_delete=models.CASCADE, null=True, blank=True)
     fk = models.ForeignKey(ForFkField, on_delete=models.CASCADE, null=True, blank=True)
     mtm = models.ManyToManyField(ForManyToManyField, blank=True)
-
-    def __str__(self):
-        return self.char
-
-
-class HelpText(models.Model):
-    char = models.CharField(max_length=128, help_text="char help text..")
-    boolean = models.BooleanField(default=False, help_text="boolean help text..")
-    time = models.TimeField(auto_now=True)
-    datetime = models.DateTimeField(auto_now_add=True, help_text="datetime help text..")
 
     def __str__(self):
         return self.char
