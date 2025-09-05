@@ -1,0 +1,462 @@
+[
+{
+    "model": "inline.inline",
+    "pk": 1,
+    "fields": {
+        "char": "Antoliny",
+        "fk": null
+    }
+},
+{
+    "model": "inline.inline",
+    "pk": 8,
+    "fields": {
+        "char": "Carl",
+        "fk": 1
+    }
+},
+{
+    "model": "inline.inline",
+    "pk": 9,
+    "fields": {
+        "char": "Tom",
+        "fk": 8
+    }
+},
+{
+    "model": "inline.inline",
+    "pk": 10,
+    "fields": {
+        "char": "Cliff",
+        "fk": 9
+    }
+},
+{
+    "model": "inline.inline",
+    "pk": 11,
+    "fields": {
+        "char": "Frank",
+        "fk": 10
+    }
+},
+{
+    "model": "inline.longinline",
+    "pk": 1,
+    "fields": {
+        "char": "Antoliny",
+        "text": "Hello my name is Antoliny !!",
+        "integer": 10,
+        "boolean": true,
+        "email": "antoliny@django.com",
+        "decimal": "12.13",
+        "float": 59.43,
+        "fk": 2
+    }
+},
+{
+    "model": "inline.longinline",
+    "pk": 2,
+    "fields": {
+        "char": "Tom",
+        "text": "Hello my name is Tom !!",
+        "integer": 33,
+        "boolean": true,
+        "email": "tom@world.com",
+        "decimal": "99.99",
+        "float": 43.52,
+        "fk": null
+    }
+},
+{
+    "model": "inline.longinline",
+    "pk": 3,
+    "fields": {
+        "char": "Kim",
+        "text": "Hello my name is Kim !!",
+        "integer": 74,
+        "boolean": false,
+        "email": "Kim@django.com",
+        "decimal": "73.43",
+        "float": 92.3,
+        "fk": 1
+    }
+},
+{
+    "model": "inline.longinline",
+    "pk": 4,
+    "fields": {
+        "char": "Simon",
+        "text": "Hello my name is Simon !!",
+        "integer": 52,
+        "boolean": false,
+        "email": "Simon@django.com",
+        "decimal": "67.43",
+        "float": 11.11,
+        "fk": 1
+    }
+},
+{
+    "model": "inline.longinline",
+    "pk": 5,
+    "fields": {
+        "char": "Jacob",
+        "text": "Hello my name is Jacob !!",
+        "integer": 52,
+        "boolean": false,
+        "email": "Jacob@django.com",
+        "decimal": "66.80",
+        "float": 432.64,
+        "fk": 4
+    }
+},
+{
+    "model": "inline.longinline",
+    "pk": 6,
+    "fields": {
+        "char": "Sarah",
+        "text": "Hello my name is Sarah !!",
+        "integer": 45,
+        "boolean": true,
+        "email": "Sarah@django.com",
+        "decimal": "52.33",
+        "float": 12.63,
+        "fk": 5
+    }
+},
+{
+    "model": "inline.fieldsetinline",
+    "pk": 1,
+    "fields": {
+        "not_required_file": "django.png",
+        "choice": "one",
+        "datetime": "2021-09-05T05:32:22Z",
+        "fk": null,
+        "mtom": [
+            2
+        ]
+    }
+},
+{
+    "model": "inline.fieldsetinline",
+    "pk": 2,
+    "fields": {
+        "not_required_file": "django_eKuMTEu.png",
+        "choice": "two",
+        "datetime": "2021-09-05T02:14:27Z",
+        "fk": 1,
+        "mtom": [
+            1,
+            3,
+            4
+        ]
+    }
+},
+{
+    "model": "inline.fieldsetinline",
+    "pk": 3,
+    "fields": {
+        "not_required_file": "django_bPWlw6E.png",
+        "choice": "three",
+        "datetime": "2020-02-23T11:32:54Z",
+        "fk": null,
+        "mtom": [
+            2,
+            6
+        ]
+    }
+},
+{
+    "model": "inline.fieldsetinline",
+    "pk": 4,
+    "fields": {
+        "not_required_file": "django_75oez60.png",
+        "choice": "one",
+        "datetime": "1999-08-28T05:44:23Z",
+        "fk": null,
+        "mtom": [
+            2,
+            5,
+            6
+        ]
+    }
+},
+{
+    "model": "inline.fieldsetinline",
+    "pk": 5,
+    "fields": {
+        "not_required_file": "django_ZpqTzjx.png",
+        "choice": "three",
+        "datetime": "2008-03-12T10:55:59Z",
+        "fk": 4,
+        "mtom": [
+            4,
+            6
+        ]
+    }
+},
+{
+    "model": "inline.fieldsetinline",
+    "pk": 6,
+    "fields": {
+        "not_required_file": "django_zkYXIc9.png",
+        "choice": "three",
+        "datetime": "2011-03-14T07:12:47Z",
+        "fk": 2,
+        "mtom": [
+            3,
+            4,
+            5
+        ]
+    }
+},
+{
+    "model": "inline.customwidgetinline",
+    "pk": 1,
+    "fields": {
+        "file": "django_JmdHgjb.png",
+        "not_required_file": "django_sZAjrsr.png",
+        "url": "https://www.djangoproject.com/",
+        "time": "07:32:57",
+        "date": "2020-11-08",
+        "datetime": "2011-08-11T05:23:42Z",
+        "fk": null
+    }
+},
+{
+    "model": "inline.customwidgetinline",
+    "pk": 2,
+    "fields": {
+        "file": "django_QpvBD7B.png",
+        "not_required_file": "",
+        "url": "https://www.djangoproject.com/",
+        "time": "02:20:40",
+        "date": "2025-09-05",
+        "datetime": "2025-09-05T02:20:43Z",
+        "fk": 1
+    }
+},
+{
+    "model": "inline.customwidgetinline",
+    "pk": 3,
+    "fields": {
+        "file": "django_Q0CL7yg.png",
+        "not_required_file": "django_v0Cq8DG.png",
+        "url": "https://www.djangoproject.com/",
+        "time": "05:55:37",
+        "date": "1969-04-13",
+        "datetime": "1988-11-11T07:32:54Z",
+        "fk": 2
+    }
+},
+{
+    "model": "inline.customwidgetinline",
+    "pk": 4,
+    "fields": {
+        "file": "django_cwYcFZr.png",
+        "not_required_file": "",
+        "url": "https://www.djangoproject.com/",
+        "time": "09:22:31",
+        "date": "2014-06-30",
+        "datetime": "2018-02-08T06:51:11Z",
+        "fk": 2
+    }
+},
+{
+    "model": "inline.customwidgetinline",
+    "pk": 5,
+    "fields": {
+        "file": "django_8Fiwfoj.png",
+        "not_required_file": "django_CuBtsC6.png",
+        "url": "https://www.djangoproject.com/",
+        "time": "01:49:35",
+        "date": "2000-09-19",
+        "datetime": "2013-11-13T08:34:48Z",
+        "fk": 4
+    }
+},
+{
+    "model": "inline.customwidgetinline",
+    "pk": 6,
+    "fields": {
+        "file": "django_ZNi559s.png",
+        "not_required_file": "",
+        "url": "https://www.djangoproject.com/",
+        "time": "06:24:10",
+        "date": "2030-08-30",
+        "datetime": "2006-04-13T02:24:12Z",
+        "fk": 5
+    }
+},
+{
+    "model": "inline.manytomanyinline",
+    "pk": 1,
+    "fields": {
+        "char": "Paul",
+        "fk": null,
+        "mtom1": [
+            4,
+            5
+        ],
+        "mtom2": [
+            3
+        ],
+        "mtom3": [
+            2
+        ]
+    }
+},
+{
+    "model": "inline.manytomanyinline",
+    "pk": 2,
+    "fields": {
+        "char": "Jake",
+        "fk": 1,
+        "mtom1": [
+            3,
+            4
+        ],
+        "mtom2": [
+            3
+        ],
+        "mtom3": [
+            1
+        ]
+    }
+},
+{
+    "model": "inline.manytomanyinline",
+    "pk": 3,
+    "fields": {
+        "char": "Shai",
+        "fk": 1,
+        "mtom1": [
+            2
+        ],
+        "mtom2": [
+            1,
+            2,
+            5
+        ],
+        "mtom3": []
+    }
+},
+{
+    "model": "inline.manytomanyinline",
+    "pk": 4,
+    "fields": {
+        "char": "David",
+        "fk": 3,
+        "mtom1": [
+            1,
+            2,
+            5
+        ],
+        "mtom2": [],
+        "mtom3": [
+            5
+        ]
+    }
+},
+{
+    "model": "inline.manytomanyinline",
+    "pk": 5,
+    "fields": {
+        "char": "Thibaud",
+        "fk": 4,
+        "mtom1": [
+            1,
+            4
+        ],
+        "mtom2": [
+            3
+        ],
+        "mtom3": [
+            4
+        ]
+    }
+},
+{
+    "model": "inline.helptextinline",
+    "pk": 1,
+    "fields": {
+        "char": "Justin",
+        "boolean": true,
+        "integer": 59,
+        "float": 88.43,
+        "datetime": "2000-02-23T02:07:57Z",
+        "fk": null
+    }
+},
+{
+    "model": "inline.helptextinline",
+    "pk": 2,
+    "fields": {
+        "char": "Jon",
+        "boolean": true,
+        "integer": 58,
+        "float": 91.2,
+        "datetime": "2011-08-05T12:12:00Z",
+        "fk": null
+    }
+},
+{
+    "model": "inline.helptextinline",
+    "pk": 3,
+    "fields": {
+        "char": "Joseph",
+        "boolean": false,
+        "integer": 53,
+        "float": 3.1,
+        "datetime": "1987-01-01T07:32:14Z",
+        "fk": 1
+    }
+},
+{
+    "model": "inline.helptextinline",
+    "pk": 4,
+    "fields": {
+        "char": "James",
+        "boolean": true,
+        "integer": 59,
+        "float": 2.3,
+        "datetime": "2004-12-11T04:15:01Z",
+        "fk": null
+    }
+},
+{
+    "model": "inline.helptextinline",
+    "pk": 5,
+    "fields": {
+        "char": "Tom",
+        "boolean": true,
+        "integer": 85,
+        "float": 72.43,
+        "datetime": "1989-04-11T08:13:50Z",
+        "fk": null
+    }
+},
+{
+    "model": "inline.helptextinline",
+    "pk": 6,
+    "fields": {
+        "char": "Sasha",
+        "boolean": false,
+        "integer": 63,
+        "float": 83.11,
+        "datetime": "1998-05-12T09:54:32Z",
+        "fk": 5
+    }
+},
+{
+    "model": "inline.helptextinline",
+    "pk": 7,
+    "fields": {
+        "char": "Nick",
+        "boolean": false,
+        "integer": 39,
+        "float": 9.9,
+        "datetime": "2011-12-18T05:42:32Z",
+        "fk": null
+    }
+}
+]
