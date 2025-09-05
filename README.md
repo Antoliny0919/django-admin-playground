@@ -1,0 +1,66 @@
+<!-- ABOUT THE PROJECT -->
+
+## django-admin-playground
+
+This project provides an optimal environment for contributing to Django Admin, with a particular focus on UI/UX improvements.
+
+It provides the following features:
+
+- Previous/Next Comparison Pages(Access the "/compare" path.)
+- Various Admin Use Cases
+- Initial Data for Testing
+- Provides images for visual regression testing via screenshots (planned)
+- Automated generation of admin images for the [Django Project documentation](https://www.djangoproject.com/) (planned)
+
+
+### Running
+
+1. Clone django repo.
+   ```sh
+   git clone https://github.com/django/django.git
+   ```
+
+2. Clone this repo into the django folder.
+   ```sh
+   cd django
+   git clone https://github.com/Antoliny0919/django-admin-playground.git
+   ```
+
+> **Warning⚠️**
+> If you cloned django-admin-playground into a different path within the django folder,
+> you need to update the values in the following files:
+> [manage.py](https://github.com/Antoliny0919/django-admin-playground/blob/main/manage.py#L12)
+> [main.settings.py](https://github.com/Antoliny0919/django-admin-playground/blob/main/main/settings.py#L7)
+
+3. Run migrations
+   ```sh
+   python manage.py migrate
+   ```
+
+4. Add initial data
+   ```sh
+   python manage.py loaddata auth_fixture.json changelist_fixture.json form_fixture.json inline_fixture.json
+   ```
+
+5. Run server 🚀
+   ```sh
+   python manage.py runserver
+   ```
+
+
+### Contributing
+
+1. Add test cases.
+django-admin-playground welcomes values or settings that can create visual differences in the Django Admin.
+Please add a ModelAdmin or fixture with specific values that can create visual differences.
+
+2. Keep Django Admin templates up-to-date.
+The [before_admin](https://github.com/Antoliny0919/django-admin-playground/tree/main/templates/before_admin) template folder must always stay up-to-date with the latest [Django Admin templates](https://github.com/django/django/tree/main/django/contrib/admin/templates/admin).
+If there are any changes in the Django Admin templates, the template files in the `before_admin` folder must be kept identical.
+If the Django Admin templates have been modified, please reflect those changes in the `before_admin` templates!
+
+3. Feature improvements
+django-admin-playground aims to create the optimal environment for contributing to Django Admin.
+If you have any ideas or items that could improve the contribution environment, don’t hesitate to create an Issue.
+
+Finally, I would like to thank everyone who has contributed to Django and django-admin-playground ❤️
