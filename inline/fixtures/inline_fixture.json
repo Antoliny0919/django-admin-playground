@@ -40,6 +40,14 @@
     }
 },
 {
+    "model": "inline.inline",
+    "pk": 12,
+    "fields": {
+        "char": "very long long long long long long long  long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long char",
+        "fk": 11
+    }
+},
+{
     "model": "inline.longinline",
     "pk": 1,
     "fields": {
@@ -127,6 +135,7 @@
     "model": "inline.fieldsetinline",
     "pk": 1,
     "fields": {
+        "char": "Tiberius",
         "not_required_file": "django.png",
         "choice": "one",
         "datetime": "2021-09-05T05:32:22Z",
@@ -140,6 +149,7 @@
     "model": "inline.fieldsetinline",
     "pk": 2,
     "fields": {
+        "char": "Philip",
         "not_required_file": "django_eKuMTEu.png",
         "choice": "two",
         "datetime": "2021-09-05T02:14:27Z",
@@ -155,6 +165,7 @@
     "model": "inline.fieldsetinline",
     "pk": 3,
     "fields": {
+        "char": "Michael",
         "not_required_file": "django_bPWlw6E.png",
         "choice": "three",
         "datetime": "2020-02-23T11:32:54Z",
@@ -169,6 +180,7 @@
     "model": "inline.fieldsetinline",
     "pk": 4,
     "fields": {
+        "char": "Kristian",
         "not_required_file": "django_75oez60.png",
         "choice": "one",
         "datetime": "1999-08-28T05:44:23Z",
@@ -184,6 +196,7 @@
     "model": "inline.fieldsetinline",
     "pk": 5,
     "fields": {
+        "char": "Jorge",
         "not_required_file": "django_ZpqTzjx.png",
         "choice": "three",
         "datetime": "2008-03-12T10:55:59Z",
@@ -198,6 +211,7 @@
     "model": "inline.fieldsetinline",
     "pk": 6,
     "fields": {
+        "char": "Jacob",
         "not_required_file": "django_zkYXIc9.png",
         "choice": "three",
         "datetime": "2011-03-14T07:12:47Z",
@@ -213,6 +227,7 @@
     "model": "inline.customwidgetinline",
     "pk": 1,
     "fields": {
+        "char": "Irene",
         "file": "django_JmdHgjb.png",
         "not_required_file": "django_sZAjrsr.png",
         "url": "https://www.djangoproject.com/",
@@ -226,6 +241,7 @@
     "model": "inline.customwidgetinline",
     "pk": 2,
     "fields": {
+        "char": "Natalia",
         "file": "django_QpvBD7B.png",
         "not_required_file": "",
         "url": "https://www.djangoproject.com/",
@@ -239,6 +255,7 @@
     "model": "inline.customwidgetinline",
     "pk": 3,
     "fields": {
+        "char": "Edmond",
         "file": "django_Q0CL7yg.png",
         "not_required_file": "django_v0Cq8DG.png",
         "url": "https://www.djangoproject.com/",
@@ -252,6 +269,7 @@
     "model": "inline.customwidgetinline",
     "pk": 4,
     "fields": {
+        "char": "Dan",
         "file": "django_cwYcFZr.png",
         "not_required_file": "",
         "url": "https://www.djangoproject.com/",
@@ -265,6 +283,7 @@
     "model": "inline.customwidgetinline",
     "pk": 5,
     "fields": {
+        "char": "Anna",
         "file": "django_8Fiwfoj.png",
         "not_required_file": "django_CuBtsC6.png",
         "url": "https://www.djangoproject.com/",
@@ -278,6 +297,7 @@
     "model": "inline.customwidgetinline",
     "pk": 6,
     "fields": {
+        "char": "Andrew",
         "file": "django_ZNi559s.png",
         "not_required_file": "",
         "url": "https://www.djangoproject.com/",
