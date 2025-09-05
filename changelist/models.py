@@ -2,13 +2,13 @@ from django.db import models
 
 
 class BaseModel(models.Model):
-    char = models.CharField(max_length=128)
+    char = models.CharField(max_length=128, help_text="char help text..")
     boolean = models.BooleanField(default=False, verbose_name="very long long long long long long long long long long long verbose name.")
     integer = models.IntegerField(null=True, blank=True)
-    file = models.FileField(null=True, blank=True)
-    url = models.URLField(null=True, blank=True)
+    file = models.FileField(null=True, blank=True, help_text="file help text..")
+    url = models.URLField(null=True, blank=True, help_text="url help text..")
     date = models.DateField(auto_now_add=True)
-    datetime = models.DateTimeField()
+    datetime = models.DateTimeField(help_text="datetime help text..")
     fk = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
