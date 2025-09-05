@@ -1,0 +1,234 @@
+[
+{
+    "model": "form.basemodel",
+    "pk": 1,
+    "fields": {
+        "char": "Brian",
+        "text": "",
+        "choice": "two",
+        "slug": "Brian",
+        "integer": null,
+        "boolean": false,
+        "datetime": null,
+        "file": "",
+        "fk": null
+    }
+},
+{
+    "model": "form.basemodel",
+    "pk": 2,
+    "fields": {
+        "char": "Thibaud",
+        "text": "",
+        "choice": "three",
+        "slug": null,
+        "integer": null,
+        "boolean": false,
+        "datetime": null,
+        "file": "",
+        "fk": null
+    }
+},
+{
+    "model": "form.basemodel",
+    "pk": 3,
+    "fields": {
+        "char": "Yusuke",
+        "text": "",
+        "choice": "one",
+        "slug": "xxx",
+        "integer": 5,
+        "boolean": true,
+        "datetime": null,
+        "file": "",
+        "fk": null
+    }
+},
+{
+    "model": "form.basemodel",
+    "pk": 4,
+    "fields": {
+        "char": "Marlene",
+        "text": "...",
+        "choice": "three",
+        "slug": "slug_slug",
+        "integer": 11,
+        "boolean": true,
+        "datetime": "2009-01-31T11:59:48Z",
+        "file": "",
+        "fk": 2
+    }
+},
+{
+    "model": "form.basemodel",
+    "pk": 5,
+    "fields": {
+        "char": "Tim",
+        "text": null,
+        "choice": null,
+        "slug": "tim",
+        "integer": null,
+        "boolean": false,
+        "datetime": null,
+        "file": "",
+        "fk": null
+    }
+},
+{
+    "model": "form.basemodel",
+    "pk": 6,
+    "fields": {
+        "char": "",
+        "text": "Text...",
+        "choice": null,
+        "slug": null,
+        "integer": null,
+        "boolean": true,
+        "datetime": null,
+        "file": "django_0mQd8qc.png",
+        "fk": 2
+    }
+},
+{
+    "model": "form.basemodel",
+    "pk": 7,
+    "fields": {
+        "char": "Eli",
+        "text": "text..",
+        "choice": "two",
+        "slug": "some_slug",
+        "integer": 51,
+        "boolean": true,
+        "datetime": "2021-02-18T01:21:40Z",
+        "file": "django_I1jWyoI.png",
+        "fk": 5
+    }
+},
+{
+    "model": "form.common",
+    "pk": 1,
+    "fields": {}
+},
+{
+    "model": "form.common",
+    "pk": 2,
+    "fields": {}
+},
+{
+    "model": "form.common",
+    "pk": 3,
+    "fields": {}
+},
+{
+    "model": "form.prepopulated",
+    "pk": 5,
+    "fields": {}
+},
+{
+    "model": "form.readonly",
+    "pk": 6,
+    "fields": {}
+},
+{
+    "model": "form.verbosename",
+    "pk": 7,
+    "fields": {}
+},
+{
+    "model": "form.helptext",
+    "pk": 4,
+    "fields": {}
+},
+{
+    "model": "form.customwidget",
+    "pk": 1,
+    "fields": {
+        "char": "Sarah",
+        "file": "django.png",
+        "not_required_file": "django_pAU5DC2.png",
+        "url": "https://www.djangoproject.com/",
+        "time": "08:20:34",
+        "date": "2025-09-05",
+        "datetime": "2025-09-05T08:20:36Z"
+    }
+},
+{
+    "model": "form.fieldset",
+    "pk": 1,
+    "fields": {
+        "char": "Simon",
+        "choice": "three",
+        "not_required_file": "django_UKXCu5H.png",
+        "datetime": "2000-09-19T01:01:01Z",
+        "mtm": []
+    }
+},
+{
+    "model": "form.fieldset",
+    "pk": 2,
+    "fields": {
+        "char": "Nathan",
+        "choice": "two",
+        "not_required_file": "",
+        "datetime": "1999-02-12T04:21:38Z",
+        "mtm": []
+    }
+},
+{
+    "model": "form.fieldset",
+    "pk": 3,
+    "fields": {
+        "char": "Meagen",
+        "choice": "two",
+        "not_required_file": "django_qlHjNYv.png",
+        "datetime": "1988-02-07T04:21:19Z",
+        "mtm": []
+    }
+},
+{
+    "model": "form.related",
+    "pk": 1,
+    "fields": {
+        "char": "Tim",
+        "fk": 1,
+        "oto": 3,
+        "mtm": [
+            1,
+            2,
+            3
+        ]
+    }
+},
+{
+    "model": "form.related",
+    "pk": 2,
+    "fields": {
+        "char": "Lucie",
+        "fk": 3,
+        "oto": 1,
+        "mtm": [
+            2
+        ]
+    }
+},
+{
+    "model": "form.rawid",
+    "pk": 2,
+    "fields": {}
+},
+{
+    "model": "form.autocomplete",
+    "pk": 1,
+    "fields": {}
+},
+{
+    "model": "form.allmtm",
+    "pk": 1,
+    "fields": {
+        "char": "Antoliny",
+        "mtm1": [],
+        "mtm2": [],
+        "mtm3": []
+    }
+}
+]

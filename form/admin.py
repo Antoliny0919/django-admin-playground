@@ -42,7 +42,7 @@ class VerboseNameForm(forms.ModelForm):
         labels = {
             "char": "char verbose name..",
             "text": "text verbose name..",
-            "integer": "integer verbose name..",
+            "integer": "very long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long verbose name",
             "fk": "fk verbose name..",
             "datetime": "datetime verbose name..",
         }
@@ -58,7 +58,7 @@ class HelpTextForm(forms.ModelForm):
     class Meta:
         help_texts = {
             "char": "char help text..",
-            "slug": "slug help text..",
+            "slug": "very long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long help text",
             "boolean": "boolean help text..",
             "datetime": "datetime help text..",
             "file": "file help text..",
