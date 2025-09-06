@@ -6,22 +6,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style type="text/tailwindcss">
       @theme {
+        --font-base: "Raleway", sans-serif;
+        --color-help-text-bg: var(--color-slate-800);
+        --color-help-text-fg: var(--color-gray-50);
+        --shadow-sidebar: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
       }
     </style>
   </head>
   <body class="w-screen h-screen">
-    {% with params=request.resolver_match.kwargs %}
-    <div class="flex w-full h-screen">
-      <div class="flex-1">
-        <iframe class="w-full h-full" id="before" src="{% block before_url %}{% endblock %}"></iframe>
+    <div class="flex">
+      <div class="fixed z-sidebar lg:sticky w-[3.5rem]">
+        <nav class="fixed top-0 left-0 w-[3.5rem] h-screen bg-gray-100 duration-100 border-r border-gray-300 shadow-sidebar">
+          <div class="flex w-full items-center p-2">
+            <button class="group inline-flex items-center justify-center rounded-lg w-10 h-10 cursor-pointer hover:bg-gray-300 active:bg-gray-300" aria-label="Sidebar Toggle" aria-pressed="false">
+              <div class="absolute px-4 text-xs py-2 left-16 bg-help-text-bg text-help-text-fg whitespace-nowrap rounded-lg opacity-0 font-base duration-300 group-hover:opacity-100" aria-hidden="true">Sidebar Toggle</div>
+              <svg class="" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="4" y="6" width="16" height="12" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                <line x1="8" y1="6" x2="8" y2="18" stroke="currentColor" stroke-width="1.5"/>
+              </svg>
+            </button>
+          </div>
+        </nav>
       </div>
-      <div class="flex-1">
-        <iframe class="w-full h-full" id="after" src="{% block after_url %}{% endblock %}"></iframe>
+      {% with params=request.resolver_match.kwargs %}
+      <div class="flex w-full h-screen">
+        <div class="flex-1">
+          <iframe class="w-full h-full" id="before" src="{% block before_url %}{% endblock %}"></iframe>
+        </div>
+        <div class="flex-1">
+          <iframe class="w-full h-full" id="after" src="{% block after_url %}{% endblock %}"></iframe>
+        </div>
       </div>
+      {% endwith %}
     </div>
-    {% endwith %}
   </body>
 </html>
