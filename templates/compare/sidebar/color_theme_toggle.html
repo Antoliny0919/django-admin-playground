@@ -43,7 +43,7 @@
     }
   "
   >
-    <div class="flex flex-row items-center px-2" :class="sidebarIsOpen ? 'gap-0' : 'gap-4'">
+    <div class="flex flex-row items-center px-2" :class="$store.sidebar.isOpen ? 'gap-0' : 'gap-4'">
       <div class="w-6 h-6 flex items-center justify-center">
         <template x-if="currentIcon() === 'light'">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-[24px] h-[24px]" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -65,7 +65,7 @@
       <div
       class="py-2 px-4 left-16 text-help-text-fg whitespace-nowrap rounded-lg font-base group-hover:opacity-100"
       aria-hidden="true"
-      :class="sidebarIsOpen ? 'bg-transparent opacity-100 text-sm' : 'bg-help-text-bg opacity-0 text-xs'"
+      :class="$store.sidebar.isOpen ? 'bg-transparent opacity-100 text-sm' : 'bg-help-text-bg opacity-0 text-xs'"
       >Toggle Theme</div>
     </div>
   </button>

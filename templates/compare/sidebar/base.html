@@ -1,22 +1,26 @@
 {% load static %}
 <div class="shrink-0 overflow-hidden">
-  <div class="fixed z-sidebar md:sticky duration-300" x-data="{ sidebarIsOpen: false }" :class="sidebarIsOpen ? 'w-[18rem]' : 'w-[3.5rem]'">
+  <div
+  class="fixed z-sidebar md:sticky duration-300"
+  x-data=""
+  :class="$store.sidebar.isOpen ? 'w-[18rem]' : 'w-[3.5rem]'"
+  >
     <nav
     class="fixed top-0 left-0 flex flex-col gap-4 h-screen bg-gray-100 duration-300 border-r border-gray-300 ease-in-out shadow-sidebar"
-    :class="sidebarIsOpen ? 'w-[18rem]' : 'w-[3.5rem]'"
+    :class="$store.sidebar.isOpen ? 'w-[18rem]' : 'w-[3.5rem]'"
     >
       <div class="flex w-full items-center p-2">
         <button
         class="group inline-flex items-center justify-center rounded-lg p-2 cursor-pointer hover:bg-gray-300"
         aria-label="Sidebar Toggle"
-        :aria-pressed="sidebarIsOpen"
-        @click="sidebarIsOpen = !sidebarIsOpen"
-        :class="sidebarIsOpen ? 'bg-gray-300' : ''"
+        :aria-pressed="$store.sidebar.isOpen"
+        @click="$store.sidebar.toggle()"
+        :class="$store.sidebar.isOpen ? 'bg-gray-300' : ''"
         >
           <div
           class="absolute px-4 text-xs py-2 left-16 bg-help-text-bg text-help-text-fg whitespace-nowrap rounded-lg opacity-0 font-base duration-300 group-hover:opacity-100"
           aria-hidden="true"
-          :class="sidebarIsOpen ? 'hidden' : ''"
+          :class="$store.sidebar.isOpen ? 'hidden' : ''"
           >Toggle Sidebar</div>
           <svg class="" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="4" y="6" width="16" height="12" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/>
@@ -25,7 +29,7 @@
         </button>
         <h1
         class="flex gap-1 items-center ml-4 whitespace-nowrap font-title font-bold text-lg duration-300"
-        :class="sidebarIsOpen ? 'opacity-100' : 'opacity-0'"
+        :class="$store.sidebar.isOpen ? 'opacity-100' : 'opacity-0'"
         >
           <span class="text-red-600">P</span>
           <span class="text-teal-600">L</span>
@@ -53,3 +57,15 @@
     </nav>
   </div>
 </div>
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.store('sidebar', {
+            isOpen: localStorage.getItem('django-admin-playground-sidebar') === 'true',
+
+            toggle() {
+                this.isOpen = ! this.isOpen;
+                localStorage.setItem('django-admin-playground-sidebar', this.isOpen);
+            }
+        })
+    })
+</script>
