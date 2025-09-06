@@ -15,12 +15,12 @@
         aria-label="Sidebar Toggle"
         :aria-pressed="$store.sidebar.isOpen"
         @click="$store.sidebar.toggle()"
-        :class="$store.sidebar.isOpen ? 'bg-gray-300' : ''"
+        :class="$store.sidebar.isOpen && 'bg-gray-300'"
         >
           <div
           class="absolute px-4 text-xs py-2 left-16 bg-help-text-bg text-help-text-fg whitespace-nowrap rounded-lg opacity-0 font-base duration-300 group-hover:opacity-100"
           aria-hidden="true"
-          :class="$store.sidebar.isOpen ? 'hidden' : ''"
+          :class="$store.sidebar.isOpen && 'hidden'"
           >Toggle Sidebar</div>
           <svg class="" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="4" y="6" width="16" height="12" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/>
