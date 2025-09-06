@@ -1,0 +1,55 @@
+{% load static %}
+<div class="shrink-0 overflow-hidden">
+  <div class="fixed z-sidebar md:sticky duration-300" x-data="{ sidebarIsOpen: false }" :class="sidebarIsOpen ? 'w-[18rem]' : 'w-[3.5rem]'">
+    <nav
+    class="fixed top-0 left-0 flex flex-col gap-4 h-screen bg-gray-100 duration-300 border-r border-gray-300 ease-in-out shadow-sidebar"
+    :class="sidebarIsOpen ? 'w-[18rem]' : 'w-[3.5rem]'"
+    >
+      <div class="flex w-full items-center p-2">
+        <button
+        class="group inline-flex items-center justify-center rounded-lg p-2 cursor-pointer hover:bg-gray-300"
+        aria-label="Sidebar Toggle"
+        :aria-pressed="sidebarIsOpen"
+        @click="sidebarIsOpen = !sidebarIsOpen"
+        :class="sidebarIsOpen ? 'bg-gray-300' : ''"
+        >
+          <div
+          class="absolute px-4 text-xs py-2 left-16 bg-help-text-bg text-help-text-fg whitespace-nowrap rounded-lg opacity-0 font-base duration-300 group-hover:opacity-100"
+          aria-hidden="true"
+          :class="sidebarIsOpen ? 'hidden' : ''"
+          >Toggle Sidebar</div>
+          <svg class="" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="6" width="16" height="12" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/>
+            <line x1="8" y1="6" x2="8" y2="18" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </button>
+        <h1
+        class="flex gap-1 items-center ml-4 whitespace-nowrap font-title font-bold text-lg duration-300"
+        :class="sidebarIsOpen ? 'opacity-100' : 'opacity-0'"
+        >
+          <span class="text-red-600">P</span>
+          <span class="text-teal-600">L</span>
+          <span class="text-indigo-600">A</span>
+          <span class="text-purple-600">Y</span>
+          <span class="text-amber-600">G</span>
+          <span class="text-emerald-600">R</span>
+          <span class="text-indigo-600">O</span>
+          <span class="text-zinc-600">U</span>
+          <span class="text-rose-600">N</span>
+          <span class="text-lime-600">D</span>
+          <img class="ml-1 w-[32px] h-[32px]" src="{% static 'compare/img/playground.png' %}">
+        </h1>
+      </div>
+      <div class="flex flex-col align-center h-full mt-2">
+        <ul>
+          <li>
+            {% include 'compare/sidebar/color_theme_toggle.html' %}
+          </li>
+          <li>
+            {% include 'compare/sidebar/layout_direction_toggle.html' %}
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</div>
