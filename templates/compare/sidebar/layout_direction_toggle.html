@@ -1,0 +1,48 @@
+<div class="flex w-full items-center p-2" x-data="{
+    layoutDirection: localStorage.getItem('layout-direction'),
+    init() {
+        const iframes = document.querySelectorAll('iframe');
+        this.documents = []
+        iframes.forEach((iframe) => {
+            iframe.onload = () => {
+                this.documents.push(iframe.contentDocument.documentElement);
+            }
+        });
+        const direction = this.layoutDirection ?? document.documentElement.dir;
+        this.setLayoutDirection(direction)
+    },
+    setLayoutDirection(newDirection) {
+        this.layoutDirection = newDirection;
+        localStorage.setItem('layout-direction', newDirection);
+        this.updateLayoutDirection();
+    },
+    updateLayoutDirection() {
+        for (const doc of this.documents) {
+            doc.dir = this.layoutDirection;
+        }
+    },
+    currentIcon() {
+        if (this.layoutDirection === 'ltr') return 'ltr';
+        else return 'rtl';
+    },
+  }">
+  <button class="group inline-flex items-center justify-center rounded-lg w-10 h-10 cursor-pointer bg-green-900 text-white hover:bg-green-800" @click="
+    if (currentIcon() === 'ltr') {
+        setLayoutDirection('rtl');
+    } else {
+        setLayoutDirection('ltr');
+    }
+  ">
+    <div class="absolute px-4 text-xs py-2 left-16 bg-help-text-bg text-help-text-fg whitespace-nowrap rounded-lg opacity-0 font-base duration-300 group-hover:opacity-100" aria-hidden="true">Toggle Layout Direction</div>
+    <template x-if="currentIcon() === 'ltr'">
+      <svg class="fill-white" width="24px" height="24px" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg">
+        <path d="m1384.152 1232.856 270.293 270.22H288.975v85.892h1365.47l-270.293 270.306 60.743 60.726 374.08-373.892-374.08-373.892-60.743 60.64ZM650.967 85.893h162.897V629.51H650.967c-149.924 0-271.926-121.883-271.926-271.766 0-149.969 122.002-271.851 271.926-271.851m0 629.51h162.897v540.782h85.917V85.893h225.874v1170.292h85.916V85.893h165.905V0h-726.51c-197.262 0-357.84 160.448-357.84 357.744 0 197.21 160.578 357.659 357.842 357.659" fill-rule="evenodd"/>
+      </svg>
+    </template>
+    <template x-if="currentIcon() === 'rtl'">
+      <svg class="fill-white" width="24px" height="24px" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg">
+        <path d="m188 1544.887 373.633 373.6 60.77-60.678-270.118-270.095h1372.732v-85.74H352.285l270.118-270.095-60.77-60.593L188 1544.886ZM755.599 85.827h162.74v543.192h-162.74c-149.78 0-271.663-121.787-271.663-271.553 0-149.853 121.883-271.64 271.663-271.64m0 629.02h162.74v540.36h85.833V85.827h225.656v1169.38h85.833V85.827h165.744V0H755.6C558.525 0 398.103 160.323 398.103 357.466c0 197.056 160.422 357.38 357.496 357.38" fill-rule="evenodd"/>
+      </svg>
+    </template>
+  </button>
+</div>

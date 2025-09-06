@@ -1,6 +1,7 @@
-{% load static %}
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" dir="{{ LANGUAGE_BIDI|yesno:'rtl,ltr,auto' }}">
   <head>
     <title>Django Admin Playground</title>
     <meta charset="UTF-8">
@@ -37,6 +38,9 @@
             <ul>
               <li>
                 {% include 'compare/sidebar/color_theme_toggle.html' %}
+              </li>
+              <li>
+                {% include 'compare/sidebar/layout_direction_toggle.html' %}
               </li>
             </ul>
           </div>
