@@ -54,6 +54,11 @@
           </li>
         </ul>
       </div>
+      {% if request.user.is_authenticated %}
+      <div class="relative p-2 shadow-sidebar duration-300 transition-color" :class="$store.sidebar.isOpen && 'shadow-sidebar bg-green-900/20'">
+        {% include 'compare/sidebar/profile.html' %}
+      </div>
+      {% endif %}
     </nav>
   </div>
 </div>
