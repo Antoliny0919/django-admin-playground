@@ -5,7 +5,7 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path("", TemplateView.as_view(template_name="compare/index.html")),
     path("login/", TemplateView.as_view(template_name="compare/login.html")),
-    path("password_change/", TemplateView.as_view(template_name="compare/password_change.html")),
+    path("password_change/", TemplateView.as_view(template_name="compare/password_change.html"), name="password_change"),
     path("password_change/done/", TemplateView.as_view(template_name="compare/password_change_done.html")),
     path("<str:app_name>/", TemplateView.as_view(template_name="compare/app_index.html")),
 
