@@ -18,7 +18,7 @@
         :class="$store.sidebar.isOpen && 'bg-gray-300'"
         >
           <div
-          class="absolute px-4 text-xs py-2 left-16 bg-help-text-bg text-help-text-fg whitespace-nowrap rounded-lg opacity-0 font-base duration-300 group-hover:opacity-100"
+          class="absolute px-4 text-xs py-2 hidden left-16 bg-help-text-bg text-help-text-fg whitespace-nowrap rounded-lg opacity-0 font-base duration-300 group-hover:opacity-100"
           aria-hidden="true"
           :class="$store.sidebar.isOpen && 'hidden'"
           >Toggle Sidebar</div>
@@ -29,7 +29,7 @@
         </button>
         <h1
         class="flex gap-1 items-center ml-4 whitespace-nowrap font-title font-bold text-lg duration-300"
-        :class="$store.sidebar.isOpen ? 'opacity-100' : 'opacity-0'"
+        :class="!$store.sidebar.isOpen && 'hidden'"
         >
           <span class="text-red-600">P</span>
           <span class="text-teal-600">L</span>
