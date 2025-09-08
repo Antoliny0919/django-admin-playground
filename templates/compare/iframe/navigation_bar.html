@@ -44,6 +44,7 @@ x-data="{
   },
   refresh() {
     this.iframe.contentWindow.location.reload();
+    this.useNav = false;
   },
   search() {
     this.iframe.src = this.url.value;
