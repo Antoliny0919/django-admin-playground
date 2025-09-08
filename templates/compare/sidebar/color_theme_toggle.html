@@ -6,13 +6,12 @@
         const iframes = document.querySelectorAll('iframe');
         this.documents = [document.documentElement]
         iframes.forEach((iframe) => {
-            iframe.onload = () => {
+            iframe.addEventListener('load', () => {
                 this.documents.push(iframe.contentDocument.documentElement);
-            }
+            })
         });
         this.isSystemDark = mediaQuery.matches;
-        this.theme ? this.setTheme(this.theme) : this.setTheme('auto')
-        console.log(123);
+        this.theme ? this.setTheme(this.theme) : this.setTheme('auto');
     },
     setTheme(newTheme) {
         this.theme = newTheme;

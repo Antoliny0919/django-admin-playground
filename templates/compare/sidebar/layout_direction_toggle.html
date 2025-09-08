@@ -4,9 +4,9 @@
         const iframes = document.querySelectorAll('iframe');
         this.documents = []
         iframes.forEach((iframe) => {
-            iframe.onload = () => {
+            iframe.addEventListener('load', () => {
                 this.documents.push(iframe.contentDocument.documentElement);
-            }
+            });
         });
         const direction = this.layoutDirection ?? document.documentElement.dir;
         this.setLayoutDirection(direction)
