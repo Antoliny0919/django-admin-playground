@@ -2,13 +2,13 @@
 
 ## django-admin-playground
 
-This project provides an optimal environment for contributing to Django Admin, with a particular focus on ``UI/UX`` improvements.
+This project provides an optimal environment for contributing to Django Admin.
 
 ![logo](image/readme_logo.png)
 
 It provides the following features:
 
-- Previous/Next Comparison Pages(Access the "/compare" path.)
+- Before/After Comparison Pages(Access the "/compare" path.)
 - Various Admin Use Cases
 - Initial Data for Testing
 - Provides images for visual regression testing via screenshots (planned)
