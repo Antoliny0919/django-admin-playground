@@ -52,13 +52,12 @@ x-data="{
     <div class="flex gap-2">
         <button
         class="group w-8 h-8 flex items-center justify-center transition-color duration-200 bg-gray-50 rounded-md"
-        :class="!canGoPrevious() ? 'opacity-60' : 'hover:bg-blue-100 cursor-pointer'"
+        :class="!canGoPrevious() ? 'bg-gray-50/70' : 'hover:bg-blue-100 cursor-pointer'"
         :disabled="!canGoPrevious()"
         @click="previous()"
         >
             <svg
-            class="fill-[#5f6368]"
-            :class="canGoPrevious() && 'group-hover:fill-blue-700'"
+            :class="canGoPrevious() ? 'fill-[#5f6368] group-hover:fill-blue-700' : 'fill-[#5f6368]/60'"
             width="24"
             height="24"
             viewBox="0 0 24 24"
@@ -69,13 +68,12 @@ x-data="{
         </button>
         <button
         class="group w-8 h-8 flex items-center justify-center transition-color duration-200 bg-gray-50 rounded-md"
-        :class="!canGoNext() ? 'opacity-60' : 'hover:bg-blue-100 cursor-pointer'"
+        :class="!canGoNext() ? 'bg-gray-50/70' : 'hover:bg-blue-100 cursor-pointer'"
         :disabled="!canGoNext()"
         @click="next()"
         >
             <svg
-            class="fill-[#5f6368]"
-            :class="canGoNext() && 'group-hover:fill-blue-700'"
+            :class="canGoNext() ? 'fill-[#5f6368] group-hover:fill-blue-700' : 'fill-[#5f6368]/60'"
             width="24"
             height="24"
             viewBox="0 0 24 24"
