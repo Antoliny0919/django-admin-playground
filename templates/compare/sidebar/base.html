@@ -55,7 +55,7 @@
         </ul>
       </div>
       {% if request.user.is_authenticated %}
-        <h2 class="px-4 py-2 mt-12 font-title text-base">
+        <h2 class="px-4 py-2 mt-12 font-title text-base whitespace-nowrap" x-show="$store.sidebar.isOpen">
           <span>Select</span>
           <span class="text-indigo-600">M</span><span class="text-lime-600">o</span><span class="text-rose-600">d</span><span class="text-neutral-600">e</span><span class="text-orange-600">l</span>
         </h2>
