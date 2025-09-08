@@ -29,9 +29,11 @@
       {% with params=request.resolver_match.kwargs %}
       <div class="flex w-full h-screen">
         <div class="flex-1">
+          {% include 'compare/iframe/navigation_bar.html' with iframe_id='before' %}
           <iframe class="w-full h-full" id="before" src="{% block before_url %}{% endblock %}"></iframe>
         </div>
         <div class="flex-1">
+          {% include 'compare/iframe/navigation_bar.html' with iframe_id='after' %}
           <iframe class="w-full h-full" id="after" src="{% block after_url %}{% endblock %}"></iframe>
         </div>
       </div>
