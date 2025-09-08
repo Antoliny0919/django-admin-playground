@@ -1,0 +1,47 @@
+<h2 class="px-1 py-2 font-title text-base">
+  <span>Select</span>
+  <span class="text-indigo-600">M</span><span class="text-lime-600">o</span><span class="text-rose-600">d</span><span class="text-neutral-600">e</span><span class="text-orange-600">l</span>
+</h2>
+{% for app in app_list %}
+<div x-data="{showModelList: true}">
+  <div class="font-base bg-green-800/40">
+    <h3 class="flex flex-row items-center justify-between">
+      <a class="block p-2 whitespace-nowrap w-[90%] text-ellipsis fade-text overflow-hidden hover:bg-green-800/50 duration-300 transition-color" href="{{ app.app_url }}">{{ app.name }}</a>
+      <button class="cursor-pointer" type="button" @click="showModelList = !showModelList">
+        <svg
+        class="duration-300 transition-transform"
+        :class="!showModelList ? 'rotate-90 hover:rotate-0' : 'hover:rotate-90'"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        >
+        <path d="M7 14L12 19L17 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      </button>
+    </h3>
+  </div>
+  <ul
+  x-show="showModelList"
+  x-collapse
+  >
+  {% for model in app.models %}
+    <li class="flex flex-row items-center [&:not(:last-child)]:border-b-2 border-dotted hover:bg-green-800/20 duration-300 transition-color">
+      <a href="{{ model.admin_url }}" class="block px-4 py-2 whitespace-nowrap w-[90%] overflow-hidden text-ellipsis fade-text">{{ model.name }}</a>
+      <a href="{{ model.add_url }}" class="cursor-pointer scale-90 hover:scale-100">
+        <svg fill="#000000" width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <g data-name="Layer 2">
+          <g data-name="plus-square">
+          <rect width="24" height="24" opacity="0"/>
+          <path d="M18 3H6a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3V6a3 3 0 0 0-3-3zm1 15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1z"/>
+          <path d="M15 11h-2V9a1 1 0 0 0-2 0v2H9a1 1 0 0 0 0 2h2v2a1 1 0 0 0 2 0v-2h2a1 1 0 0 0 0-2z"/>
+          </g>
+          </g>
+        </svg>
+      </a>
+    </li>
+  {% endfor %}
+  </ul>
+</div>
+{% endfor %}

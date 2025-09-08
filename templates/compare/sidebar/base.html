@@ -6,7 +6,7 @@
   :class="$store.sidebar.isOpen ? 'w-[18rem]' : 'w-[3.5rem]'"
   >
     <nav
-    class="fixed top-0 left-0 flex flex-col gap-4 h-screen bg-gray-100 duration-300 border-r border-gray-300 ease-in-out shadow-sidebar"
+    class="fixed top-0 left-0 flex flex-col h-screen bg-gray-100 duration-300 border-r border-gray-300 ease-in-out shadow-sidebar"
     :class="$store.sidebar.isOpen ? 'w-[18rem]' : 'w-[3.5rem]'"
     >
       <div class="flex w-full items-center p-2">
@@ -44,7 +44,7 @@
           <img class="ml-1 w-[32px] h-[32px]" src="{% static 'compare/img/playground.png' %}">
         </h1>
       </div>
-      <div class="flex flex-col align-center h-full mt-2">
+      <div class="flex flex-col align-center mt-2" :class="!$store.sidebar.isOpen && 'h-full'">
         <ul>
           <li>
             {% include 'compare/sidebar/color_theme_toggle.html' %}
@@ -55,9 +55,12 @@
         </ul>
       </div>
       {% if request.user.is_authenticated %}
-      <div class="relative p-2 shadow-sidebar duration-300 transition-color" :class="$store.sidebar.isOpen && 'shadow-sidebar bg-green-900/20'">
-        {% include 'compare/sidebar/profile.html' %}
-      </div>
+        <div class="overflow-scroll px-2 mt-12 h-full" x-show="$store.sidebar.isOpen">
+          {% include 'compare/sidebar/app_list.html' %}
+        </div>
+        <div class="relative p-2 shadow-sidebar duration-300 transition-color" :class="$store.sidebar.isOpen && 'shadow-sidebar bg-green-900/20'">
+          {% include 'compare/sidebar/profile.html' %}
+        </div>
       {% endif %}
     </nav>
   </div>

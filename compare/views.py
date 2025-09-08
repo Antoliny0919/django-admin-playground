@@ -1,5 +1,6 @@
-from django.contrib import admin
 from django.views.generic.base import TemplateView
+
+from main.admin import compare_site
 
 
 class BaseView(TemplateView):
@@ -7,7 +8,7 @@ class BaseView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["app_list"] = admin.site.get_app_list(self.request)
+        context["app_list"] = compare_site.get_app_list(self.request)
         return context
 
 
