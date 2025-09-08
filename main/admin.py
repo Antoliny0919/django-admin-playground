@@ -1,4 +1,5 @@
 from django.contrib.admin import AdminSite
+from django.urls import reverse
 from django.contrib.auth.admin import UserAdmin, GroupAdmin
 from django.contrib.auth.models import User, Group, Permission
 from django.template.response import TemplateResponse
@@ -37,6 +38,29 @@ class CustomAdminSite(AdminSite):
         return template_name
 
 
+class CompareAdminSite(AdminSite):
+    def _build_app_dict(self, request, label=None):
+        """
+        To provide the compare page in the sidebar,
+        all URLs in app_dict are replaced with compare paths.
+        """
+        admin_path = reverse("admin:index").strip("/")
+        app_dict = super()._build_app_dict(request, label)
+        for app_data in app_dict.values():
+            if app_data.get("app_url"):
+                app_data["app_url"] = app_data["app_url"].replace(admin_path, "compare")
+            for model_data in app_data["models"]:
+                if model_data.get("admin_url"):
+                    model_data["admin_url"] = model_data["admin_url"].replace(admin_path, "compare")
+                if model_data.get("add_url"):
+                    model_data["add_url"] = model_data["add_url"].replace(admin_path, "compare")
+        return app_dict
+
+
 before_site = CustomAdminSite(name="before_admin", template_prefix="before_admin")
+# compare admin is not registered in the URL, only the object data is used.
+compare_site = CompareAdminSite(name="compare")
 before_site.register(User, UserAdmin)
 before_site.register(Group, GroupAdmin)
+compare_site.register(User, UserAdmin)
+compare_site.register(Group, GroupAdmin)
