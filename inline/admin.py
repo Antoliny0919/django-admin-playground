@@ -129,16 +129,16 @@ class ManyToManyFieldTabularInline(admin.TabularInline):
     model = ManyToManyInline
     verbose_name = "ManyToMany Field Tabular Inline"
     extra = 1
-    filter_vertical = ["mtom2"]
-    filter_horizontal = ["mtom3"]
+    filter_vertical = ["m2m_2"]
+    filter_horizontal = ["m2m_3"]
 
 
 class ManyToManyFieldStackedInline(admin.StackedInline):
     model = ManyToManyInline
     verbose_name = "ManyToMany Field Stacked Inline"
     extra = 1
-    filter_vertical = ["mtom2"]
-    filter_horizontal = ["mtom3"]
+    filter_vertical = ["m2m_2"]
+    filter_horizontal = ["m2m_3"]
 
 
 class HelpTextTabularInline(admin.TabularInline):

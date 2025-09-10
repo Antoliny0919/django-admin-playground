@@ -160,7 +160,7 @@
         "choice": "three",
         "not_required_file": "django_UKXCu5H.png",
         "datetime": "2000-09-19T01:01:01Z",
-        "mtm": []
+        "m2m": []
     }
 },
 {
@@ -171,7 +171,7 @@
         "choice": "two",
         "not_required_file": "",
         "datetime": "1999-02-12T04:21:38Z",
-        "mtm": []
+        "m2m": []
     }
 },
 {
@@ -182,7 +182,7 @@
         "choice": "two",
         "not_required_file": "django_qlHjNYv.png",
         "datetime": "1988-02-07T04:21:19Z",
-        "mtm": []
+        "m2m": []
     }
 },
 {
@@ -191,8 +191,8 @@
     "fields": {
         "char": "Tim",
         "fk": 1,
-        "oto": 3,
-        "mtm": [
+        "o2o": 3,
+        "m2m": [
             1,
             2,
             3
@@ -205,8 +205,8 @@
     "fields": {
         "char": "Lucie",
         "fk": 3,
-        "oto": 1,
-        "mtm": [
+        "o2o": 1,
+        "m2m": [
             2
         ]
     }
@@ -222,13 +222,13 @@
     "fields": {}
 },
 {
-    "model": "form.allmtm",
+    "model": "form.allmanytomany",
     "pk": 1,
     "fields": {
         "char": "Antoliny",
-        "mtm1": [],
-        "mtm2": [],
-        "mtm3": []
+        "m2m_1": [],
+        "m2m_2": [],
+        "m2m_3": []
     }
 }
 ]

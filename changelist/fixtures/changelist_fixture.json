@@ -2100,9 +2100,9 @@
     "pk": 1,
     "fields": {
         "char": "Moshe",
-        "oto": 2,
+        "o2o": 2,
         "fk": 5,
-        "mtm": [
+        "m2m": [
             4,
             5
         ]
@@ -2113,9 +2113,9 @@
     "pk": 2,
     "fields": {
         "char": "Nancy",
-        "oto": 5,
+        "o2o": 5,
         "fk": 4,
-        "mtm": [
+        "m2m": [
             1,
             4
         ]
@@ -2126,9 +2126,9 @@
     "pk": 3,
     "fields": {
         "char": "Narcisse",
-        "oto": 4,
+        "o2o": 4,
         "fk": 5,
-        "mtm": [
+        "m2m": [
             1,
             2,
             3,

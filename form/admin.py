@@ -10,7 +10,7 @@ from .models import (
     Fieldset,
     RawID,
     AutoComplete,
-    AllMtM,
+    AllManyToMany,
     FieldError,
 )
 
@@ -71,20 +71,20 @@ class HelpTextAdmin(admin.ModelAdmin):
 
 class FieldsetAdmin(admin.ModelAdmin):
     radio_fields = {"choice": admin.VERTICAL}
-    filter_horizontal = ("mtm",)
+    filter_horizontal = ("m2m",)
 
 
 class RawIDAdmin(admin.ModelAdmin):
-    raw_id_fields = ("fk", "oto", "mtm",)
+    raw_id_fields = ("fk", "o2o", "m2m",)
 
 
 class AutocompleteAdmin(admin.ModelAdmin):
-    autocomplete_fields = ("fk", "mtm", "oto")
+    autocomplete_fields = ("fk", "m2m", "o2o")
 
 
-class AllMtMAdmin(admin.ModelAdmin):
-    filter_vertical = ("mtm2",)
-    filter_horizontal = ("mtm3",)
+class AllManyToManyAdmin(admin.ModelAdmin):
+    filter_vertical = ("m2m_2",)
+    filter_horizontal = ("m2m_3",)
 
 
 register(Common, BaseFormAdmin)
@@ -96,5 +96,5 @@ register(CustomWidget)
 register(Fieldset, FieldsetAdmin)
 register(RawID, RawIDAdmin)
 register(AutoComplete, AutocompleteAdmin)
-register(AllMtM, AllMtMAdmin)
+register(AllManyToMany, AllManyToManyAdmin)
 register(FieldError)

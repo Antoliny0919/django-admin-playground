@@ -68,7 +68,7 @@ class Fieldset(models.Model):
     choice = models.CharField(choices=CHOICES, max_length=10)
     not_required_file = models.FileField(null=True, blank=True)
     datetime = models.DateTimeField()
-    mtm = models.ManyToManyField("self", blank=True)
+    m2m = models.ManyToManyField("self", blank=True)
 
     def __str__(self):
         return self.char
@@ -77,8 +77,8 @@ class Fieldset(models.Model):
 class Related(models.Model):
     char = models.CharField(max_length=128)
     fk = models.ForeignKey(Common, on_delete=models.SET_NULL, null=True, blank=True, related_name="fk_common")
-    mtm = models.ManyToManyField(Common, blank=True, related_name="mtm_common")
-    oto = models.OneToOneField(Common, on_delete=models.SET_NULL, null=True, blank=True)
+    m2m = models.ManyToManyField(Common, blank=True, related_name="mtm_common")
+    o2o = models.OneToOneField(Common, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return self.char
@@ -92,11 +92,11 @@ class AutoComplete(Related):
     pass
 
 
-class AllMtM(models.Model):
+class AllManyToMany(models.Model):
     char = models.CharField(max_length=128)
-    mtm1 = models.ManyToManyField(Common, blank=True, related_name="mtm1")
-    mtm2 = models.ManyToManyField(Common, blank=True, related_name="mtm2")
-    mtm3 = models.ManyToManyField(Common, blank=True, related_name="mtm3")
+    m2m_1 = models.ManyToManyField(Common, blank=True, related_name="mtm1")
+    m2m_2 = models.ManyToManyField(Common, blank=True, related_name="mtm2")
+    m2m_3 = models.ManyToManyField(Common, blank=True, related_name="mtm3")
 
     class Meta:
         verbose_name = "All ManyToMany"

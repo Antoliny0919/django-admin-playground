@@ -72,14 +72,14 @@ class ForFkField(models.Model):
 
 
 class ForManyToManyField(models.Model):
-    char = models.CharField(max_length=128, verbose_name="for mtm verbose name")
+    char = models.CharField(max_length=128, verbose_name="for m2m verbose name")
 
 
 class Related(models.Model):
     char = models.CharField(max_length=128)
-    oto = models.OneToOneField(ForOneToOneField, on_delete=models.CASCADE, null=True, blank=True)
+    o2o = models.OneToOneField(ForOneToOneField, on_delete=models.CASCADE, null=True, blank=True)
     fk = models.ForeignKey(ForFkField, on_delete=models.CASCADE, null=True, blank=True)
-    mtm = models.ManyToManyField(ForManyToManyField, blank=True)
+    m2m = models.ManyToManyField(ForManyToManyField, blank=True)
 
     def __str__(self):
         return self.char

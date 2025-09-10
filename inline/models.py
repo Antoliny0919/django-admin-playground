@@ -36,7 +36,7 @@ class FieldsetInline(models.Model):
     char = models.CharField(max_length=128, null=True, blank=True)
     not_required_file = models.FileField(null=True, blank=True)
     choice = models.CharField(choices=CHOICES, max_length=10)
-    mtom = models.ManyToManyField("self", blank=True)
+    m2m = models.ManyToManyField("self", blank=True)
     datetime = models.DateTimeField()
     fk = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
 
@@ -60,9 +60,9 @@ class CustomWidgetInline(models.Model):
 
 class ManyToManyInline(models.Model):
     char = models.CharField(max_length=128)
-    mtom1 = models.ManyToManyField("self", blank=True)
-    mtom2 = models.ManyToManyField("self", blank=True)
-    mtom3 = models.ManyToManyField("self", blank=True)
+    m2m_1 = models.ManyToManyField("self", blank=True)
+    m2m_2 = models.ManyToManyField("self", blank=True)
+    m2m_3 = models.ManyToManyField("self", blank=True)
     fk = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):

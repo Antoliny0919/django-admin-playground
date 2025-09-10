@@ -77,7 +77,7 @@ class FullFilterAdmin(admin.ModelAdmin):
 
 
 class RelatedChangeListAdmin(admin.ModelAdmin):
-    list_display = ("id", "char", "oto__char", "fk__char", "fk__fk__char", "mtm__char",)
+    list_display = ("id", "char", "o2o__char", "fk__char", "fk__fk__char", "m2m__char",)
 
 
 class VerboseNameAdmin(admin.ModelAdmin):
