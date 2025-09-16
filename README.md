@@ -28,12 +28,11 @@ It provides the following features:
    git clone https://github.com/Antoliny0919/django-admin-playground.git
    ```
 
-   > 📘 INFO
-   >
-   > If you cloned django-admin-playground into a different path within the django folder,
-   > you need to update the values in the following files:
-   > - [manage.py](https://github.com/Antoliny0919/django-admin-playground/blob/main/manage.py#L12)
-   > - [settings.py](https://github.com/Antoliny0919/django-admin-playground/blob/main/main/settings.py#L7)
+> [!WARNING]
+> If you cloned django-admin-playground into a different path within the django folder,
+> you need to update the values in the following files:
+> - [manage.py](https://github.com/Antoliny0919/django-admin-playground/blob/main/manage.py#L12)
+> - [settings.py](https://github.com/Antoliny0919/django-admin-playground/blob/main/main/settings.py#L7)
 
 3. Run migrations
    ```sh
@@ -45,12 +44,11 @@ It provides the following features:
    python manage.py loaddata auth_fixture.json changelist_fixture.json form_fixture.json inline_fixture.json
    ```
 
-   > 📘 INFO
-   >
-   > django-admin-playground provides a superuser by default.
-   >
-   > - Username: ``admin``
-   > - Password: ``admin``
+> [!TIP]
+> django-admin-playground provides a superuser by default.
+>
+> - Username: ``admin``
+> - Password: ``admin``
 
 5. Run server 🚀
    ```sh
