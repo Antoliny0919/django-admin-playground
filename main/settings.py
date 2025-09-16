@@ -1,5 +1,3 @@
-import os
-
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -17,7 +15,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-X_FRAME_OPTIONS = 'ALLOWALL'
+X_FRAME_OPTIONS = "ALLOWALL"
 
 
 # Application definition
@@ -57,8 +55,8 @@ TEMPLATES = [
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
             BASE_DIR / "templates",
-            os.path.join(DJANGO_DIR, "django/contrib/admin/templates"),
-            os.path.join(DJANGO_DIR, "django/contrib/admindocs/templates"),
+            DJANGO_DIR / "django/contrib/admin/templates",
+            DJANGO_DIR / "django/contrib/admindocs/templates",
         ],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -81,7 +79,7 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
-    }
+    },
 }
 
 
@@ -90,7 +88,7 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",  # noqa: E501
     },
     {
         "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
@@ -122,7 +120,7 @@ USE_TZ = True
 STATIC_URL = "static/"
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
+    BASE_DIR / "static",
 ]
 
 # Default primary key field type

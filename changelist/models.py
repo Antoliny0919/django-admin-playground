@@ -3,7 +3,12 @@ from django.db import models
 
 class BaseModel(models.Model):
     char = models.CharField(max_length=128, help_text="char help text..")
-    boolean = models.BooleanField(default=False, verbose_name="very long long long long long long long long long long long verbose name.")
+    boolean = models.BooleanField(
+        default=False,
+        verbose_name=(
+            "very long long long long long long long longlong long long verbose name."
+        ),
+    )
     integer = models.IntegerField(null=True, blank=True)
     file = models.FileField(null=True, blank=True, help_text="file help text..")
     url = models.URLField(null=True, blank=True, help_text="url help text..")
@@ -77,7 +82,12 @@ class ForManyToManyField(models.Model):
 
 class Related(models.Model):
     char = models.CharField(max_length=128)
-    o2o = models.OneToOneField(ForOneToOneField, on_delete=models.CASCADE, null=True, blank=True)
+    o2o = models.OneToOneField(
+        ForOneToOneField,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
     fk = models.ForeignKey(ForFkField, on_delete=models.CASCADE, null=True, blank=True)
     m2m = models.ManyToManyField(ForManyToManyField, blank=True)
 
@@ -89,7 +99,10 @@ class VerboseName(models.Model):
     char = models.CharField(max_length=128, verbose_name="char verbose name")
     boolean = models.BooleanField(default=False, verbose_name="boolean verbose name")
     time = models.TimeField(auto_now=True)
-    datetime = models.DateTimeField(auto_now_add=True, verbose_name="datetime verbose name")
+    datetime = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name="datetime verbose name",
+    )
 
     class Meta:
         verbose_name = "very" + "long " * 40 + "verbose_name"
