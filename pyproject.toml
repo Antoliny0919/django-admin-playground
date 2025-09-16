@@ -1,0 +1,69 @@
+[tool.ruff]
+target-version = "py39"
+line-length = 88
+# Exclude the template content as most files aren't parseable
+extend-exclude = [
+  "[{]{2}cookiecutter.project_slug[}]{2}/*",
+  "docs/*",
+]
+
+lint.select = [
+  "A",
+  # "ANN", # flake8-annotations: we should support this in the future but many errors atm
+  "ASYNC",
+  "B",
+  "BLE",
+  "C4",
+  "C90",
+  "COM",
+  "DTZ",
+  "E",
+  "EM",
+  "ERA",
+  "EXE",
+  "F",
+  "FA",
+  "FBT",
+  "FLY",
+  "G",
+  "I",
+  "ICN",
+  "INP",
+  "INT",
+  "ISC",
+  "N",
+  "PD",
+  "PERF",
+  "PGH",
+  "PIE",
+  "PL",
+  "PT",
+  # "ARG", # Unused function argument
+  "PTH",
+  "PYI",
+  "Q",
+  "RET",
+  "RSE",
+  # "FURB",
+  # "LOG",
+  "RUF",
+  "S",
+  "SIM",
+  "SLF",
+  "SLOT",
+  "T10",
+  "TC",
+  "TID",
+  "TRY",
+  "UP",
+  "W",
+  "YTT",
+]
+lint.ignore = [
+  "EM101",
+  "RUF012", # Mutable class attributes should be annotated with `typing.ClassVar`
+  "S101",   # Use of assert detected https://docs.astral.sh/ruff/rules/assert/
+  "SIM102", # sometimes it's better to nest
+  "TRY003", # Avoid specifying long messages outside the exception class
+]
+lint.isort.force-single-line = true
