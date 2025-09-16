@@ -1,4 +1,4 @@
-{% load static i18n %}
+{% load static i18n django_browser_reload %}
 {% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}" dir="{{ LANGUAGE_BIDI|yesno:'rtl,ltr,auto' }}">
@@ -39,5 +39,6 @@
       </div>
       {% endwith %}
     </div>
+    {% django_browser_reload_script %}
   </body>
 </html>

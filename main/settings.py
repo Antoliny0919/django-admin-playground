@@ -30,13 +30,17 @@ CORE_APPS = [
     "compare",
 ]
 
+THIRD_PARTY_APPS = [
+    "django_browser_reload",
+]
+
 ADMIN_APPS = [
     "inline",
     "changelist",
     "form",
 ]
 
-INSTALLED_APPS = CORE_APPS + ADMIN_APPS
+INSTALLED_APPS = CORE_APPS + THIRD_PARTY_APPS + ADMIN_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -46,6 +50,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 ROOT_URLCONF = "main.urls"
