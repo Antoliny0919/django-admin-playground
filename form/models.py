@@ -1,12 +1,15 @@
-from django.db import models
 from django.core.exceptions import ValidationError
+from django.db import models
 
 
 class BaseModel(models.Model):
     CHOICES = [
         ("one", "One"),
         ("two", "Two"),
-        ("three", "very long long long long long long long long long long long long long long long long long long long long long choice"),
+        (
+            "three",
+            "very " + "long " * 20 + "choice",
+        ),
     ]
     char = models.CharField(max_length=1000)
     text = models.TextField(max_length=128, null=True, blank=True)
@@ -35,7 +38,6 @@ class ReadOnly(BaseModel):
 
 
 class VerboseName(BaseModel):
-
     class Meta:
         verbose_name = "Verbose Name"
         verbose_name_plural = "Verbose Name Plural"
@@ -76,7 +78,13 @@ class Fieldset(models.Model):
 
 class Related(models.Model):
     char = models.CharField(max_length=128)
-    fk = models.ForeignKey(Common, on_delete=models.SET_NULL, null=True, blank=True, related_name="fk_common")
+    fk = models.ForeignKey(
+        Common,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="fk_common",
+    )
     m2m = models.ManyToManyField(Common, blank=True, related_name="mtm_common")
     o2o = models.OneToOneField(Common, on_delete=models.SET_NULL, null=True, blank=True)
 

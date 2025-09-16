@@ -1,38 +1,40 @@
 from django import forms
 from django.contrib import admin
-from .models import (
-    Common,
-    Prepopulated,
-    ReadOnly,
-    VerboseName,
-    HelpText,
-    CustomWidget,
-    Fieldset,
-    RawID,
-    AutoComplete,
-    AllManyToMany,
-    FieldError,
-)
 
 from main.utils import register
+
+from .models import AllManyToMany
+from .models import AutoComplete
+from .models import Common
+from .models import CustomWidget
+from .models import FieldError
+from .models import Fieldset
+from .models import HelpText
+from .models import Prepopulated
+from .models import RawID
+from .models import ReadOnly
+from .models import VerboseName
 
 
 class BaseFormAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None, {"fields": (("char", "slug",), "choice")}),
+        (None, {"fields": (("char", "slug"), "choice")}),
         ("fieldset1", {"fields": ("text", "integer", "boolean")}),
-        ("fieldset2", {"fields": (("file",), ("datetime",), ("fk",)), "classes": ("collapse",)}),
+        (
+            "fieldset2",
+            {"fields": (("file",), ("datetime",), ("fk",)), "classes": ("collapse",)},
+        ),
     ]
     search_fields = ("char",)
 
 
 class PrepopulatedAdmin(admin.ModelAdmin):
-    fields = ("char", "slug",)
+    fields = ("char", "slug")
     prepopulated_fields = {"slug": ("char",)}
 
 
 class ReadOnlyAdmin(admin.ModelAdmin):
-    readonly_fields = ("char", "choice", "slug", "integer", "datetime",)
+    readonly_fields = ("char", "choice", "slug", "integer", "datetime")
 
 
 class VerboseNameForm(forms.ModelForm):
@@ -42,7 +44,7 @@ class VerboseNameForm(forms.ModelForm):
         labels = {
             "char": "char verbose name..",
             "text": "text verbose name..",
-            "integer": "very long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long verbose name",
+            "integer": "very " + "long " * 80 + "verbose name..",
             "fk": "fk verbose name..",
             "datetime": "datetime verbose name..",
         }
@@ -58,7 +60,7 @@ class HelpTextForm(forms.ModelForm):
     class Meta:
         help_texts = {
             "char": "char help text..",
-            "slug": "very long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long help text",
+            "slug": "very " + "long " * 80 + "help text..",
             "boolean": "boolean help text..",
             "datetime": "datetime help text..",
             "file": "file help text..",
@@ -75,7 +77,7 @@ class FieldsetAdmin(admin.ModelAdmin):
 
 
 class RawIDAdmin(admin.ModelAdmin):
-    raw_id_fields = ("fk", "o2o", "m2m",)
+    raw_id_fields = ("fk", "o2o", "m2m")
 
 
 class AutocompleteAdmin(admin.ModelAdmin):

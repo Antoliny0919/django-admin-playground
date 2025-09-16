@@ -1,5 +1,5 @@
+from django.core.exceptions import ValidationError
 from django.db import models
-from django.core.exceptions import  ValidationError
 
 
 class Inline(models.Model):
@@ -71,7 +71,7 @@ class ManyToManyInline(models.Model):
 
 class HelpTextInline(models.Model):
     char = models.CharField(max_length=128, help_text="char field help text..")
-    boolean= models.BooleanField(help_text="boolean field help text..")
+    boolean = models.BooleanField(help_text="boolean field help text..")
     integer = models.IntegerField(help_text="integer field help text..")
     float = models.FloatField(help_text="float field help text..")
     datetime = models.DateTimeField(help_text="datetime field help text..")

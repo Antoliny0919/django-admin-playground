@@ -1,27 +1,30 @@
 from django.contrib.admin import AdminSite
-from django.urls import reverse
-from django.contrib.auth.admin import UserAdmin, GroupAdmin
-from django.contrib.auth.models import User, Group, Permission
+from django.contrib.auth.admin import GroupAdmin
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import Group
+from django.contrib.auth.models import User
 from django.template.response import TemplateResponse
+from django.urls import reverse
 
 
 class CustomAdminSite(AdminSite):
-
-    def __init__(self, name='admin', template_prefix='admin'):
+    def __init__(self, name="admin", template_prefix="admin"):
         super().__init__(name)
         self.template_prefix = template_prefix
 
     def admin_view(self, view, cacheable=False):
-
         def inner(request, *args, **kwargs):
             response = view(request, *args, **kwargs)
 
             if isinstance(response, TemplateResponse):
                 if isinstance(response.template_name, str):
-                    response.template_name = self._modify_template_name(response.template_name)
+                    response.template_name = self._modify_template_name(
+                        response.template_name,
+                    )
                 elif isinstance(response.template_name, (list, tuple)):
                     response.template_name = [
-                        self._modify_template_name(name) for name in response.template_name
+                        self._modify_template_name(name)
+                        for name in response.template_name
                     ]
 
             return response
@@ -33,8 +36,8 @@ class CustomAdminSite(AdminSite):
         Replace template prefix to template_name.
         admin/index.html --> your_template_prefix/index.html
         """
-        if template_name.startswith('admin/'):
-            return template_name.replace('admin/', f'{self.template_prefix}/')
+        if template_name.startswith("admin/"):
+            return template_name.replace("admin/", f"{self.template_prefix}/")
         return template_name
 
 
@@ -51,9 +54,15 @@ class CompareAdminSite(AdminSite):
                 app_data["app_url"] = app_data["app_url"].replace(admin_path, "compare")
             for model_data in app_data["models"]:
                 if model_data.get("admin_url"):
-                    model_data["admin_url"] = model_data["admin_url"].replace(admin_path, "compare")
+                    model_data["admin_url"] = model_data["admin_url"].replace(
+                        admin_path,
+                        "compare",
+                    )
                 if model_data.get("add_url"):
-                    model_data["add_url"] = model_data["add_url"].replace(admin_path, "compare")
+                    model_data["add_url"] = model_data["add_url"].replace(
+                        admin_path,
+                        "compare",
+                    )
         return app_dict
 
 

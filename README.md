@@ -29,10 +29,10 @@ It provides the following features:
    ```
 
    > 📘 INFO
-   > 
+   >
    > If you cloned django-admin-playground into a different path within the django folder,
    > you need to update the values in the following files:
-   > - [manage.py](https://github.com/Antoliny0919/django-admin-playground/blob/main/manage.py#L12) 
+   > - [manage.py](https://github.com/Antoliny0919/django-admin-playground/blob/main/manage.py#L12)
    > - [settings.py](https://github.com/Antoliny0919/django-admin-playground/blob/main/main/settings.py#L7)
 
 3. Run migrations
@@ -46,9 +46,9 @@ It provides the following features:
    ```
 
    > 📘 INFO
-   > 
+   >
    > django-admin-playground provides a superuser by default.
-   > 
+   >
    > - Username: ``admin``
    > - Password: ``admin``
 

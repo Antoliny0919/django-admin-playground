@@ -1,16 +1,15 @@
 from django.contrib import admin
 from django.core.exceptions import ValidationError
-from .models import (
-    Inline,
-    LongInline,
-    FieldsetInline,
-    CustomWidgetInline,
-    ErrorInline,
-    HelpTextInline,
-    ManyToManyInline,
-)
 
 from main.utils import register
+
+from .models import CustomWidgetInline
+from .models import ErrorInline
+from .models import FieldsetInline
+from .models import HelpTextInline
+from .models import Inline
+from .models import LongInline
+from .models import ManyToManyInline
 
 
 class TabularInline(admin.TabularInline):
@@ -69,14 +68,14 @@ class ReadonlyTabularInline(admin.TabularInline):
     model = LongInline
     verbose_name = "Readonly Tabular Inline"
     extra = 1
-    readonly_fields = ("char", "text", "integer", "boolean", "email", "decimal",)
+    readonly_fields = ("char", "text", "integer", "boolean", "email", "decimal")
 
 
 class ReadonlyStackedInline(admin.TabularInline):
     model = LongInline
     verbose_name = "Readonly Stacked Inline"
     extra = 1
-    readonly_fields = ("char", "text", "integer", "boolean", "email", "decimal",)
+    readonly_fields = ("char", "text", "integer", "boolean", "email", "decimal")
 
 
 class CustomFieldsetsTabularInline(admin.TabularInline):
@@ -85,7 +84,10 @@ class CustomFieldsetsTabularInline(admin.TabularInline):
     fieldsets = [
         (None, {"fields": ("text",)}),
         ("fieldset1", {"fields": ("char", "integer")}),
-        ("fieldset2", {"fields": ("boolean", "email", "decimal"), "classes": ("collapse",)})
+        (
+            "fieldset2",
+            {"fields": ("boolean", "email", "decimal"), "classes": ("collapse",)},
+        ),
     ]
     extra = 1
 
@@ -96,7 +98,10 @@ class CustomFieldsetsStackedInline(admin.StackedInline):
     fieldsets = [
         (None, {"fields": ("text",)}),
         ("fieldset1", {"fields": ("char", "integer")}),
-        ("fieldset2", {"fields": ("boolean", "email", "decimal"), "classes": ("collapse",)})
+        (
+            "fieldset2",
+            {"fields": ("boolean", "email", "decimal"), "classes": ("collapse",)},
+        ),
     ]
     extra = 1
 
@@ -159,9 +164,9 @@ class FormErrorTabularInline(admin.TabularInline):
     extra = 1
 
     def get_formset(self, request, obj=None, **kwargs):
-        FormSet = super().get_formset(request, obj, **kwargs)
+        formset = super().get_formset(request, obj, **kwargs)
 
-        class CustomFormSet(FormSet):
+        class CustomFormSet(formset):
             def clean(self):
                 raise ValidationError("Non Form Errors")
 
@@ -174,19 +179,45 @@ class FormErrorStackedInline(admin.StackedInline):
     extra = 1
 
     def get_formset(self, request, obj=None, **kwargs):
-        FormSet = super().get_formset(request, obj, **kwargs)
+        formset = super().get_formset(request, obj, **kwargs)
 
-        class CustomFormSet(FormSet):
+        class CustomFormSet(formset):
             def clean(self):
                 raise ValidationError("Non Form Errors")
 
         return CustomFormSet
 
 
-register(Inline, inlines=[TabularInline, StackedInline, LinkTabularInline, LinkStackedInline, CollapseTabularInline, CollapseStackedInline])
-register(LongInline, inlines=[ReadonlyTabularInline, ReadonlyStackedInline, CustomFieldsetsTabularInline, CustomFieldsetsStackedInline, LongTabularInline, LongStackedInline,])
+register(
+    Inline,
+    inlines=[
+        TabularInline,
+        StackedInline,
+        LinkTabularInline,
+        LinkStackedInline,
+        CollapseTabularInline,
+        CollapseStackedInline,
+    ],
+)
+register(
+    LongInline,
+    inlines=[
+        ReadonlyTabularInline,
+        ReadonlyStackedInline,
+        CustomFieldsetsTabularInline,
+        CustomFieldsetsStackedInline,
+        LongTabularInline,
+        LongStackedInline,
+    ],
+)
 register(FieldsetInline, inlines=[FieldsetTabularInline, FieldsetStackedInline])
-register(CustomWidgetInline, inlines=[CustomWidgetTabularInline, CustomWidgetStackedInline])
-register(ManyToManyInline, inlines=[ManyToManyFieldTabularInline, ManyToManyFieldStackedInline])
+register(
+    CustomWidgetInline,
+    inlines=[CustomWidgetTabularInline, CustomWidgetStackedInline],
+)
+register(
+    ManyToManyInline,
+    inlines=[ManyToManyFieldTabularInline, ManyToManyFieldStackedInline],
+)
 register(HelpTextInline, inlines=[HelpTextTabularInline, HelpTextStackedInline])
 register(ErrorInline, inlines=[FormErrorTabularInline, FormErrorStackedInline])
