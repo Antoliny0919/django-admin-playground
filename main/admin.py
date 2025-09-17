@@ -29,6 +29,11 @@ class CustomAdminSite(AdminSite):
 
         return super().admin_view(inner, cacheable)
 
+    def each_context(self, request):
+        context = super().each_context(request)
+        context["site_template_prefix"] = self.template_prefix
+        return context
+
     def _modify_template_name(self, template_name):
         """
         Replace template prefix to template_name.
@@ -65,9 +70,12 @@ class CompareAdminSite(AdminSite):
 
 
 before_site = CustomAdminSite(name="before_admin", template_prefix="before_admin")
+after_site = CustomAdminSite()
 # compare admin is not registered in the URL, only the object data is used.
 compare_site = CompareAdminSite(name="compare")
 before_site.register(User, UserAdmin)
 before_site.register(Group, GroupAdmin)
+after_site.register(User, UserAdmin)
+after_site.register(Group, GroupAdmin)
 compare_site.register(User, UserAdmin)
 compare_site.register(Group, GroupAdmin)
