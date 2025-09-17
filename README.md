@@ -17,12 +17,12 @@ It provides the following features:
 
 ### Running
 
-1. Clone django repo.
+1. Clone django repo
    ```sh
    git clone https://github.com/django/django.git
    ```
 
-2. Clone this repo into the django folder.
+2. Clone this repo into the django folder
    ```sh
    cd django
    git clone https://github.com/Antoliny0919/django-admin-playground.git
@@ -34,12 +34,27 @@ It provides the following features:
 > - [manage.py](https://github.com/Antoliny0919/django-admin-playground/blob/main/manage.py#L12)
 > - [settings.py](https://github.com/Antoliny0919/django-admin-playground/blob/main/main/settings.py#L7)
 
-3. Run migrations
+3. Create your virtual environment
+   ```sh
+   python -m venv venv
+   ```
+
+> [!NOTE]
+>
+> If a virtual environment already exists in the cloned Django folder,
+> you can use that environment and skip this step without any issues.
+
+4. Install requirements
+   ```sh
+   pip install -r requirements.txt
+   ```
+
+5. Run migrations
    ```sh
    python manage.py migrate
    ```
 
-4. Add initial data
+6. Add initial data
    ```sh
    python manage.py loaddata auth_fixture.json changelist_fixture.json form_fixture.json inline_fixture.json
    ```
@@ -50,7 +65,7 @@ It provides the following features:
 > - Username: ``admin``
 > - Password: ``admin``
 
-5. Run server 🚀
+7. Run server 🚀
    ```sh
    python manage.py runserver
    ```
