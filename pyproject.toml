@@ -6,7 +6,7 @@ extend-exclude = [
   "[{]{2}cookiecutter.project_slug[}]{2}/*",
   "docs/*",
 ]
-
+exclude = ["migrations", "before_admin", "before_registration"]
 lint.select = [
   "A",
   # "ANN", # flake8-annotations: we should support this in the future but many errors atm
