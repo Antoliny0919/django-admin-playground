@@ -35,8 +35,10 @@ It provides the following features:
 > - [settings.py](https://github.com/Antoliny0919/django-admin-playground/blob/main/main/settings.py#L7)
 
 3. Create your virtual environment
+
    ```sh
    python -m venv venv
+   source venv/bin/activate
    ```
 
 > [!NOTE]
