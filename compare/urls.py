@@ -1,15 +1,17 @@
 from django.urls import path
 
-from .views import AddView
-from .views import AppIndexView
-from .views import ChangeListView
-from .views import ChangeView
-from .views import DeleteView
-from .views import HistoryView
-from .views import IndexView
-from .views import LoginView
-from .views import PasswordChangeDoneView
-from .views import PasswordChangeView
+from .views import (
+    AddView,
+    AppIndexView,
+    ChangeListView,
+    ChangeView,
+    DeleteView,
+    HistoryView,
+    IndexView,
+    LoginView,
+    PasswordChangeDoneView,
+    PasswordChangeView,
+)
 
 urlpatterns = [
     path("", IndexView.as_view()),

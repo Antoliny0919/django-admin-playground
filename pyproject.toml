@@ -64,4 +64,3 @@ lint.ignore = [
   "SIM102", # sometimes it's better to nest
   "TRY003", # Avoid specifying long messages outside the exception class
 ]
-lint.isort.force-single-line = true

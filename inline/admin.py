@@ -3,13 +3,15 @@ from django.core.exceptions import ValidationError
 
 from main.utils import register
 
-from .models import CustomWidgetInline
-from .models import ErrorInline
-from .models import FieldsetInline
-from .models import HelpTextInline
-from .models import Inline
-from .models import LongInline
-from .models import ManyToManyInline
+from .models import (
+    CustomWidgetInline,
+    ErrorInline,
+    FieldsetInline,
+    HelpTextInline,
+    Inline,
+    LongInline,
+    ManyToManyInline,
+)
 
 
 class TabularInline(admin.TabularInline):

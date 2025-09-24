@@ -1,7 +1,6 @@
 from django.contrib import admin
 
-from .admin import before_site
-from .admin import compare_site
+from .admin import before_site, compare_site
 
 MY_ADMINS = [admin.site, before_site, compare_site]
 

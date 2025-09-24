@@ -3,17 +3,19 @@ from django.contrib import admin
 
 from main.utils import register
 
-from .models import AllManyToMany
-from .models import AutoComplete
-from .models import Common
-from .models import CustomWidget
-from .models import FieldError
-from .models import Fieldset
-from .models import HelpText
-from .models import Prepopulated
-from .models import RawID
-from .models import ReadOnly
-from .models import VerboseName
+from .models import (
+    AllManyToMany,
+    AutoComplete,
+    Common,
+    CustomWidget,
+    FieldError,
+    Fieldset,
+    HelpText,
+    Prepopulated,
+    RawID,
+    ReadOnly,
+    VerboseName,
+)
 
 
 class BaseFormAdmin(admin.ModelAdmin):

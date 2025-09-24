@@ -1,8 +1,6 @@
 from django.contrib.admin import AdminSite
-from django.contrib.auth.admin import GroupAdmin
-from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.models import Group
-from django.contrib.auth.models import User
+from django.contrib.auth.admin import GroupAdmin, UserAdmin
+from django.contrib.auth.models import Group, User
 from django.template.response import TemplateResponse
 from django.urls import reverse
 

@@ -2,22 +2,24 @@ from django.contrib import admin
 
 from main.utils import register
 
-from .models import Action
-from .models import AllLink
-from .models import ColumnSort
-from .models import DateHierarchy
-from .models import ForFk2Field
-from .models import ForFkField
-from .models import ForManyToManyField
-from .models import ForOneToOneField
-from .models import FullFilter
-from .models import ListEditAble
-from .models import ListFilter
-from .models import Pagination
-from .models import ReadOnly
-from .models import Related
-from .models import Search
-from .models import VerboseName
+from .models import (
+    Action,
+    AllLink,
+    ColumnSort,
+    DateHierarchy,
+    ForFk2Field,
+    ForFkField,
+    ForManyToManyField,
+    ForOneToOneField,
+    FullFilter,
+    ListEditAble,
+    ListFilter,
+    Pagination,
+    ReadOnly,
+    Related,
+    Search,
+    VerboseName,
+)
 
 
 class PaginationAdmin(admin.ModelAdmin):
