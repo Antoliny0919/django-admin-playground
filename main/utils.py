@@ -1,8 +1,6 @@
-from django.contrib import admin
+from .admin import after_site, before_site, compare_site
 
-from .admin import before_site, compare_site
-
-MY_ADMINS = [admin.site, before_site, compare_site]
+MY_ADMINS = [after_site, before_site, compare_site]
 
 
 def register(model, model_admin=None, **kwargs):
