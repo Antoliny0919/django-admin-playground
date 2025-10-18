@@ -1,6 +1,8 @@
 from django.contrib.admin import AdminSite
 from django.contrib.auth.admin import GroupAdmin, UserAdmin
 from django.contrib.auth.models import Group, User
+from django.contrib.flatpages.admin import FlatPageAdmin
+from django.contrib.flatpages.models import FlatPage
 from django.template.response import TemplateResponse
 from django.urls import reverse
 
@@ -69,13 +71,21 @@ class CompareAdminSite(AdminSite):
         return app_dict
 
 
+class CustomFlatPageAdmin(FlatPageAdmin):
+    # Customize the FlatPageAdmin as needed
+    pass
+
+
 before_site = CustomAdminSite(name="before_admin", template_prefix="before_admin")
 after_site = CustomAdminSite()
 # compare admin is not registered in the URL, only the object data is used.
 compare_site = CompareAdminSite(name="compare")
 before_site.register(User, UserAdmin)
 before_site.register(Group, GroupAdmin)
+before_site.register(FlatPage, FlatPageAdmin)
 after_site.register(User, UserAdmin)
 after_site.register(Group, GroupAdmin)
+after_site.register(FlatPage, FlatPageAdmin)
 compare_site.register(User, UserAdmin)
 compare_site.register(Group, GroupAdmin)
+compare_site.register(FlatPage, FlatPageAdmin)
