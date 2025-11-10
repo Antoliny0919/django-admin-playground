@@ -40,6 +40,7 @@ ADMIN_APPS = [
     "inline",
     "changelist",
     "form",
+    "docs",
     "docs.polls",
     "docs.users",
     "docs.news",
