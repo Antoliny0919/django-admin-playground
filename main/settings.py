@@ -40,6 +40,9 @@ ADMIN_APPS = [
     "inline",
     "changelist",
     "form",
+    "docs.polls",
+    "docs.users",
+    "docs.news",
 ]
 
 INSTALLED_APPS = CORE_APPS + THIRD_PARTY_APPS + ADMIN_APPS
