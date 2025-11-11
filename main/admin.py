@@ -80,6 +80,9 @@ before_site = CustomAdminSite(name="before_admin", template_prefix="before_admin
 after_site = CustomAdminSite()
 # compare admin is not registered in the URL, only the object data is used.
 compare_site = CompareAdminSite(name="compare")
+docs_screenshot_site = CustomAdminSite(name="docs_screenshot")
+docs_screenshot_site.register(User, UserAdmin)
+docs_screenshot_site.register(Group, GroupAdmin)
 before_site.register(User, UserAdmin)
 before_site.register(Group, GroupAdmin)
 before_site.register(FlatPage, FlatPageAdmin)

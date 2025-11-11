@@ -27,20 +27,20 @@ class MakeImageManagementCommandTestCase(TestCase):
         command = Command()
         shot_scraper_command = command.create_shot_scraper_command(
             "one/two/",
-            ".one div.two",
-            "numbers.png",
-            "400"
+            selector=".one div.two",
+            output="numbers.png",
+            height="400",
         )
         self.assertEqual(
             shot_scraper_command,
             [
                 "shot-scraper",
                 "http://localhost:8009/one/two/",
-                "-s",
+                "--selector",
                 ".one div.two",
-                "-o",
+                "--output",
                 "numbers.png",
-                "-w",
+                "--height",
                 "400",
             ]
         )
