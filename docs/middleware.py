@@ -16,7 +16,5 @@ class AuthenticateToQueryMiddleware:
                 login(request, user)
             except User.DoesNotExist:
                 raise PermissionDenied(f"Invalid user {username} supplied in query parameter")
-        else:
-            logout(request)
 
         return self.get_response(request)
