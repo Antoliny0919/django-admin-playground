@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from main.utils import register
+from main.admin import for_admin03_screenshot_site, docs_screenshot_site
 from .models import Choice, Question, QuestionAdmin07, QuestionAdmin08, QuestionAdmin10, QuestionAdmin11, QuestionAdmin12, QuestionAdmin13, QuestionAdmin14
 
 
@@ -55,12 +55,14 @@ class QuestionAdmin14ModelAdmin(admin.ModelAdmin):
     inlines = [ChoiceInlineAdmin14]
 
 
-register(Choice)
-register(Question)
-register(QuestionAdmin07, QuestionAdmin07ModelAdmin)
-register(QuestionAdmin08, QuestionAdmin08ModelAdmin)
-register(QuestionAdmin10, QuestionAdmin10ModelAdmin)
-register(QuestionAdmin11, QuestionAdmin11ModelAdmin)
-register(QuestionAdmin12, QuestionAdmin12ModelAdmin)
-register(QuestionAdmin13, QuestionAdmin13ModelAdmin)
-register(QuestionAdmin14, QuestionAdmin14ModelAdmin)
+for_admin03_screenshot_site.register(Question)
+
+docs_screenshot_site.register(Choice)
+docs_screenshot_site.register(Question)
+docs_screenshot_site.register(QuestionAdmin07, QuestionAdmin07ModelAdmin)
+docs_screenshot_site.register(QuestionAdmin08, QuestionAdmin08ModelAdmin)
+docs_screenshot_site.register(QuestionAdmin10, QuestionAdmin10ModelAdmin)
+docs_screenshot_site.register(QuestionAdmin11, QuestionAdmin11ModelAdmin)
+docs_screenshot_site.register(QuestionAdmin12, QuestionAdmin12ModelAdmin)
+docs_screenshot_site.register(QuestionAdmin13, QuestionAdmin13ModelAdmin)
+docs_screenshot_site.register(QuestionAdmin14, QuestionAdmin14ModelAdmin)
