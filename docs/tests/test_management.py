@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.core.management import CommandError
 from django.core.management import call_command
 from unittest.mock import patch, MagicMock
 
@@ -43,3 +44,9 @@ class MakeImageManagementCommandTestCase(TestCase):
                 "400",
             ]
         )
+
+    def test_invalid_name_argument(self):
+        with self.assertRaisesMessage(
+            CommandError, "apple is an image that cannot be generated"
+        ):
+            call_command("makeimages", "apple")
