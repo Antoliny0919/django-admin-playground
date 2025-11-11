@@ -10,7 +10,13 @@ IMAGE_DATA = {
         "path": "after_admin/login/",
         "selector": "#container",
         "output": "admin01t.png",
-        "width": "394",
+        "width": "1025",
+    },
+    "admin02": {
+        "path": "docs_screenshot/?_user=admin",
+        "output": "admin02.png",
+        "width": "1025",
+        "height": "280",
     }
 }
 
@@ -18,8 +24,6 @@ IMAGE_DATA = {
 class Command(BaseCommand):
     help = "Generates images used in the Django documentation."
     url = f"http://localhost:{PORT_NUMBER}"
-    screen_width = 1200
-    screen_height = 768
 
     def add_arguments(self, parser):
         parser.add_argument("name", help="Name of the image to generate")
@@ -30,17 +34,12 @@ class Command(BaseCommand):
         )
         time.sleep(3)  # wait for server to be ready
 
-    def create_shot_scraper_command(self, path, selector, output, width, **kwargs):
-        return [
-            "shot-scraper",
-            f"{self.url}/{path}",
-            "-s",
-            selector,
-            "-o",
-            output,
-            "-w",
-            width,
-        ]
+    def create_shot_scraper_command(self, path, **options):
+        command = ["shot-scraper", f"{self.url}/{path}"]
+        for option in options:
+            command.append(f"--{option}")
+            command.append(options[option])
+        return command
 
     def handle(self, *args, **options):
         name = options["name"]
@@ -48,11 +47,7 @@ class Command(BaseCommand):
             raise CommandError(f"{name} is an image that cannot be generated")
         self.start_server()
         data = IMAGE_DATA[name]
-        command = self.create_shot_scraper_command(
-            data["path"],
-            data["selector"],
-            data["output"],
-            data["width"]
-        )
+        path = data.pop("path")
+        command = self.create_shot_scraper_command(path, **data)
         subprocess.run(command)
         self.server.terminate()
