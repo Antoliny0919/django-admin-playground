@@ -1,6 +1,6 @@
 from django.contrib.auth.admin import UserAdmin
 
-from main.utils import register
+from main.admin import docs_screenshot_site
 from .models import UserForScreenshot
 
-register(UserForScreenshot, UserAdmin)
+docs_screenshot_site.register(UserForScreenshot, UserAdmin)

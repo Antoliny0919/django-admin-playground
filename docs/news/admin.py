@@ -1,7 +1,7 @@
 from django.contrib import admin, messages
 from django.utils.translation import ngettext
 
-from main.utils import register
+from main.admin import docs_screenshot_site
 from .models import Article
 
 
@@ -25,4 +25,4 @@ class ArticleAdmin(admin.ModelAdmin):
             )
 
 
-register(Article, ArticleAdmin)
+docs_screenshot_site.register(Article, ArticleAdmin)
