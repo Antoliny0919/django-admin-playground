@@ -13,7 +13,7 @@ IMAGE_DATA = {
         "width": "1025",
     },
     "admin02": {
-        "path": "docs_screenshot/?_user=admin",
+        "path": "admin02/?_user=admin",
         "output": "admin02.png",
         "width": "1025",
         "height": "280",
