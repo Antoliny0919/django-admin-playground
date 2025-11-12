@@ -31,6 +31,7 @@ class MakeImageManagementCommandTestCase(TestCase):
         command = Command()
         shot_scraper_command = command.create_shot_scraper_command(
             "one/two/",
+            Path("some_folder").resolve(),
             selector=".one div.two",
             output="numbers.png",
             height="400",
@@ -44,7 +45,7 @@ class MakeImageManagementCommandTestCase(TestCase):
                 "--selector",
                 ".one div.two",
                 "--output",
-                "numbers.png",
+                str(Path("some_folder").resolve() / "numbers.png"),
                 "--height",
                 "400",
             ]
@@ -103,3 +104,45 @@ class MakeImageManagementCommandTestCase(TestCase):
 
                 mock_popen.assert_called_once()
                 mock_server.terminate.assert_called_once()
+
+    @patch('subprocess.run')
+    @patch("subprocess.Popen")
+    @patch("time.sleep")
+    def test_screenshot_save_to_specific_directory(self, mock_sleep, mock_popen, mock_run):
+        mock_server = MagicMock()
+        mock_popen.return_value = mock_server
+
+        call_command("makeimages", "admin01", "--output-dir", "hello/world/")
+
+        command_list = mock_run.call_args[0][0]
+        output_index = command_list.index("--output") + 1
+        self.assertEqual(
+            command_list[output_index],
+            str(Path("hello/world/").resolve() / "admin01t.png"),
+        )
+
+        call_command("makeimages", "admin01")
+
+        command_list = mock_run.call_args[0][0]
+        output_index = command_list.index("--output") + 1
+        self.assertEqual(
+            command_list[output_index],
+            str(Path("screenshots").resolve() / "admin01t.png"),
+        )
+
+    @patch('subprocess.run')
+    @patch("subprocess.Popen")
+    @patch("time.sleep")
+    def test_output_directory_creation(self, mock_sleep, mock_popen, mock_run):
+        mock_server = MagicMock()
+        mock_popen.return_value = mock_server
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            test_dir = os.path.join(tmpdir, "nested/test/path")
+
+            call_command("makeimages", "admin01", "--output-dir", test_dir)
+
+            self.assertTrue(
+                os.path.exists(test_dir),
+                f"Directory {test_dir} was not created"
+            )
