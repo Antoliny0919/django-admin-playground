@@ -16,7 +16,7 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument(
             "name",
-            nargs='+',
+            nargs='*',
             help="Names of the image to generate"
         )
         parser.add_argument(
@@ -24,6 +24,12 @@ class Command(BaseCommand):
             "--output-dir",
             default="screenshots",
             help="Specifies the folder where screenshots will be saved",
+        )
+        parser.add_argument(
+            "-a",
+            "--all",
+            action="store_true",
+            help="Generates all screenshots"
         )
 
     def start_server(self):
@@ -50,10 +56,18 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         names = options["name"]
-        if any(name not in SCREENSHOT_CONFIG.keys() for name in names):
+        use_all = options["all"]
+
+        if not use_all and not names:
+            raise CommandError("Please provide at least one name or use --all option")
+
+        if not use_all and any(name not in SCREENSHOT_CONFIG.keys() for name in names):
             raise CommandError("Invalid name")
+
         self.start_server()
         output_dir = self.get_output_directory(options["output_dir"])
+        if use_all:
+            names = SCREENSHOT_CONFIG.keys()
         for name in names:
             data = SCREENSHOT_CONFIG[name].copy()
             path = data.pop("path")
