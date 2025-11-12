@@ -26,7 +26,7 @@ class Command(BaseCommand):
         time.sleep(3)  # wait for server to be ready
 
     def create_shot_scraper_command(self, path, **options):
-        command = ["shot-scraper", f"{self.url}/{path}"]
+        command = ["shot-scraper", f"{self.url}/{path}", "--retina"]
         for option in options:
             command.append(f"--{option}")
             command.append(options[option])

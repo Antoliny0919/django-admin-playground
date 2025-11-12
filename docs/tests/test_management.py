@@ -40,6 +40,7 @@ class MakeImageManagementCommandTestCase(TestCase):
             [
                 "shot-scraper",
                 "http://localhost:8009/one/two/",
+                "--retina",
                 "--selector",
                 ".one div.two",
                 "--output",
