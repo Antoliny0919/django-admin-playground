@@ -62,7 +62,7 @@ It provides the following features:
 
 6. Add initial data
    ```sh
-   python manage.py loaddata auth_fixture.json changelist_fixture.json form_fixture.json inline_fixture.json
+   python manage.py loaddata auth_fixture.json changelist_fixture.json form_fixture.json inline_fixture.json docs_fixture.json
    ```
 
 > [!TIP]
