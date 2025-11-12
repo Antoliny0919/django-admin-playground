@@ -1,5 +1,5 @@
 SCREENSHOT_CONFIG = {
-    "admin01t": {
+    "admin01": {
         "path": "after_admin/login/",
         "selector": "#container",
         "output": "admin01t.png",

@@ -13,7 +13,11 @@ class Command(BaseCommand):
     url = f"http://localhost:{PORT_NUMBER}"
 
     def add_arguments(self, parser):
-        parser.add_argument("name", help="Name of the image to generate")
+        parser.add_argument(
+            "name",
+            nargs='+',
+            help="Names of the image to generate"
+        )
 
     def start_server(self):
         self.server = subprocess.Popen(
@@ -29,12 +33,13 @@ class Command(BaseCommand):
         return command
 
     def handle(self, *args, **options):
-        name = options["name"]
-        if name not in SCREENSHOT_CONFIG.keys():
-            raise CommandError(f"{name} is an image that cannot be generated")
+        names = options["name"]
+        if any(name not in SCREENSHOT_CONFIG.keys() for name in names):
+            raise CommandError("Invalid name")
         self.start_server()
-        data = SCREENSHOT_CONFIG[name]
-        path = data.pop("path")
-        command = self.create_shot_scraper_command(path, **data)
-        subprocess.run(command)
+        for name in names:
+            data = SCREENSHOT_CONFIG[name].copy()
+            path = data.pop("path")
+            command = self.create_shot_scraper_command(path, **data)
+            subprocess.run(command)
         self.server.terminate()
