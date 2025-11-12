@@ -51,6 +51,12 @@ class MakeImageManagementCommandTestCase(TestCase):
             ]
         )
 
+    def test_error_when_screenshot_not_specified(self):
+        with self.assertRaisesMessage(
+            CommandError, "Please provide at least one name or use --all option"
+        ):
+            call_command("makeimages")
+
     def test_invalid_name_argument(self):
         cases = [
             ["apple"],
@@ -146,3 +152,34 @@ class MakeImageManagementCommandTestCase(TestCase):
                 os.path.exists(test_dir),
                 f"Directory {test_dir} was not created"
             )
+
+    @patch('subprocess.run')
+    @patch("subprocess.Popen")
+    @patch("time.sleep")
+    def test_generate_all_screenshot(self, mock_sleep, mock_popen, mock_run):
+        mock_server = MagicMock()
+        mock_popen.return_value = mock_server
+
+        with patch('docs.management.commands.makeimages.SCREENSHOT_CONFIG', {
+            'cheeze': {
+                'path': 'after_admin/login/',
+                'output': 'cheeze.png',
+            },
+            'hamburger': {
+                'path': 'after_admin/login/',
+                'output': 'hamburger.png',
+            },
+            'pizza': {
+                'path': 'after_admin/login/',
+                'output': 'pizza.png',
+            }
+        }):
+            call_command("makeimages", "--all")
+
+            self.assertEqual(mock_run.call_count, 3)
+            for call, output in zip(
+                mock_run.call_args_list, ["cheeze.png", "hamburger.png", "pizza.png"]
+            ):
+                command = call[0][0]
+                output_idx = command.index('--output') + 1
+                self.assertIn(output, command[output_idx])
