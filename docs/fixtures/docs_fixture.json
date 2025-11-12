@@ -1,0 +1,135 @@
+[
+{
+    "model": "polls.question",
+    "pk": 1,
+    "fields": {
+        "question_text": "What's up?",
+        "pub_date": "2025-11-11T09:59:40Z"
+    }
+},
+{
+    "model": "news.article",
+    "pk": 1,
+    "fields": {
+        "title": "A New Human-like Species Discovered in Deep Burial Chamber",
+        "body": "..",
+        "status": "p"
+    }
+},
+{
+    "model": "news.article",
+    "pk": 2,
+    "fields": {
+        "title": "Django 1.9 Released",
+        "body": "..",
+        "status": "p"
+    }
+},
+{
+    "model": "news.article",
+    "pk": 3,
+    "fields": {
+        "title": "Mars Is a Real Fixer-Upper of a Planet, Says Elon Musk on Colbert's 'Late Show'",
+        "body": "..",
+        "status": "w"
+    }
+},
+{
+    "model": "news.article",
+    "pk": 4,
+    "fields": {
+        "title": "The Coming of the Glacier Man",
+        "body": "..",
+        "status": "p"
+    }
+},
+{
+    "model": "news.article",
+    "pk": 5,
+    "fields": {
+        "title": "The Last Audio Casette Factory",
+        "body": "..",
+        "status": "p"
+    }
+},
+{
+    "model": "users.userforscreenshot",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$1500000$zDUdsvlomgPWHNCmtNfjMb$R5ahse+1jbDkOeg5mu98BjhxV/gnY1HC5Ixm/7/HqTs=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "admin",
+        "first_name": "Admin",
+        "last_name": "User",
+        "email": "admin@example.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2025-11-11T10:41:02Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.userforscreenshot",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$1500000$yFjsRQzyfYjvoEgnmA3bjF$c9b8MEHi0U7st9xD+ndV/gT0nKzEup0duHWRIxyJmLc=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "poe",
+        "first_name": "Poe",
+        "last_name": "Dameron",
+        "email": "poe@example.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-11-11T10:41:29Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.userforscreenshot",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$1500000$QZkOM98O0NYS5RnLckyy6U$QSz08i1IWZVn4upo8haJVI9nGmRF9jxFQLCyd8p86k4=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "rey",
+        "first_name": "Rey",
+        "last_name": "Skywalker",
+        "email": "rey@example.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-11-11T10:42:06Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 1,
+    "fields": {
+        "user": 1,
+        "content_type": 47,
+        "object_id": "1",
+        "object_repr": "What's up?",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]",
+        "action_time": "2025-11-12T10:00:00Z"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 2,
+    "fields": {
+        "user": 1,
+        "content_type": 47,
+        "object_id": "1",
+        "object_repr": "What's up?",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Date published\"]}}]",
+        "action_time": "2025-11-12T10:30:00Z"
+    }
+}
+]
