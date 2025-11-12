@@ -3,22 +3,9 @@ import time
 
 from django.core.management.base import BaseCommand, CommandError
 
-PORT_NUMBER = "8009"
+from docs.config import SCREENSHOT_CONFIG
 
-IMAGE_DATA = {
-    "admin01t": {
-        "path": "after_admin/login/",
-        "selector": "#container",
-        "output": "admin01t.png",
-        "width": "1025",
-    },
-    "admin02": {
-        "path": "admin02/?_user=admin",
-        "output": "admin02.png",
-        "width": "1025",
-        "height": "280",
-    }
-}
+PORT_NUMBER = "8009"
 
 
 class Command(BaseCommand):
@@ -43,10 +30,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         name = options["name"]
-        if name not in IMAGE_DATA.keys():
+        if name not in SCREENSHOT_CONFIG.keys():
             raise CommandError(f"{name} is an image that cannot be generated")
         self.start_server()
-        data = IMAGE_DATA[name]
+        data = SCREENSHOT_CONFIG[name]
         path = data.pop("path")
         command = self.create_shot_scraper_command(path, **data)
         subprocess.run(command)

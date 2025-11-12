@@ -26,3 +26,9 @@ class UserForScreenshot(AbstractUser):
 
     class Meta:
         verbose_name = "user"
+
+
+class UserForScreenshotActions(UserForScreenshot):
+    class Meta:
+        proxy = True
+        verbose_name = "user"
