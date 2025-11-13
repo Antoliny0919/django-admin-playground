@@ -1,4 +1,5 @@
 import os
+import io
 import tempfile
 from pathlib import Path
 
@@ -127,6 +128,13 @@ class MakeImageManagementCommandTestCase(TestCase):
             str(Path("hello/world/").resolve() / "admin01t.png"),
         )
 
+    @patch('subprocess.run')
+    @patch("subprocess.Popen")
+    @patch("time.sleep")
+    def test_screenshot_save_to_default_directory(self, mock_sleep, mock_popen, mock_run):
+        mock_server = MagicMock()
+        mock_popen.return_value = mock_server
+
         call_command("makeimages", "admin01")
 
         command_list = mock_run.call_args[0][0]
@@ -135,6 +143,7 @@ class MakeImageManagementCommandTestCase(TestCase):
             command_list[output_index],
             str(Path("screenshots").resolve() / "admin01t.png"),
         )
+        mock_server.terminate.assert_called_once()
 
     @patch('subprocess.run')
     @patch("subprocess.Popen")
@@ -183,3 +192,52 @@ class MakeImageManagementCommandTestCase(TestCase):
                 command = call[0][0]
                 output_idx = command.index('--output') + 1
                 self.assertIn(output, command[output_idx])
+
+    def test_screenshot_list_start_message_output(self):
+        out = io.StringIO()
+        call_command(
+            "makeimages", "--screenshot-list", stdout=out,
+        )
+        out = out.getvalue()
+        self.assertIn("This is a list of available image names for screenshots.", out)
+        self.assertIn(
+            "Check the names and pass the name of the image you want to capture as an argument.",
+            out,
+        )
+        self.assertIn("Available screenshot names:", out)
+
+    def test_screenshot_list_output(self):
+        out = io.StringIO()
+        with patch('docs.management.commands.makeimages.DISPLAY_SCREENSHOT_LIST_DATA', {
+            'admin_site': {
+                'link': 'https://example.com/admin',
+                'names': ['admin01', 'admin02']
+            },
+            'user_management': {
+                'link': 'https://example.com/users',
+                'names': ['user01']
+            }
+        }):
+            call_command("makeimages", "--screenshot-list", stdout=out)
+            output = out.getvalue()
+
+            # Check group names are displayed
+            self.assertIn("Admin Site", output)
+            self.assertIn("User Management", output)
+
+            # Check links are displayed
+            self.assertIn("See: https://example.com/admin", output)
+            self.assertIn("See: https://example.com/users", output)
+
+            # Check screenshot names are displayed
+            self.assertIn("admin01", output)
+            self.assertIn("admin02", output)
+            self.assertIn("user01", output)
+
+    def test_screenshot_list_does_not_start_server(self):
+        out = io.StringIO()
+        with patch('subprocess.Popen') as mock_popen:
+            call_command("makeimages", "--screenshot-list", stdout=out)
+
+            # Server should not be started when just listing screenshots
+            mock_popen.assert_not_called()
