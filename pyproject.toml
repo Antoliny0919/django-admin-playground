@@ -2,10 +2,6 @@
 target-version = "py39"
 line-length = 88
 # Exclude the template content as most files aren't parseable
-extend-exclude = [
-  "[{]{2}cookiecutter.project_slug[}]{2}/*",
-  "docs/*",
-]
 exclude = ["migrations", "before_admin", "before_registration"]
 lint.select = [
   "A",
