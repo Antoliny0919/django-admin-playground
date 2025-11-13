@@ -91,25 +91,25 @@ class Command(BaseCommand):
         show_screenshot_list = options["screenshot_list"]
         if show_screenshot_list:
             self.stdout.write(self.get_screenshot_list() + "\n")
-        else:
-            if not use_all and not names:
-                raise CommandError("Please provide at least one name or use --all option")
+            return
+        if not use_all and not names:
+            raise CommandError("Please provide at least one name or use --all option")
 
-            if not use_all:
-                for name in names:
-                    if name not in SCREENSHOT_CONFIG.keys():
-                        raise CommandError(
-                            f"{name} is not a valid screenshot name"
-                            "Use the -s or --screenshot-list option to view the list of available screenshots"
-                        )
-
-            self.start_server()
-            output_dir = self.get_output_directory(options["output_dir"])
-            if use_all:
-                names = SCREENSHOT_CONFIG.keys()
+        if not use_all:
             for name in names:
-                data = SCREENSHOT_CONFIG[name].copy()
-                path = data.pop("path")
-                command = self.create_shot_scraper_command(path, output_dir, **data)
-                subprocess.run(command)
-            self.server.terminate()
+                if name not in SCREENSHOT_CONFIG.keys():
+                    raise CommandError(
+                        f"{name} is not a valid screenshot name"
+                        "Use the -s or --screenshot-list option to view the list of available screenshots"
+                    )
+
+        self.start_server()
+        output_dir = self.get_output_directory(options["output_dir"])
+        if use_all:
+            names = SCREENSHOT_CONFIG.keys()
+        for name in names:
+            data = SCREENSHOT_CONFIG[name].copy()
+            path = data.pop("path")
+            command = self.create_shot_scraper_command(path, output_dir, **data)
+            subprocess.run(command)
+        self.server.terminate()
