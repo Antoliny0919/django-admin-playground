@@ -2,10 +2,12 @@ import subprocess
 import time
 from pathlib import Path
 
+from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
 from django.core.management.base import BaseCommand, CommandError
 from django.core.management.color import color_style
 
-from docs.config import SCREENSHOT_CONFIG, DISPLAY_SCREENSHOT_LIST_DATA
+from docs.config import SCREENSHOT_CONFIG, DISPLAY_SCREENSHOT_LIST_DATA, DJANGO_DOCS_SCREENSHOT_PATH
 
 PORT_NUMBER = "8009"
 
@@ -38,6 +40,11 @@ class Command(BaseCommand):
             action="store_true",
             help="display a list of available screenshots"
         )
+        parser.add_argument(
+            "--direct",
+            action="store_true",
+            help="Save screenshots directly to Django docs folder"
+        )
 
     def start_server(self):
         self.server = subprocess.Popen(
@@ -45,12 +52,27 @@ class Command(BaseCommand):
         )
         time.sleep(3)  # wait for server to be ready
 
-    def create_shot_scraper_command(self, path, output_dir, **options):
+    def get_screenshot_save_path(self, name, output_dir, use_direct, value):
+        if use_direct:
+            if not hasattr(settings, "DJANGO_DIR"):
+                raise ImproperlyConfigured(
+                    "DJANGO_DIR setting is required when using --direct option. "
+                    "Please add DJANGO_DIR to settings.py"
+                )
+            if name not in DJANGO_DOCS_SCREENSHOT_PATH:
+                raise ImproperlyConfigured(
+                    f"Screenshot '{name}' is not configured in DJANGO_DOCS_SCREENSHOT_PATH. "
+                    f"Please add the mapping for '{name}' in docs/config.py"
+                )
+            return str(settings.DJANGO_DIR / DJANGO_DOCS_SCREENSHOT_PATH[name])
+        return str(output_dir / value)
+
+    def create_shot_scraper_command(self, name, path, output_dir, use_direct, **options):
         command = ["shot-scraper", f"{self.url}/{path}", "--retina"]
         for option in options:
             value = options[option]
             if option == "output":
-                value = str(output_dir / options[option])
+                value = self.get_screenshot_save_path(name, output_dir, use_direct, value)
             command.append(f"--{option}")
             command.append(value)
         return command
@@ -84,11 +106,11 @@ class Command(BaseCommand):
 
         return "\n".join(usage)
 
-
     def handle(self, *args, **options):
         names = options["name"]
         use_all = options["all"]
         show_screenshot_list = options["screenshot_list"]
+        use_direct = options["direct"]
         if show_screenshot_list:
             self.stdout.write(self.get_screenshot_list() + "\n")
             return
@@ -110,6 +132,6 @@ class Command(BaseCommand):
         for name in names:
             data = SCREENSHOT_CONFIG[name].copy()
             path = data.pop("path")
-            command = self.create_shot_scraper_command(path, output_dir, **data)
+            command = self.create_shot_scraper_command(name, path, output_dir, use_direct, **data)
             subprocess.run(command)
         self.server.terminate()

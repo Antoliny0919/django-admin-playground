@@ -148,3 +148,22 @@ DISPLAY_SCREENSHOT_LIST_DATA = {
         "link": "https://docs.djangoproject.com/en/dev/ref/contrib/admin/filters/"
     }
 }
+
+
+DJANGO_DOCS_SCREENSHOT_PATH = {
+    "admin01": "docs/intro/_images/admin01.png",
+    "admin02": "docs/intro/_images/admin02.png",
+    "admin03": "docs/intro/_images/admin03t.png",
+    "admin04": "docs/intro/_images/admin04t.png",
+    "admin05": "docs/intro/_images/admin05t.png",
+    "admin06": "docs/intro/_images/admin06t.png",
+    "admin07": "docs/intro/_images/admin07t.png",
+    "admin08": "docs/intro/_images/admin08t.png",
+    "admin09": "docs/intro/_images/admin09.png",
+    "admin10": "docs/intro/_images/admin10t.png",
+    "admin11": "docs/intro/_images/admin11t.png",
+    "admin12": "docs/intro/_images/admin12t.png",
+    "admin13": "docs/intro/_images/admin13t.png",
+    "admin14": "docs/intro/_images/admin14t.png",
+    "list_filter": "docs/ref/contrib/admin/_images/list_filter.png",
+}

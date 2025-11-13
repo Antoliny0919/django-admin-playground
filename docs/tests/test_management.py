@@ -4,6 +4,7 @@ import tempfile
 from pathlib import Path
 
 from django.test import TestCase
+from django.core.exceptions import ImproperlyConfigured
 from django.core.management import CommandError
 from django.core.management import call_command
 from unittest.mock import patch, MagicMock
@@ -31,8 +32,10 @@ class MakeImageManagementCommandTestCase(TestCase):
     def test_create_shot_scraper_command(self):
         command = Command()
         shot_scraper_command = command.create_shot_scraper_command(
+            "admin01",
             "one/two/",
             Path("some_folder").resolve(),
+            False,
             selector=".one div.two",
             output="numbers.png",
             height="400",
@@ -51,6 +54,41 @@ class MakeImageManagementCommandTestCase(TestCase):
                 "400",
             ]
         )
+
+    def test_create_shot_scraper_with_use_direct(self):
+        command = Command()
+
+        shot_scraper_command = command.create_shot_scraper_command(
+            "admin01",
+            "one/two/",
+            Path("some_folder").resolve(),
+            True,
+            selector=".one div.two",
+            output="numbers.png",
+            height="400",
+        )
+        output_idx = shot_scraper_command.index("--output")
+        output_path = shot_scraper_command[output_idx + 1]
+        self.assertIn("django/docs/intro/_images/admin01.png", output_path)
+
+    def test_unconfig_django_screenshot_path(self):
+        command = Command()
+
+        with patch('docs.management.commands.makeimages.DJANGO_DOCS_SCREENSHOT_PATH', {
+            "admin02": "some/django/path/admin02.png"
+        }):
+            with self.assertRaisesMessage(
+                ImproperlyConfigured,
+                "Screenshot 'admin01' is not configured in DJANGO_DOCS_SCREENSHOT_PATH. "
+                "Please add the mapping for 'admin01' in docs/config.py"
+            ):
+                command.create_shot_scraper_command(
+                    "admin01",
+                    "one/two/",
+                    Path("some_folder").resolve(),
+                    True,
+                    output="admin01.png",
+                )
 
     def test_error_when_screenshot_not_specified(self):
         with self.assertRaisesMessage(
@@ -307,7 +345,6 @@ class MakeImageManagementCommandTestCase(TestCase):
                     output_idx = command.index('--output') + 1
                     self.assertTrue(command[output_idx].startswith(expected_dir))
 
-
     @patch('subprocess.run')
     @patch("subprocess.Popen")
     @patch("time.sleep")
@@ -320,3 +357,16 @@ class MakeImageManagementCommandTestCase(TestCase):
         command_list = mock_run.call_args[0][0]
         self.assertIn("--retina", command_list)
         mock_server.terminate.assert_called_once()
+
+    @patch('subprocess.run')
+    @patch("subprocess.Popen")
+    @patch("time.sleep")
+    def test_direct_options_with_output_dir(self, mock_sleep, mock_popen, mock_run):
+        mock_server = MagicMock()
+        mock_popen.return_value = mock_server
+
+        call_command("makeimages", "admin01", "--direct", "--output-dir", "aa/bb/cc")
+        command = mock_run.call_args[0][0]
+        output_idx = command.index('--output') + 1
+        # direct option takes precedence over the output_dir option
+        self.assertIn("django/docs/intro/_images/admin01.png", command[output_idx])
