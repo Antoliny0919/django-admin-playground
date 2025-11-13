@@ -60,13 +60,17 @@ class MakeImageManagementCommandTestCase(TestCase):
 
     def test_invalid_name_argument(self):
         cases = [
-            ["apple"],
-            ["admin01", "admin02", "admin889"],
+            [["apple"], "apple"],
+            [["admin01", "admin02", "admin889"], "admin889"],
         ]
-        for case in cases:
+        for case, invalid_name in cases:
             with self.subTest(case=case):
                 with self.assertRaisesMessage(
-                    CommandError, "Invalid name"
+                    CommandError, (
+                        f"{invalid_name} is not a valid screenshot name"
+                        "Use the -s or --screenshot-list option to view "
+                        "the list of available screenshots"
+                    )
                 ):
                     call_command("makeimages", *case)
 
