@@ -114,3 +114,37 @@ SCREENSHOT_CONFIG = {
         "width": "1400",
     },
 }
+
+
+DISPLAY_SCREENSHOT_LIST_DATA = {
+    "tutorial_part_2": {
+        "names": [
+            "admin01",
+            "admin02",
+            "admin03",
+            "admin04",
+            "admin05",
+            "admin06",
+        ],
+        "link": "https://docs.djangoproject.com/en/dev/intro/tutorial02/"
+    },
+    "tutorial_part_7": {
+        "names": [
+            "admin07",
+            "admin08",
+            "admin09",
+            "admin10",
+            "admin11",
+            "admin12",
+            "admin13",
+            "admin14",
+        ],
+        "link": "https://docs.djangoproject.com/en/dev/intro/tutorial07/"
+    },
+    "admin_filter": {
+        "names": [
+            "list_filter"
+        ],
+        "link": "https://docs.djangoproject.com/en/dev/ref/contrib/admin/filters/"
+    }
+}
