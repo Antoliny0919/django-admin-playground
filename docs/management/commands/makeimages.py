@@ -95,8 +95,13 @@ class Command(BaseCommand):
             if not use_all and not names:
                 raise CommandError("Please provide at least one name or use --all option")
 
-            if not use_all and any(name not in SCREENSHOT_CONFIG.keys() for name in names):
-                raise CommandError("Invalid name")
+            if not use_all:
+                for name in names:
+                    if name not in SCREENSHOT_CONFIG.keys():
+                        raise CommandError(
+                            f"{name} is not a valid screenshot name"
+                            "Use the -s or --screenshot-list option to view the list of available screenshots"
+                        )
 
             self.start_server()
             output_dir = self.get_output_directory(options["output_dir"])
