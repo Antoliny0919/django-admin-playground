@@ -241,3 +241,78 @@ class MakeImageManagementCommandTestCase(TestCase):
 
             # Server should not be started when just listing screenshots
             mock_popen.assert_not_called()
+
+    @patch('subprocess.run')
+    @patch("subprocess.Popen")
+    @patch("time.sleep")
+    def test_multiple_screenshots_at_once(self, mock_sleep, mock_popen, mock_run):
+        mock_server = MagicMock()
+        mock_popen.return_value = mock_server
+
+        with patch('docs.management.commands.makeimages.SCREENSHOT_CONFIG', {
+            'test_one': {
+                'path': 'path/one/',
+                'output': 'test_one.png',
+            },
+            'test_two': {
+                'path': 'path/two/',
+                'output': 'test_two.png',
+            },
+            'test_three': {
+                'path': 'path/three/',
+                'output': 'test_three.png',
+            }
+        }):
+            call_command("makeimages", "test_one", "test_two")
+
+            # Verify subprocess.run was called twice (for two screenshots)
+            self.assertEqual(mock_run.call_count, 2)
+
+            mock_popen.assert_called_once()
+            mock_server.terminate.assert_called_once()
+
+    @patch('subprocess.run')
+    @patch("subprocess.Popen")
+    @patch("time.sleep")
+    def test_all_option_with_output_dir(self, mock_sleep, mock_popen, mock_run):
+        mock_server = MagicMock()
+        mock_popen.return_value = mock_server
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            custom_dir = os.path.join(tmpdir, "custom_screenshots")
+
+            with patch('docs.management.commands.makeimages.SCREENSHOT_CONFIG', {
+                'shot_a': {
+                    'path': 'path/a/',
+                    'output': 'shot_a.png',
+                },
+                'shot_b': {
+                    'path': 'path/b/',
+                    'output': 'shot_b.png',
+                }
+            }):
+                call_command("makeimages", "--all", "--output-dir", custom_dir)
+
+                self.assertTrue(os.path.exists(custom_dir))
+
+                # Verify all screenshots use the custom directory
+                self.assertEqual(mock_run.call_count, 2)
+                expected_dir = str(Path(custom_dir).resolve())
+                for call in mock_run.call_args_list:
+                    command = call[0][0]
+                    output_idx = command.index('--output') + 1
+                    self.assertTrue(command[output_idx].startswith(expected_dir))
+
+
+    @patch('subprocess.run')
+    @patch("subprocess.Popen")
+    @patch("time.sleep")
+    def test_retina_option_always_included(self, mock_sleep, mock_popen, mock_run):
+        mock_server = MagicMock()
+        mock_popen.return_value = mock_server
+
+        call_command("makeimages", "admin01")
+
+        command_list = mock_run.call_args[0][0]
+        self.assertIn("--retina", command_list)
+        mock_server.terminate.assert_called_once()
