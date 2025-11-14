@@ -209,6 +209,7 @@ class Command(BaseCommand):
             self.start_server()
             for command in commands:
                 subprocess.run(command, check=False)
+            self.server.terminate()
             # Resize the generated screenshot to the desired dimension
             for name, command in zip(names, commands):
                 output_idx = command.index("--output")
@@ -216,4 +217,3 @@ class Command(BaseCommand):
                 self.adjust_screenshot_size(name, screenshot_path)
         else:
             self.stdout.write(style.WARNING("Screenshot generation cancelled"))
-        self.server.terminate()
