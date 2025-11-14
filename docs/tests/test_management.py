@@ -13,6 +13,9 @@ from docs.management.commands.makeimages import Command
 
 
 class MakeImageManagementCommandTestCase(TestCase):
+    def setUp(self):
+        self.command = Command()
+
     @patch("docs.management.commands.makeimages.Command.adjust_screenshot_size")
     @patch("subprocess.run")
     @patch("subprocess.Popen")
@@ -34,8 +37,7 @@ class MakeImageManagementCommandTestCase(TestCase):
         mock_server.terminate.assert_called_once()
 
     def test_create_shot_scraper_command(self):
-        command = Command()
-        shot_scraper_command = command.create_shot_scraper_command(
+        shot_scraper_command = self.command.create_shot_scraper_command(
             "admin01",
             "one/two/",
             Path("some_folder").resolve(),
@@ -60,9 +62,7 @@ class MakeImageManagementCommandTestCase(TestCase):
         )
 
     def test_create_shot_scraper_with_use_direct(self):
-        command = Command()
-
-        shot_scraper_command = command.create_shot_scraper_command(
+        shot_scraper_command = self.command.create_shot_scraper_command(
             "admin01",
             "one/two/",
             Path("some_folder").resolve(),
@@ -76,8 +76,6 @@ class MakeImageManagementCommandTestCase(TestCase):
         self.assertIn("django/docs/intro/_images/admin01.png", output_path)
 
     def test_unconfig_django_screenshot_path(self):
-        command = Command()
-
         with (
             patch(
                 "docs.management.commands.makeimages.DJANGO_DOCS_SCREENSHOT_DATA",
@@ -90,7 +88,7 @@ class MakeImageManagementCommandTestCase(TestCase):
                 "Please add the mapping for 'admin01' in docs/config.py",
             ),
         ):
-            command.create_shot_scraper_command(
+            self.command.create_shot_scraper_command(
                 "admin01",
                 "one/two/",
                 Path("some_folder").resolve(),
@@ -489,15 +487,14 @@ class MakeImageManagementCommandTestCase(TestCase):
     @patch("builtins.input", return_value="")
     def test_generate_accept_confirm_with_enter(self, mock_input):
         out = io.StringIO()
-        command = Command()
-        command.stdout = OutputWrapper(out)
+        self.command.stdout = OutputWrapper(out)
         commands = [
             ["--output", "/aa/bb/cc/helloworld.png"],
             ["--output", "/factory/car/beautiful_car.png"],
             ["--output", "/cake/cheeze/newyork_cheeze_cake.png"],
         ]
 
-        result = command.generate_accept_confirm(commands)
+        result = self.command.generate_accept_confirm(commands)
         output = out.getvalue()
 
         # input was called?
@@ -516,19 +513,16 @@ class MakeImageManagementCommandTestCase(TestCase):
     @patch("builtins.input", return_value="no")
     def test_generate_accept_confirm_with_cancel(self, mock_input):
         out = io.StringIO()
-        command = Command()
-        command.stdout = OutputWrapper(out)
+        self.command.stdout = OutputWrapper(out)
         commands = [
             ["--output", "/test/screenshot.png"],
         ]
 
-        result = command.generate_accept_confirm(commands)
+        result = self.command.generate_accept_confirm(commands)
         mock_input.assert_called_once()
         self.assertFalse(result)
 
     def test_adjust_screenshot_size(self):
-        command = Command()
-
         with tempfile.TemporaryDirectory() as tmpdir:
             test_image_path = Path(tmpdir) / "test_screenshot.png"
             test_img = Image.new("RGB", (800, 600), color="red")
@@ -538,7 +532,7 @@ class MakeImageManagementCommandTestCase(TestCase):
                 "docs.management.commands.makeimages.DJANGO_DOCS_SCREENSHOT_DATA",
                 {"test_screenshot": {"width": 400}},
             ):
-                command.adjust_screenshot_size("test_screenshot", test_image_path)
+                self.command.adjust_screenshot_size("test_screenshot", test_image_path)
 
                 resized_img = Image.open(test_image_path)
                 self.assertEqual(resized_img.width, 400)
@@ -546,9 +540,8 @@ class MakeImageManagementCommandTestCase(TestCase):
                 self.assertEqual(resized_img.height, 300)
 
     def test_adjust_screenshot_size_file_not_found(self):
-        command = Command()
         out = io.StringIO()
-        command.stdout = OutputWrapper(out)
+        self.command.stdout = OutputWrapper(out)
 
         with tempfile.TemporaryDirectory() as tmpdir:
             non_existent_path = Path(tmpdir) / "does_not_exist.png"
@@ -558,7 +551,7 @@ class MakeImageManagementCommandTestCase(TestCase):
                 {"test_shot": {"width": 400}},
             ):
                 # Should not raise an error, just print a warning
-                command.adjust_screenshot_size("test_shot", non_existent_path)
+                self.command.adjust_screenshot_size("test_shot", non_existent_path)
 
                 output = out.getvalue()
                 self.assertIn("screenshot file not found", output)
