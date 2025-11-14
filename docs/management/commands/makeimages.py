@@ -58,6 +58,59 @@ class Command(BaseCommand):
             ),
         )
 
+    def handle(self, *args, **options):  # noqa: C901
+        names = options["name"]
+        use_all = options["all"]
+        show_screenshot_list = options["screenshot_list"]
+        use_direct = options["direct"]
+        output_dir = options["output_dir"]
+        interactive = options["interactive"]
+        if show_screenshot_list:
+            self.stdout.write(self.get_screenshot_list() + "\n")
+            return
+        if not use_all and not names:
+            raise CommandError("Please provide at least one name or use --all option")
+
+        if not use_all:
+            for name in names:
+                if name not in SCREENSHOT_CONFIG:
+                    msg = (
+                        f"{name} is not a valid screenshot name. "
+                        "Use the -s or --screenshot-list option to view "
+                        "the list of available screenshots"
+                    )
+                    raise CommandError(msg)
+
+        commands = []
+        if use_all:
+            names = SCREENSHOT_CONFIG.keys()
+        for name in names:
+            data = SCREENSHOT_CONFIG[name].copy()
+            path = data.pop("path")
+            command = self.create_shot_scraper_command(
+                name,
+                path,
+                output_dir,
+                use_direct,
+                **data,
+            )
+            commands.append(command)
+        accept = True
+        if interactive:
+            accept = self.generate_accept_confirm(commands)
+        if accept:
+            self.start_server()
+            for command in commands:
+                subprocess.run(command, check=False)
+            self.server.terminate()
+            # Resize the generated screenshot to the desired dimension
+            for name, command in zip(names, commands):
+                output_idx = command.index("--output")
+                screenshot_path = command[output_idx + 1]
+                self.adjust_screenshot_size(name, screenshot_path)
+        else:
+            self.stdout.write(style.WARNING("Screenshot generation cancelled"))
+
     def start_server(self):
         self.server = subprocess.Popen(
             ["python", "manage.py", "runserver", PORT_NUMBER],
@@ -164,56 +217,3 @@ class Command(BaseCommand):
             new_height = int(height * (new_width / width))
             resized_img = img.resize((new_width, new_height), Image.LANCZOS)
             resized_img.save(path)
-
-    def handle(self, *args, **options):  # noqa: C901
-        names = options["name"]
-        use_all = options["all"]
-        show_screenshot_list = options["screenshot_list"]
-        use_direct = options["direct"]
-        output_dir = options["output_dir"]
-        interactive = options["interactive"]
-        if show_screenshot_list:
-            self.stdout.write(self.get_screenshot_list() + "\n")
-            return
-        if not use_all and not names:
-            raise CommandError("Please provide at least one name or use --all option")
-
-        if not use_all:
-            for name in names:
-                if name not in SCREENSHOT_CONFIG:
-                    msg = (
-                        f"{name} is not a valid screenshot name. "
-                        "Use the -s or --screenshot-list option to view "
-                        "the list of available screenshots"
-                    )
-                    raise CommandError(msg)
-
-        commands = []
-        if use_all:
-            names = SCREENSHOT_CONFIG.keys()
-        for name in names:
-            data = SCREENSHOT_CONFIG[name].copy()
-            path = data.pop("path")
-            command = self.create_shot_scraper_command(
-                name,
-                path,
-                output_dir,
-                use_direct,
-                **data,
-            )
-            commands.append(command)
-        accept = True
-        if interactive:
-            accept = self.generate_accept_confirm(commands)
-        if accept:
-            self.start_server()
-            for command in commands:
-                subprocess.run(command, check=False)
-            self.server.terminate()
-            # Resize the generated screenshot to the desired dimension
-            for name, command in zip(names, commands):
-                output_idx = command.index("--output")
-                screenshot_path = command[output_idx + 1]
-                self.adjust_screenshot_size(name, screenshot_path)
-        else:
-            self.stdout.write(style.WARNING("Screenshot generation cancelled"))
