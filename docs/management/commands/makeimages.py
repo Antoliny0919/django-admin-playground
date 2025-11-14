@@ -66,7 +66,7 @@ class Command(BaseCommand):
         output_dir = options["output_dir"]
         interactive = options["interactive"]
         if show_screenshot_list:
-            self.stdout.write(self.get_screenshot_list() + "\n")
+            self.stdout.write(self.get_available_screenshot_names() + "\n")
             return
         if not use_all and not names:
             raise CommandError("Please provide at least one name or use --all option")
@@ -177,7 +177,7 @@ class Command(BaseCommand):
         accept = input()
         return accept == ""
 
-    def get_screenshot_list(self):
+    def get_available_screenshot_names(self):
         """
         Returns the message to be displayed for the screenshot list option.
         """
