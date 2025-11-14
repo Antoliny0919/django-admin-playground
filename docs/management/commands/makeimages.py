@@ -105,8 +105,8 @@ class Command(BaseCommand):
             self.server.terminate()
             # Resize the generated screenshot to the desired dimension
             for name, command in zip(names, commands):
-                output_idx = command.index("--output")
-                screenshot_path = command[output_idx + 1]
+                output_idx = command.index("--output") + 1
+                screenshot_path = command[output_idx]
                 self.adjust_screenshot_size(name, screenshot_path)
         else:
             self.stdout.write(style.WARNING("Screenshot generation cancelled"))
@@ -168,8 +168,8 @@ class Command(BaseCommand):
             "",
         ]
         for command in commands:
-            output_idx = command.index("--output")
-            output_path = command[output_idx + 1]
+            output_idx = command.index("--output") + 1
+            output_path = command[output_idx]
             message.append(f"  • {output_path}")
         message.append("")
         message.append("Press Enter to continue (or type anything else to cancel): ")
