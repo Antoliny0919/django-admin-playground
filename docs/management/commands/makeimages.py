@@ -132,7 +132,10 @@ class Command(BaseCommand):
                 )
                 raise ImproperlyConfigured(msg)
             return str(settings.DJANGO_DIR / DJANGO_DOCS_SCREENSHOT_DATA[name]["path"])
-        return str(self.get_output_directory(output_dir) / value)
+        # Convert to absolute path and create directory if it doesn't exist
+        output_dir_path = Path(output_dir).resolve()
+        output_dir_path.mkdir(parents=True, exist_ok=True)
+        return str(output_dir_path / value)
 
     def create_shot_scraper_command(
         self,
@@ -155,12 +158,6 @@ class Command(BaseCommand):
             command.append(f"--{option}")
             command.append(final_value)
         return command
-
-    def get_output_directory(self, output_dir):
-        # Convert to absolute path and create directory if it doesn't exist
-        output_dir_path = Path(output_dir).resolve()
-        output_dir_path.mkdir(parents=True, exist_ok=True)
-        return output_dir_path
 
     def generate_accept_confirm(self, commands):
         message = [
