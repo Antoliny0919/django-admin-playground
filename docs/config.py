@@ -45,7 +45,7 @@ SCREENSHOT_CONFIG = {
             const submitRow = document.querySelector('div#content div.submit-row');
             submitRow.style.display = 'none';
             """
-        )
+        ),
     },
     "admin08": {
         "path": "docs_screenshot/polls/questionadmin08/1/change/?_user=admin",
@@ -57,7 +57,7 @@ SCREENSHOT_CONFIG = {
             const submitRow = document.querySelector('div#content div.submit-row');
             submitRow.style.display = 'none';
             """
-        )
+        ),
     },
     "admin09": {
         "path": "docs_screenshot/polls/choice/add/?_user=admin",
@@ -69,7 +69,7 @@ SCREENSHOT_CONFIG = {
             const submitRow = document.querySelector('div#content div.submit-row');
             submitRow.style.display = 'none';
             """
-        )
+        ),
     },
     "admin10": {
         "path": "docs_screenshot/polls/questionadmin10/add/?_user=admin",
@@ -126,7 +126,7 @@ DISPLAY_SCREENSHOT_LIST_DATA = {
             "admin05",
             "admin06",
         ],
-        "link": "https://docs.djangoproject.com/en/dev/intro/tutorial02/"
+        "link": "https://docs.djangoproject.com/en/dev/intro/tutorial02/",
     },
     "tutorial_part_7": {
         "names": [
@@ -139,14 +139,12 @@ DISPLAY_SCREENSHOT_LIST_DATA = {
             "admin13",
             "admin14",
         ],
-        "link": "https://docs.djangoproject.com/en/dev/intro/tutorial07/"
+        "link": "https://docs.djangoproject.com/en/dev/intro/tutorial07/",
     },
     "admin_filter": {
-        "names": [
-            "list_filter"
-        ],
-        "link": "https://docs.djangoproject.com/en/dev/ref/contrib/admin/filters/"
-    }
+        "names": ["list_filter"],
+        "link": "https://docs.djangoproject.com/en/dev/ref/contrib/admin/filters/",
+    },
 }
 
 
