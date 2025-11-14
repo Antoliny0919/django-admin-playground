@@ -5,6 +5,7 @@ from unittest.mock import MagicMock, patch
 
 from django.core.exceptions import ImproperlyConfigured
 from django.core.management import CommandError, call_command
+from django.core.management.base import OutputWrapper
 from django.test import TestCase
 
 from docs.management.commands.makeimages import Command
@@ -18,7 +19,7 @@ class MakeImageManagementCommandTestCase(TestCase):
         mock_server = MagicMock()
         mock_popen.return_value = mock_server
 
-        call_command("makeimages", "admin01")
+        call_command("makeimages", "admin01", "--noinput")
 
         mock_popen.assert_called_once_with(["python", "manage.py", "runserver", "8009"])
         mock_sleep.assert_called_once_with(3)
@@ -150,7 +151,7 @@ class MakeImageManagementCommandTestCase(TestCase):
                     },
                 },
             ):
-                call_command("makeimages", "test_admin")
+                call_command("makeimages", "test_admin", "--noinput")
 
                 self.assertTrue(
                     temp_output.exists(),
@@ -172,7 +173,13 @@ class MakeImageManagementCommandTestCase(TestCase):
         mock_server = MagicMock()
         mock_popen.return_value = mock_server
 
-        call_command("makeimages", "admin01", "--output-dir", "hello/world/")
+        call_command(
+            "makeimages",
+            "admin01",
+            "--output-dir",
+            "hello/world/",
+            "--noinput",
+        )
 
         command_list = mock_run.call_args[0][0]
         output_index = command_list.index("--output") + 1
@@ -193,7 +200,7 @@ class MakeImageManagementCommandTestCase(TestCase):
         mock_server = MagicMock()
         mock_popen.return_value = mock_server
 
-        call_command("makeimages", "admin01")
+        call_command("makeimages", "admin01", "--noinput")
 
         command_list = mock_run.call_args[0][0]
         output_index = command_list.index("--output") + 1
@@ -213,7 +220,7 @@ class MakeImageManagementCommandTestCase(TestCase):
         with tempfile.TemporaryDirectory() as tmpdir:
             test_dir = Path(tmpdir) / "nested/test/path"
 
-            call_command("makeimages", "admin01", "--output-dir", test_dir)
+            call_command("makeimages", "admin01", "--noinput", "--output-dir", test_dir)
 
             self.assertTrue(
                 test_dir.exists(),
@@ -244,7 +251,7 @@ class MakeImageManagementCommandTestCase(TestCase):
                 },
             },
         ):
-            call_command("makeimages", "--all")
+            call_command("makeimages", "--all", "--noinput")
 
             self.assertEqual(mock_run.call_count, 3)
             for call, output in zip(
@@ -334,7 +341,7 @@ class MakeImageManagementCommandTestCase(TestCase):
                 },
             },
         ):
-            call_command("makeimages", "test_one", "test_two")
+            call_command("makeimages", "test_one", "test_two", "--noinput")
 
             # Verify subprocess.run was called twice (for two screenshots)
             self.assertEqual(mock_run.call_count, 2)
@@ -365,7 +372,13 @@ class MakeImageManagementCommandTestCase(TestCase):
                     },
                 },
             ):
-                call_command("makeimages", "--all", "--output-dir", custom_dir)
+                call_command(
+                    "makeimages",
+                    "--all",
+                    "--output-dir",
+                    custom_dir,
+                    "--noinput",
+                )
 
                 self.assertTrue(custom_dir.exists())
 
@@ -384,7 +397,7 @@ class MakeImageManagementCommandTestCase(TestCase):
         mock_server = MagicMock()
         mock_popen.return_value = mock_server
 
-        call_command("makeimages", "admin01")
+        call_command("makeimages", "admin01", "--noinput")
 
         command_list = mock_run.call_args[0][0]
         self.assertIn("--retina", command_list)
@@ -397,10 +410,57 @@ class MakeImageManagementCommandTestCase(TestCase):
         mock_server = MagicMock()
         mock_popen.return_value = mock_server
 
-        call_command("makeimages", "admin01", "--direct", "--output-dir", "aa/bb/cc")
+        call_command(
+            "makeimages",
+            "admin01",
+            "--direct",
+            "--output-dir",
+            "aa/bb/cc",
+            "--noinput",
+        )
         command = mock_run.call_args[0][0]
         output_idx = command.index("--output") + 1
         # direct option takes precedence over the output_dir option
         self.assertIn("django/docs/intro/_images/admin01.png", command[output_idx])
         output_dir = Path("aa/bb/cc").resolve()
         self.assertFalse(output_dir.exists())
+
+    @patch("builtins.input", return_value="")
+    def test_generate_accept_confirm_with_enter(self, mock_input):
+        out = io.StringIO()
+        command = Command()
+        command.stdout = OutputWrapper(out)
+        commands = [
+            ["--output", "/aa/bb/cc/helloworld.png"],
+            ["--output", "/factory/car/beautiful_car.png"],
+            ["--output", "/cake/cheeze/newyork_cheeze_cake.png"],
+        ]
+
+        result = command.generate_accept_confirm(commands)
+        output = out.getvalue()
+
+        # input was called?
+        mock_input.assert_called_once()
+
+        self.assertTrue(result)
+        self.assertIn("The following screenshots will be generated:", output)
+        self.assertIn("/aa/bb/cc/helloworld.png", output)
+        self.assertIn("/factory/car/beautiful_car.png", output)
+        self.assertIn("/cake/cheeze/newyork_cheeze_cake.png", output)
+        self.assertIn(
+            "Press Enter to continue (or type anything else to cancel):",
+            output,
+        )
+
+    @patch("builtins.input", return_value="no")
+    def test_generate_accept_confirm_with_cancel(self, mock_input):
+        out = io.StringIO()
+        command = Command()
+        command.stdout = OutputWrapper(out)
+        commands = [
+            ["--output", "/test/screenshot.png"],
+        ]
+
+        result = command.generate_accept_confirm(commands)
+        mock_input.assert_called_once()
+        self.assertFalse(result)

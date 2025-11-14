@@ -14,6 +14,7 @@ from docs.config import (
 )
 
 PORT_NUMBER = "8009"
+style = color_style()
 
 
 class Command(BaseCommand):
@@ -44,6 +45,16 @@ class Command(BaseCommand):
             "--direct",
             action="store_true",
             help="Save screenshots directly to Django docs folder",
+        )
+        parser.add_argument(
+            "--noinput",
+            "--no-input",
+            action="store_false",
+            dest="interactive",
+            help=(
+                "Instructs not to prompt for any confirmation input "
+                "when generating screenshots"
+            ),
         )
 
     def start_server(self):
@@ -97,6 +108,21 @@ class Command(BaseCommand):
         output_dir_path.mkdir(parents=True, exist_ok=True)
         return output_dir_path
 
+    def generate_accept_confirm(self, commands):
+        message = [
+            style.NOTICE("The following screenshots will be generated:"),
+            "",
+        ]
+        for command in commands:
+            output_idx = command.index("--output")
+            output_path = command[output_idx + 1]
+            message.append(f"  • {output_path}")
+        message.append("")
+        message.append("Press Enter to continue (or type anything else to cancel): ")
+        self.stdout.write("\n".join(message), ending="")
+        accept = input()
+        return accept == ""
+
     def get_screenshot_list(self):
         """
         Returns the message to be displayed for the screenshot list option.
@@ -108,7 +134,6 @@ class Command(BaseCommand):
             "",
             "Available screenshot names:",
         ]
-        style = color_style()
         for group in DISPLAY_SCREENSHOT_LIST_DATA:
             usage.append("")
             # Format group key for display (e.g., "admin_site" -> "Admin Site")
@@ -122,12 +147,13 @@ class Command(BaseCommand):
 
         return "\n".join(usage)
 
-    def handle(self, *args, **options):
+    def handle(self, *args, **options):  # noqa: C901
         names = options["name"]
         use_all = options["all"]
         show_screenshot_list = options["screenshot_list"]
         use_direct = options["direct"]
         output_dir = options["output_dir"]
+        interactive = options["interactive"]
         if show_screenshot_list:
             self.stdout.write(self.get_screenshot_list() + "\n")
             return
@@ -144,7 +170,7 @@ class Command(BaseCommand):
                     )
                     raise CommandError(msg)
 
-        self.start_server()
+        commands = []
         if use_all:
             names = SCREENSHOT_CONFIG.keys()
         for name in names:
@@ -157,5 +183,14 @@ class Command(BaseCommand):
                 use_direct,
                 **data,
             )
-            subprocess.run(command, check=False)
+            commands.append(command)
+        accept = True
+        if interactive:
+            accept = self.generate_accept_confirm(commands)
+        if accept:
+            self.start_server()
+            for command in commands:
+                subprocess.run(command, check=False)
+        else:
+            self.stdout.write(style.WARNING("Screenshot generation cancelled"))
         self.server.terminate()
