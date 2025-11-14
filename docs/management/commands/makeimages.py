@@ -6,10 +6,11 @@ from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.core.management.base import BaseCommand, CommandError
 from django.core.management.color import color_style
+from PIL import Image
 
 from docs.config import (
     DISPLAY_SCREENSHOT_LIST_DATA,
-    DJANGO_DOCS_SCREENSHOT_PATH,
+    DJANGO_DOCS_SCREENSHOT_DATA,
     SCREENSHOT_CONFIG,
 )
 
@@ -70,14 +71,14 @@ class Command(BaseCommand):
                     "DJANGO_DIR setting is required when using --direct option. "
                     "Please add DJANGO_DIR to settings.py",
                 )
-            if name not in DJANGO_DOCS_SCREENSHOT_PATH:
+            if name not in DJANGO_DOCS_SCREENSHOT_DATA:
                 msg = (
                     f"Screenshot '{name}' is not configured in "
-                    f"DJANGO_DOCS_SCREENSHOT_PATH. "
+                    f"DJANGO_DOCS_SCREENSHOT_DATA. "
                     f"Please add the mapping for '{name}' in docs/config.py"
                 )
                 raise ImproperlyConfigured(msg)
-            return str(settings.DJANGO_DIR / DJANGO_DOCS_SCREENSHOT_PATH[name])
+            return str(settings.DJANGO_DIR / DJANGO_DOCS_SCREENSHOT_DATA[name]["path"])
         return str(self.get_output_directory(output_dir) / value)
 
     def create_shot_scraper_command(
@@ -147,6 +148,23 @@ class Command(BaseCommand):
 
         return "\n".join(usage)
 
+    def adjust_screenshot_size(self, name, path):
+        try:
+            img = Image.open(path)
+        except FileNotFoundError:
+            self.stdout.write(
+                style.WARNING(
+                    f"{name} screenshot file not found, skipping resize: {path}",
+                ),
+            )
+            return
+        width, height = img.size
+        new_width = DJANGO_DOCS_SCREENSHOT_DATA[name]["width"]
+        if width != new_width:
+            new_height = int(height * (new_width / width))
+            resized_img = img.resize((new_width, new_height), Image.LANCZOS)
+            resized_img.save(path)
+
     def handle(self, *args, **options):  # noqa: C901
         names = options["name"]
         use_all = options["all"]
@@ -191,6 +209,11 @@ class Command(BaseCommand):
             self.start_server()
             for command in commands:
                 subprocess.run(command, check=False)
+            # Resize the generated screenshot to the desired dimension
+            for name, command in zip(names, commands):
+                output_idx = command.index("--output")
+                screenshot_path = command[output_idx + 1]
+                self.adjust_screenshot_size(name, screenshot_path)
         else:
             self.stdout.write(style.WARNING("Screenshot generation cancelled"))
         self.server.terminate()
