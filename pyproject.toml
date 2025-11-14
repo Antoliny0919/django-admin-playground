@@ -59,4 +59,5 @@ lint.ignore = [
   "S101",   # Use of assert detected https://docs.astral.sh/ruff/rules/assert/
   "SIM102", # sometimes it's better to nest
   "TRY003", # Avoid specifying long messages outside the exception class
+  "PT009", # Use a regular assert instead of unittest-style
 ]
