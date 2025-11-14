@@ -16,25 +16,35 @@ class MakeImageManagementCommandTestCase(TestCase):
     def setUp(self):
         self.command = Command()
 
-    @patch("docs.management.commands.makeimages.Command.adjust_screenshot_size")
-    @patch("subprocess.run")
-    @patch("subprocess.Popen")
-    @patch("time.sleep")
-    def test_start_server_and_terminate(
-        self,
-        mock_sleep,
-        mock_popen,
-        mock_run,
-        mock_adjust,
-    ):
-        mock_server = MagicMock()
-        mock_popen.return_value = mock_server
+        self.patch_sleep = patch("time.sleep")
+        self.patch_popen = patch("subprocess.Popen")
+        self.patch_run = patch("subprocess.run")
+        self.patch_adjust = patch(
+            "docs.management.commands.makeimages.Command.adjust_screenshot_size",
+        )
 
+        self.mock_sleep = self.patch_sleep.start()
+        self.mock_popen = self.patch_popen.start()
+        self.mock_run = self.patch_run.start()
+        self.mock_adjust = self.patch_adjust.start()
+
+        self.mock_server = MagicMock()
+        self.mock_popen.return_value = self.mock_server
+
+    def tearDown(self):
+        self.patch_sleep.stop()
+        self.patch_popen.stop()
+        self.patch_run.stop()
+        self.patch_adjust.stop()
+
+    def test_start_server_and_terminate(self):
         call_command("makeimages", "admin01", "--noinput")
 
-        mock_popen.assert_called_once_with(["python", "manage.py", "runserver", "8009"])
-        mock_sleep.assert_called_once_with(3)
-        mock_server.terminate.assert_called_once()
+        self.mock_popen.assert_called_once_with(
+            ["python", "manage.py", "runserver", "8009"],
+        )
+        self.mock_sleep.assert_called_once_with(3)
+        self.mock_server.terminate.assert_called_once()
 
     def test_create_shot_scraper_command(self):
         shot_scraper_command = self.command.create_shot_scraper_command(
@@ -122,21 +132,7 @@ class MakeImageManagementCommandTestCase(TestCase):
             ):
                 call_command("makeimages", *case)
 
-    @patch("docs.management.commands.makeimages.Command.adjust_screenshot_size")
-    @patch("subprocess.run")
-    @patch("subprocess.Popen")
-    @patch("time.sleep")
-    def test_screenshot_file_creation(
-        self,
-        mock_sleep,
-        mock_popen,
-        mock_run,
-        mock_adjust,
-    ):
-        mock_server = MagicMock()
-        mock_popen.return_value = mock_server
-
-        # Create a temporary directory for test screenshots
+    def test_screenshot_file_creation(self):
         with tempfile.TemporaryDirectory() as tmpdir:
             temp_output = Path(tmpdir) / "test_admin01.png"
 
@@ -150,7 +146,7 @@ class MakeImageManagementCommandTestCase(TestCase):
                     Path(output_path).touch()
                 return MagicMock()
 
-            mock_run.side_effect = create_dummy_file
+            self.mock_run.side_effect = create_dummy_file
 
             # Temporarily modify the config to use our temp directory
             with patch(
@@ -171,23 +167,10 @@ class MakeImageManagementCommandTestCase(TestCase):
                     f"Screenshot file {temp_output} was not created",
                 )
 
-                mock_popen.assert_called_once()
-                mock_server.terminate.assert_called_once()
+                self.mock_popen.assert_called_once()
+                self.mock_server.terminate.assert_called_once()
 
-    @patch("docs.management.commands.makeimages.Command.adjust_screenshot_size")
-    @patch("subprocess.run")
-    @patch("subprocess.Popen")
-    @patch("time.sleep")
-    def test_screenshot_save_to_specific_directory(
-        self,
-        mock_sleep,
-        mock_popen,
-        mock_run,
-        mock_adjust,
-    ):
-        mock_server = MagicMock()
-        mock_popen.return_value = mock_server
-
+    def test_screenshot_save_to_specific_directory(self):
         call_command(
             "makeimages",
             "admin01",
@@ -196,51 +179,25 @@ class MakeImageManagementCommandTestCase(TestCase):
             "--noinput",
         )
 
-        command_list = mock_run.call_args[0][0]
+        command_list = self.mock_run.call_args[0][0]
         output_index = command_list.index("--output") + 1
         self.assertEqual(
             command_list[output_index],
             str(Path("hello/world/").resolve() / "admin01t.png"),
         )
 
-    @patch("docs.management.commands.makeimages.Command.adjust_screenshot_size")
-    @patch("subprocess.run")
-    @patch("subprocess.Popen")
-    @patch("time.sleep")
-    def test_screenshot_save_to_default_directory(
-        self,
-        mock_sleep,
-        mock_popen,
-        mock_run,
-        mock_adjust,
-    ):
-        mock_server = MagicMock()
-        mock_popen.return_value = mock_server
-
+    def test_screenshot_save_to_default_directory(self):
         call_command("makeimages", "admin01", "--noinput")
 
-        command_list = mock_run.call_args[0][0]
+        command_list = self.mock_run.call_args[0][0]
         output_index = command_list.index("--output") + 1
         self.assertEqual(
             command_list[output_index],
             str(Path("screenshots").resolve() / "admin01t.png"),
         )
-        mock_server.terminate.assert_called_once()
+        self.mock_server.terminate.assert_called_once()
 
-    @patch("docs.management.commands.makeimages.Command.adjust_screenshot_size")
-    @patch("subprocess.run")
-    @patch("subprocess.Popen")
-    @patch("time.sleep")
-    def test_output_directory_creation(
-        self,
-        mock_sleep,
-        mock_popen,
-        mock_run,
-        mock_adjust,
-    ):
-        mock_server = MagicMock()
-        mock_popen.return_value = mock_server
-
+    def test_output_directory_creation(self):
         with tempfile.TemporaryDirectory() as tmpdir:
             test_dir = Path(tmpdir) / "nested/test/path"
 
@@ -251,20 +208,7 @@ class MakeImageManagementCommandTestCase(TestCase):
                 f"Directory {test_dir} was not created",
             )
 
-    @patch("docs.management.commands.makeimages.Command.adjust_screenshot_size")
-    @patch("subprocess.run")
-    @patch("subprocess.Popen")
-    @patch("time.sleep")
-    def test_generate_all_screenshot(
-        self,
-        mock_sleep,
-        mock_popen,
-        mock_run,
-        mock_adjust,
-    ):
-        mock_server = MagicMock()
-        mock_popen.return_value = mock_server
-
+    def test_generate_all_screenshot(self):
         with patch(
             "docs.management.commands.makeimages.SCREENSHOT_CONFIG",
             {
@@ -284,9 +228,9 @@ class MakeImageManagementCommandTestCase(TestCase):
         ):
             call_command("makeimages", "--all", "--noinput")
 
-            self.assertEqual(mock_run.call_count, 3)
+            self.assertEqual(self.mock_run.call_count, 3)
             for call, output in zip(
-                mock_run.call_args_list,
+                self.mock_run.call_args_list,
                 ["cheeze.png", "hamburger.png", "pizza.png"],
             ):
                 command = call[0][0]
@@ -348,20 +292,7 @@ class MakeImageManagementCommandTestCase(TestCase):
             # Server should not be started when just listing screenshots
             mock_popen.assert_not_called()
 
-    @patch("docs.management.commands.makeimages.Command.adjust_screenshot_size")
-    @patch("subprocess.run")
-    @patch("subprocess.Popen")
-    @patch("time.sleep")
-    def test_multiple_screenshots_at_once(
-        self,
-        mock_sleep,
-        mock_popen,
-        mock_run,
-        mock_adjust,
-    ):
-        mock_server = MagicMock()
-        mock_popen.return_value = mock_server
-
+    def test_multiple_screenshots_at_once(self):
         with patch(
             "docs.management.commands.makeimages.SCREENSHOT_CONFIG",
             {
@@ -382,25 +313,12 @@ class MakeImageManagementCommandTestCase(TestCase):
             call_command("makeimages", "test_one", "test_two", "--noinput")
 
             # Verify subprocess.run was called twice (for two screenshots)
-            self.assertEqual(mock_run.call_count, 2)
+            self.assertEqual(self.mock_run.call_count, 2)
 
-            mock_popen.assert_called_once()
-            mock_server.terminate.assert_called_once()
+            self.mock_popen.assert_called_once()
+            self.mock_server.terminate.assert_called_once()
 
-    @patch("docs.management.commands.makeimages.Command.adjust_screenshot_size")
-    @patch("subprocess.run")
-    @patch("subprocess.Popen")
-    @patch("time.sleep")
-    def test_all_option_with_output_dir(
-        self,
-        mock_sleep,
-        mock_popen,
-        mock_run,
-        mock_adjust,
-    ):
-        mock_server = MagicMock()
-        mock_popen.return_value = mock_server
-
+    def test_all_option_with_output_dir(self):
         with tempfile.TemporaryDirectory() as tmpdir:
             custom_dir = Path(tmpdir) / "custom_screenshots"
 
@@ -428,47 +346,20 @@ class MakeImageManagementCommandTestCase(TestCase):
                 self.assertTrue(custom_dir.exists())
 
                 # Verify all screenshots use the custom directory
-                self.assertEqual(mock_run.call_count, 2)
+                self.assertEqual(self.mock_run.call_count, 2)
                 expected_dir = str(Path(custom_dir).resolve())
-                for call in mock_run.call_args_list:
+                for call in self.mock_run.call_args_list:
                     command = call[0][0]
                     output_idx = command.index("--output") + 1
                     self.assertTrue(command[output_idx].startswith(expected_dir))
 
-    @patch("docs.management.commands.makeimages.Command.adjust_screenshot_size")
-    @patch("subprocess.run")
-    @patch("subprocess.Popen")
-    @patch("time.sleep")
-    def test_retina_option_always_included(
-        self,
-        mock_sleep,
-        mock_popen,
-        mock_run,
-        mock_adjust,
-    ):
-        mock_server = MagicMock()
-        mock_popen.return_value = mock_server
-
+    def test_retina_option_always_included(self):
         call_command("makeimages", "admin01", "--noinput")
 
-        command_list = mock_run.call_args[0][0]
+        command_list = self.mock_run.call_args[0][0]
         self.assertIn("--retina", command_list)
-        mock_server.terminate.assert_called_once()
 
-    @patch("docs.management.commands.makeimages.Command.adjust_screenshot_size")
-    @patch("subprocess.run")
-    @patch("subprocess.Popen")
-    @patch("time.sleep")
-    def test_direct_options_with_output_dir(
-        self,
-        mock_sleep,
-        mock_popen,
-        mock_run,
-        mock_adjust,
-    ):
-        mock_server = MagicMock()
-        mock_popen.return_value = mock_server
-
+    def test_direct_options_with_output_dir(self):
         call_command(
             "makeimages",
             "admin01",
@@ -477,7 +368,7 @@ class MakeImageManagementCommandTestCase(TestCase):
             "aa/bb/cc",
             "--noinput",
         )
-        command = mock_run.call_args[0][0]
+        command = self.mock_run.call_args[0][0]
         output_idx = command.index("--output") + 1
         # direct option takes precedence over the output_dir option
         self.assertIn("django/docs/intro/_images/admin01.png", command[output_idx])
@@ -521,6 +412,11 @@ class MakeImageManagementCommandTestCase(TestCase):
         result = self.command.generate_accept_confirm(commands)
         mock_input.assert_called_once()
         self.assertFalse(result)
+
+
+class ScreenshotAdjustSizeTestCase(TestCase):
+    def setUp(self):
+        self.command = Command()
 
     def test_adjust_screenshot_size(self):
         with tempfile.TemporaryDirectory() as tmpdir:
