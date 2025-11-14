@@ -7,15 +7,23 @@ from django.core.exceptions import ImproperlyConfigured
 from django.core.management import CommandError, call_command
 from django.core.management.base import OutputWrapper
 from django.test import TestCase
+from PIL import Image
 
 from docs.management.commands.makeimages import Command
 
 
 class MakeImageManagementCommandTestCase(TestCase):
+    @patch("docs.management.commands.makeimages.Command.adjust_screenshot_size")
     @patch("subprocess.run")
     @patch("subprocess.Popen")
     @patch("time.sleep")
-    def test_start_server_and_terminate(self, mock_sleep, mock_popen, mock_run):
+    def test_start_server_and_terminate(
+        self,
+        mock_sleep,
+        mock_popen,
+        mock_run,
+        mock_adjust,
+    ):
         mock_server = MagicMock()
         mock_popen.return_value = mock_server
 
@@ -72,13 +80,13 @@ class MakeImageManagementCommandTestCase(TestCase):
 
         with (
             patch(
-                "docs.management.commands.makeimages.DJANGO_DOCS_SCREENSHOT_PATH",
-                {"admin02": "some/django/path/admin02.png"},
+                "docs.management.commands.makeimages.DJANGO_DOCS_SCREENSHOT_DATA",
+                {"admin02": {"path": "some/django/path/admin02.png"}},
             ),
             self.assertRaisesMessage(
                 ImproperlyConfigured,
                 "Screenshot 'admin01' is not configured in "
-                "DJANGO_DOCS_SCREENSHOT_PATH. "
+                "DJANGO_DOCS_SCREENSHOT_DATA. "
                 "Please add the mapping for 'admin01' in docs/config.py",
             ),
         ):
@@ -116,10 +124,17 @@ class MakeImageManagementCommandTestCase(TestCase):
             ):
                 call_command("makeimages", *case)
 
+    @patch("docs.management.commands.makeimages.Command.adjust_screenshot_size")
     @patch("subprocess.run")
     @patch("subprocess.Popen")
     @patch("time.sleep")
-    def test_screenshot_file_creation(self, mock_sleep, mock_popen, mock_run):
+    def test_screenshot_file_creation(
+        self,
+        mock_sleep,
+        mock_popen,
+        mock_run,
+        mock_adjust,
+    ):
         mock_server = MagicMock()
         mock_popen.return_value = mock_server
 
@@ -161,6 +176,7 @@ class MakeImageManagementCommandTestCase(TestCase):
                 mock_popen.assert_called_once()
                 mock_server.terminate.assert_called_once()
 
+    @patch("docs.management.commands.makeimages.Command.adjust_screenshot_size")
     @patch("subprocess.run")
     @patch("subprocess.Popen")
     @patch("time.sleep")
@@ -169,6 +185,7 @@ class MakeImageManagementCommandTestCase(TestCase):
         mock_sleep,
         mock_popen,
         mock_run,
+        mock_adjust,
     ):
         mock_server = MagicMock()
         mock_popen.return_value = mock_server
@@ -188,6 +205,7 @@ class MakeImageManagementCommandTestCase(TestCase):
             str(Path("hello/world/").resolve() / "admin01t.png"),
         )
 
+    @patch("docs.management.commands.makeimages.Command.adjust_screenshot_size")
     @patch("subprocess.run")
     @patch("subprocess.Popen")
     @patch("time.sleep")
@@ -196,6 +214,7 @@ class MakeImageManagementCommandTestCase(TestCase):
         mock_sleep,
         mock_popen,
         mock_run,
+        mock_adjust,
     ):
         mock_server = MagicMock()
         mock_popen.return_value = mock_server
@@ -210,10 +229,17 @@ class MakeImageManagementCommandTestCase(TestCase):
         )
         mock_server.terminate.assert_called_once()
 
+    @patch("docs.management.commands.makeimages.Command.adjust_screenshot_size")
     @patch("subprocess.run")
     @patch("subprocess.Popen")
     @patch("time.sleep")
-    def test_output_directory_creation(self, mock_sleep, mock_popen, mock_run):
+    def test_output_directory_creation(
+        self,
+        mock_sleep,
+        mock_popen,
+        mock_run,
+        mock_adjust,
+    ):
         mock_server = MagicMock()
         mock_popen.return_value = mock_server
 
@@ -227,10 +253,17 @@ class MakeImageManagementCommandTestCase(TestCase):
                 f"Directory {test_dir} was not created",
             )
 
+    @patch("docs.management.commands.makeimages.Command.adjust_screenshot_size")
     @patch("subprocess.run")
     @patch("subprocess.Popen")
     @patch("time.sleep")
-    def test_generate_all_screenshot(self, mock_sleep, mock_popen, mock_run):
+    def test_generate_all_screenshot(
+        self,
+        mock_sleep,
+        mock_popen,
+        mock_run,
+        mock_adjust,
+    ):
         mock_server = MagicMock()
         mock_popen.return_value = mock_server
 
@@ -317,10 +350,17 @@ class MakeImageManagementCommandTestCase(TestCase):
             # Server should not be started when just listing screenshots
             mock_popen.assert_not_called()
 
+    @patch("docs.management.commands.makeimages.Command.adjust_screenshot_size")
     @patch("subprocess.run")
     @patch("subprocess.Popen")
     @patch("time.sleep")
-    def test_multiple_screenshots_at_once(self, mock_sleep, mock_popen, mock_run):
+    def test_multiple_screenshots_at_once(
+        self,
+        mock_sleep,
+        mock_popen,
+        mock_run,
+        mock_adjust,
+    ):
         mock_server = MagicMock()
         mock_popen.return_value = mock_server
 
@@ -349,10 +389,17 @@ class MakeImageManagementCommandTestCase(TestCase):
             mock_popen.assert_called_once()
             mock_server.terminate.assert_called_once()
 
+    @patch("docs.management.commands.makeimages.Command.adjust_screenshot_size")
     @patch("subprocess.run")
     @patch("subprocess.Popen")
     @patch("time.sleep")
-    def test_all_option_with_output_dir(self, mock_sleep, mock_popen, mock_run):
+    def test_all_option_with_output_dir(
+        self,
+        mock_sleep,
+        mock_popen,
+        mock_run,
+        mock_adjust,
+    ):
         mock_server = MagicMock()
         mock_popen.return_value = mock_server
 
@@ -390,10 +437,17 @@ class MakeImageManagementCommandTestCase(TestCase):
                     output_idx = command.index("--output") + 1
                     self.assertTrue(command[output_idx].startswith(expected_dir))
 
+    @patch("docs.management.commands.makeimages.Command.adjust_screenshot_size")
     @patch("subprocess.run")
     @patch("subprocess.Popen")
     @patch("time.sleep")
-    def test_retina_option_always_included(self, mock_sleep, mock_popen, mock_run):
+    def test_retina_option_always_included(
+        self,
+        mock_sleep,
+        mock_popen,
+        mock_run,
+        mock_adjust,
+    ):
         mock_server = MagicMock()
         mock_popen.return_value = mock_server
 
@@ -403,10 +457,17 @@ class MakeImageManagementCommandTestCase(TestCase):
         self.assertIn("--retina", command_list)
         mock_server.terminate.assert_called_once()
 
+    @patch("docs.management.commands.makeimages.Command.adjust_screenshot_size")
     @patch("subprocess.run")
     @patch("subprocess.Popen")
     @patch("time.sleep")
-    def test_direct_options_with_output_dir(self, mock_sleep, mock_popen, mock_run):
+    def test_direct_options_with_output_dir(
+        self,
+        mock_sleep,
+        mock_popen,
+        mock_run,
+        mock_adjust,
+    ):
         mock_server = MagicMock()
         mock_popen.return_value = mock_server
 
@@ -464,3 +525,41 @@ class MakeImageManagementCommandTestCase(TestCase):
         result = command.generate_accept_confirm(commands)
         mock_input.assert_called_once()
         self.assertFalse(result)
+
+    def test_adjust_screenshot_size(self):
+        command = Command()
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            test_image_path = Path(tmpdir) / "test_screenshot.png"
+            test_img = Image.new("RGB", (800, 600), color="red")
+            test_img.save(test_image_path)
+
+            with patch(
+                "docs.management.commands.makeimages.DJANGO_DOCS_SCREENSHOT_DATA",
+                {"test_screenshot": {"width": 400}},
+            ):
+                command.adjust_screenshot_size("test_screenshot", test_image_path)
+
+                resized_img = Image.open(test_image_path)
+                self.assertEqual(resized_img.width, 400)
+                # Height should be proportionally scaled (600 * 400/800 = 300)
+                self.assertEqual(resized_img.height, 300)
+
+    def test_adjust_screenshot_size_file_not_found(self):
+        command = Command()
+        out = io.StringIO()
+        command.stdout = OutputWrapper(out)
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            non_existent_path = Path(tmpdir) / "does_not_exist.png"
+
+            with patch(
+                "docs.management.commands.makeimages.DJANGO_DOCS_SCREENSHOT_DATA",
+                {"test_shot": {"width": 400}},
+            ):
+                # Should not raise an error, just print a warning
+                command.adjust_screenshot_size("test_shot", non_existent_path)
+
+                output = out.getvalue()
+                self.assertIn("screenshot file not found", output)
+                self.assertIn(str(non_existent_path), output)

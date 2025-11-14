@@ -148,20 +148,65 @@ DISPLAY_SCREENSHOT_LIST_DATA = {
 }
 
 
-DJANGO_DOCS_SCREENSHOT_PATH = {
-    "admin01": "docs/intro/_images/admin01.png",
-    "admin02": "docs/intro/_images/admin02.png",
-    "admin03": "docs/intro/_images/admin03t.png",
-    "admin04": "docs/intro/_images/admin04t.png",
-    "admin05": "docs/intro/_images/admin05t.png",
-    "admin06": "docs/intro/_images/admin06t.png",
-    "admin07": "docs/intro/_images/admin07t.png",
-    "admin08": "docs/intro/_images/admin08t.png",
-    "admin09": "docs/intro/_images/admin09.png",
-    "admin10": "docs/intro/_images/admin10t.png",
-    "admin11": "docs/intro/_images/admin11t.png",
-    "admin12": "docs/intro/_images/admin12t.png",
-    "admin13": "docs/intro/_images/admin13t.png",
-    "admin14": "docs/intro/_images/admin14t.png",
-    "list_filter": "docs/ref/contrib/admin/_images/list_filter.png",
+DJANGO_DOCS_SCREENSHOT_DATA = {
+    "admin01": {
+        "path": "docs/intro/_images/admin01.png",
+        "width": 394,
+    },
+    "admin02": {
+        "path": "docs/intro/_images/admin02.png",
+        "width": 1024,
+    },
+    "admin03": {
+        "path": "docs/intro/_images/admin03t.png",
+        "width": 949,
+    },
+    "admin04": {
+        "path": "docs/intro/_images/admin04t.png",
+        "width": 727,
+    },
+    "admin05": {
+        "path": "docs/intro/_images/admin05t.png",
+        "width": 727,
+    },
+    "admin06": {
+        "path": "docs/intro/_images/admin06t.png",
+        "width": 727,
+    },
+    "admin07": {
+        "path": "docs/intro/_images/admin07t.png",
+        "width": 500,
+    },
+    "admin08": {
+        "path": "docs/intro/_images/admin08t.png",
+        "width": 500,
+    },
+    "admin09": {
+        "path": "docs/intro/_images/admin09.png",
+        "width": 500,
+    },
+    "admin10": {
+        "path": "docs/intro/_images/admin10t.png",
+        "width": 727,
+    },
+    "admin11": {
+        "path": "docs/intro/_images/admin11t.png",
+        "width": 647,
+    },
+    "admin12": {
+        "path": "docs/intro/_images/admin12t.png",
+        "width": 727,
+    },
+    "admin13": {
+        "path": "docs/intro/_images/admin13t.png",
+        "width": 962,
+    },
+    "admin14": {
+        "path": "docs/intro/_images/admin14t.png",
+        "width": 647,
+    },
+    "list_filter": {
+        "path": "docs/ref/contrib/admin/_images/list_filter.png",
+        "width": 954,
+    },
 }
