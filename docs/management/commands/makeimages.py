@@ -67,7 +67,7 @@ class Command(BaseCommand):
                 )
                 raise ImproperlyConfigured(msg)
             return str(settings.DJANGO_DIR / DJANGO_DOCS_SCREENSHOT_PATH[name])
-        return str(output_dir / value)
+        return str(self.get_output_directory(output_dir) / value)
 
     def create_shot_scraper_command(
         self,
@@ -127,6 +127,7 @@ class Command(BaseCommand):
         use_all = options["all"]
         show_screenshot_list = options["screenshot_list"]
         use_direct = options["direct"]
+        output_dir = options["output_dir"]
         if show_screenshot_list:
             self.stdout.write(self.get_screenshot_list() + "\n")
             return
@@ -144,7 +145,6 @@ class Command(BaseCommand):
                     raise CommandError(msg)
 
         self.start_server()
-        output_dir = self.get_output_directory(options["output_dir"])
         if use_all:
             names = SCREENSHOT_CONFIG.keys()
         for name in names:

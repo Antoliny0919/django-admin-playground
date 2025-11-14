@@ -402,3 +402,5 @@ class MakeImageManagementCommandTestCase(TestCase):
         output_idx = command.index("--output") + 1
         # direct option takes precedence over the output_dir option
         self.assertIn("django/docs/intro/_images/admin01.png", command[output_idx])
+        output_dir = Path("aa/bb/cc").resolve()
+        self.assertFalse(output_dir.exists())
