@@ -1,7 +1,18 @@
 from django.contrib import admin
 
-from main.admin import for_admin03_screenshot_site, docs_screenshot_site
-from .models import Choice, Question, QuestionAdmin07, QuestionAdmin08, QuestionAdmin10, QuestionAdmin11, QuestionAdmin12, QuestionAdmin13, QuestionAdmin14
+from main.admin import docs_screenshot_site, for_admin03_screenshot_site
+
+from .models import (
+    Choice,
+    Question,
+    QuestionAdmin07,
+    QuestionAdmin08,
+    QuestionAdmin10,
+    QuestionAdmin11,
+    QuestionAdmin12,
+    QuestionAdmin13,
+    QuestionAdmin14,
+)
 
 
 class QuestionAdmin07ModelAdmin(admin.ModelAdmin):

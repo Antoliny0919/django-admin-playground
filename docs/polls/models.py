@@ -26,42 +26,36 @@ class Choice(models.Model):
 
 
 class QuestionAdmin07(Question):
-
     class Meta:
         proxy = True
         verbose_name = "question"
 
 
 class QuestionAdmin08(Question):
-
     class Meta:
         proxy = True
         verbose_name = "question"
 
 
 class QuestionAdmin10(Question):
-
     class Meta:
         proxy = True
         verbose_name = "question"
 
 
 class QuestionAdmin11(Question):
-
     class Meta:
         proxy = True
         verbose_name = "question"
 
 
 class QuestionAdmin12(Question):
-
     class Meta:
         proxy = True
         verbose_name = "question"
 
 
 class QuestionAdmin13(Question):
-
     class Meta:
         proxy = True
         verbose_name = "question"
@@ -77,7 +71,6 @@ class QuestionAdmin13(Question):
 
 
 class QuestionAdmin14(Question):
-
     class Meta:
         proxy = True
         verbose_name = "question"

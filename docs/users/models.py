@@ -1,9 +1,8 @@
-from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
+from django.db import models
 
 
 class UserForScreenshot(AbstractUser):
-
     groups = models.ManyToManyField(
         Group,
         verbose_name="groups",
