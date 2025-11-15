@@ -10,17 +10,16 @@ on:
       - 'main'
 
 jobs:
-  build:
+  tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-        with:
-          persist-credentials: false
+      - name: Checkout Code Repository
+        uses: actions/checkout@v5
 
-      - name: Set up Python version
+      - name: Set up Python
         uses: actions/setup-python@v6
         with:
-          python-version: '3.11'
+          python-version-file: '.python-version'
 
       - name: Install dependencies
         run: pip install -r requirements.txt
