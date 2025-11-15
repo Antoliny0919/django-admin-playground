@@ -1,7 +1,7 @@
 from django.contrib import admin, messages
 from django.utils.translation import ngettext
 
-from main.admin import docs_screenshot_site
+from docs.admin import screenshot_site
 
 from .models import Article
 
@@ -26,4 +26,4 @@ class ArticleAdmin(admin.ModelAdmin):
         )
 
 
-docs_screenshot_site.register(Article, ArticleAdmin)
+screenshot_site.register(Article, ArticleAdmin)
