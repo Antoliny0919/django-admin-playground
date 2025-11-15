@@ -46,66 +46,6 @@ class MakeImageManagementCommandTestCase(TestCase):
         self.mock_sleep.assert_called_once_with(3)
         self.mock_server.terminate.assert_called_once()
 
-    def test_create_shot_scraper_command(self):
-        shot_scraper_command = self.command.create_shot_scraper_command(
-            "admin01",
-            "one/two/",
-            Path("some_folder").resolve(),
-            False,
-            selector=".one div.two",
-            output="numbers.png",
-            height="400",
-        )
-        self.assertEqual(
-            shot_scraper_command,
-            [
-                "shot-scraper",
-                "http://localhost:8009/one/two/",
-                "--retina",
-                "--selector",
-                ".one div.two",
-                "--output",
-                str(Path("some_folder").resolve() / "numbers.png"),
-                "--height",
-                "400",
-            ],
-        )
-
-    def test_create_shot_scraper_with_use_direct(self):
-        shot_scraper_command = self.command.create_shot_scraper_command(
-            "admin01",
-            "one/two/",
-            Path("some_folder").resolve(),
-            True,
-            selector=".one div.two",
-            output="numbers.png",
-            height="400",
-        )
-        output_idx = shot_scraper_command.index("--output")
-        output_path = shot_scraper_command[output_idx + 1]
-        self.assertIn("django/docs/intro/_images/admin01.png", output_path)
-
-    def test_unconfig_django_screenshot_path(self):
-        with (
-            patch(
-                "docs.management.commands.makeimages.DJANGO_DOCS_SCREENSHOT_DATA",
-                {"admin02": {"path": "some/django/path/admin02.png"}},
-            ),
-            self.assertRaisesMessage(
-                ImproperlyConfigured,
-                "Screenshot 'admin01' is not configured in "
-                "DJANGO_DOCS_SCREENSHOT_DATA. "
-                "Please add the mapping for 'admin01' in docs/config.py",
-            ),
-        ):
-            self.command.create_shot_scraper_command(
-                "admin01",
-                "one/two/",
-                Path("some_folder").resolve(),
-                True,
-                output="admin01.png",
-            )
-
     def test_error_when_screenshot_not_specified(self):
         with self.assertRaisesMessage(
             CommandError,
@@ -170,7 +110,8 @@ class MakeImageManagementCommandTestCase(TestCase):
                 self.mock_popen.assert_called_once()
                 self.mock_server.terminate.assert_called_once()
 
-    def test_screenshot_save_to_specific_directory(self):
+    @patch("pathlib.Path.mkdir")
+    def test_screenshot_save_to_specific_directory(self, mock_mkdir):
         call_command(
             "makeimages",
             "admin01",
@@ -178,7 +119,6 @@ class MakeImageManagementCommandTestCase(TestCase):
             "hello/world/",
             "--noinput",
         )
-
         command_list = self.mock_run.call_args[0][0]
         output_index = command_list.index("--output") + 1
         self.assertEqual(
@@ -197,16 +137,12 @@ class MakeImageManagementCommandTestCase(TestCase):
         )
         self.mock_server.terminate.assert_called_once()
 
-    def test_output_directory_creation(self):
+    def test_output_directory_auto_creation(self):
         with tempfile.TemporaryDirectory() as tmpdir:
             test_dir = Path(tmpdir) / "nested/test/path"
-
+            self.assertFalse(test_dir.exists())
             call_command("makeimages", "admin01", "--noinput", "--output-dir", test_dir)
-
-            self.assertTrue(
-                test_dir.exists(),
-                f"Directory {test_dir} was not created",
-            )
+            self.assertTrue(test_dir.exists())
 
     def test_generate_all_screenshot(self):
         with patch(
@@ -342,9 +278,6 @@ class MakeImageManagementCommandTestCase(TestCase):
                     custom_dir,
                     "--noinput",
                 )
-
-                self.assertTrue(custom_dir.exists())
-
                 # Verify all screenshots use the custom directory
                 self.assertEqual(self.mock_run.call_count, 2)
                 expected_dir = str(Path(custom_dir).resolve())
@@ -452,3 +385,71 @@ class ScreenshotAdjustSizeTestCase(TestCase):
                 output = out.getvalue()
                 self.assertIn("screenshot file not found", output)
                 self.assertIn(str(non_existent_path), output)
+
+
+class CreateShotScraperCommandTestCase(TestCase):
+    def setUp(self):
+        self.command = Command()
+
+    @patch("pathlib.Path.mkdir")
+    def test_create_shot_scraper_command(self, mock_mkdir):
+        shot_scraper_command = self.command.create_shot_scraper_command(
+            "admin01",
+            "one/two/",
+            Path("some_folder").resolve(),
+            False,
+            selector=".one div.two",
+            output="numbers.png",
+            height="400",
+        )
+        self.assertEqual(
+            shot_scraper_command,
+            [
+                "shot-scraper",
+                "http://localhost:8009/one/two/",
+                "--retina",
+                "--selector",
+                ".one div.two",
+                "--output",
+                str(Path("some_folder").resolve() / "numbers.png"),
+                "--height",
+                "400",
+            ],
+        )
+
+    @patch("pathlib.Path.mkdir")
+    def test_create_shot_scraper_with_use_direct(self, mock_mkdir):
+        shot_scraper_command = self.command.create_shot_scraper_command(
+            "admin01",
+            "one/two/",
+            Path("some_folder").resolve(),
+            True,
+            selector=".one div.two",
+            output="numbers.png",
+            height="400",
+        )
+        output_idx = shot_scraper_command.index("--output")
+        output_path = shot_scraper_command[output_idx + 1]
+        self.assertIn("django/docs/intro/_images/admin01.png", output_path)
+
+    @patch("pathlib.Path.mkdir")
+    def test_unconfig_django_screenshot_path(self, mock_mkdir):
+        with (
+            patch(
+                "docs.management.commands.makeimages.DJANGO_DOCS_SCREENSHOT_DATA",
+                {"admin02": {"path": "some/django/path/admin02.png"}},
+            ),
+            self.assertRaisesMessage(
+                ImproperlyConfigured,
+                "Screenshot 'admin01' is not configured in "
+                "DJANGO_DOCS_SCREENSHOT_DATA. "
+                "Please add the mapping for 'admin01' in docs/config.py",
+            ),
+        ):
+            self.command.create_shot_scraper_command(
+                "admin01",
+                "one/two/",
+                Path("some_folder").resolve(),
+                True,
+                output="admin01.png",
+            )
