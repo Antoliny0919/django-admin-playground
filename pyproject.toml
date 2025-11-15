@@ -1,5 +1,5 @@
 [tool.ruff]
-target-version = "py39"
+target-version = "py311"
 line-length = 88
 # Exclude the template content as most files aren't parseable
 exclude = ["migrations", "before_admin", "before_registration"]
