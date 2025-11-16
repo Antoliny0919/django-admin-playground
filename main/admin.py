@@ -21,7 +21,7 @@ class CustomAdminSite(AdminSite):
                     response.template_name = self._modify_template_name(
                         response.template_name,
                     )
-                elif isinstance(response.template_name, (list, tuple)):
+                elif isinstance(response.template_name, (list | tuple)):
                     response.template_name = [
                         self._modify_template_name(name)
                         for name in response.template_name

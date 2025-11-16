@@ -40,6 +40,10 @@ ADMIN_APPS = [
     "inline",
     "changelist",
     "form",
+    "docs",
+    "docs.polls",
+    "docs.users",
+    "docs.news",
 ]
 
 INSTALLED_APPS = CORE_APPS + THIRD_PARTY_APPS + ADMIN_APPS
@@ -47,6 +51,7 @@ INSTALLED_APPS = CORE_APPS + THIRD_PARTY_APPS + ADMIN_APPS
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "docs.middleware.AuthenticateToQueryMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
