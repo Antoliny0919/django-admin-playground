@@ -1,6 +1,6 @@
 <!-- ABOUT THE PROJECT -->
 
-## django-admin-playground
+# django-admin-playground
 
 This project provides an optimal environment for contributing to Django Admin.
 
@@ -19,7 +19,7 @@ It provides the following features:
 - [Running](#running)
 - [Contributing](#contributing)
 
-### Running
+## Running
 
 1. Clone django repo
    ```sh
@@ -77,7 +77,7 @@ It provides the following features:
    ```
 
 
-### Contributing
+## Contributing
 
 - Add test cases.
 
