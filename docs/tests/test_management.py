@@ -6,7 +6,7 @@ from unittest.mock import MagicMock, patch
 from django.core.exceptions import ImproperlyConfigured
 from django.core.management import CommandError, call_command
 from django.core.management.base import OutputWrapper
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from PIL import Image
 
 from docs.management.commands.makeimages import Command
@@ -293,6 +293,7 @@ class MakeImageManagementCommandTestCase(TestCase):
         command_list = self.mock_run.call_args[0][0]
         self.assertIn("--retina", command_list)
 
+    @override_settings(DJANGO_DIR=Path("/some/user/django/"))
     def test_direct_options_with_output_dir(self):
         call_command(
             "makeimages",
@@ -419,18 +420,19 @@ class CreateShotScraperCommandTestCase(TestCase):
         )
 
     @patch("pathlib.Path.mkdir")
+    @override_settings(DJANGO_DIR=Path("/some/user/django/"))
     def test_create_shot_scraper_with_use_direct(self, mock_mkdir):
         shot_scraper_command = self.command.create_shot_scraper_command(
             "admin01",
             "one/two/",
             Path("some_folder").resolve(),
-            True,
+            use_direct=True,
             selector=".one div.two",
             output="numbers.png",
             height="400",
         )
-        output_idx = shot_scraper_command.index("--output")
-        output_path = shot_scraper_command[output_idx + 1]
+        output_idx = shot_scraper_command.index("--output") + 1
+        output_path = shot_scraper_command[output_idx]
         self.assertIn("django/docs/intro/_images/admin01.png", output_path)
 
     @patch("pathlib.Path.mkdir")
