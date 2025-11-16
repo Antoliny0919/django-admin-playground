@@ -14,6 +14,10 @@ It provides the following features:
 - Provides images for visual regression testing via screenshots (planned)
 - Automated generation of admin images for the [Django Project documentation](https://www.djangoproject.com/) (planned)
 
+## Table of Contents
+
+- [Running](#running)
+- [Contributing](#contributing)
 
 ### Running
 
