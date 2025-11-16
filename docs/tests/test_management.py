@@ -168,6 +168,7 @@ class MakeImageManagementCommandTestCase(TestCase):
             for call, output in zip(
                 self.mock_run.call_args_list,
                 ["cheeze.png", "hamburger.png", "pizza.png"],
+                strict=True,
             ):
                 command = call[0][0]
                 output_idx = command.index("--output") + 1

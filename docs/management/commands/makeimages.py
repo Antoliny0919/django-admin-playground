@@ -104,7 +104,7 @@ class Command(BaseCommand):
                 subprocess.run(command, check=False)
             self.server.terminate()
             # Resize the generated screenshot to the desired dimension
-            for name, command in zip(names, commands):
+            for name, command in zip(names, commands, strict=True):
                 output_idx = command.index("--output") + 1
                 screenshot_path = command[output_idx]
                 self.adjust_screenshot_size(name, screenshot_path)
