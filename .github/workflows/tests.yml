@@ -17,22 +17,21 @@ jobs:
         uses: actions/checkout@v5
         with:
           repository: django/django
-          path: django
 
       - name: Checkout django-admin-playground
         uses: actions/checkout@v5
         with:
-          path: django/django-admin-playground
+          path: django-admin-playground
 
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
-          python-version-file: 'django/django-admin-playground/.python-version'
+          python-version-file: 'django-admin-playground/.python-version'
 
       - name: Install dependencies
-        working-directory: django/django-admin-playground
+        working-directory: django-admin-playground
         run: pip install -r requirements.txt
 
       - name: Run tests
-        working-directory: django/django-admin-playground
+        working-directory: django-admin-playground
         run: python manage.py test
