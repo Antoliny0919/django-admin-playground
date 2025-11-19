@@ -88,6 +88,19 @@ For examples of where these images are used, see the following links:
 - [Django Tutorial Part7](https://docs.djangoproject.com/en/5.2/intro/tutorial07/)
 - [ModelAdmin List Filters](https://docs.djangoproject.com/en/5.2/ref/contrib/admin/filters/)
 
+### Installation
+
+`makeimages` internally uses the shot-scraper library.
+Since shot-scraper depends on Playwright, the Chromium browser needs to be installed.
+
+If you have already installed the shot-scraper library, run the following command to install the Chromium browser:
+
+```commandline
+shot-scraper install
+```
+
+For more details regarding browser installation, please refer to this [document](https://shot-scraper.datasette.io/en/stable/installation.html#installation).
+
 ### Arguments
 
 `name`
