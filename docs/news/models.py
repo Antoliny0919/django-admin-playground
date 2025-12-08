@@ -14,3 +14,12 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class NewsPaper(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField()
+
+
+class RawIDFields(models.Model):
+    newspaper = models.ManyToManyField(NewsPaper)

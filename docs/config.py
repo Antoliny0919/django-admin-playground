@@ -113,6 +113,18 @@ SCREENSHOT_CONFIG = {
         "output": "list_filter.png",
         "width": "1400",
     },
+    "fieldsets": {
+        "path": "screenshot_admin/docs_flatpages/docsflatpage/add/?_user=admin",
+        "selector": "div#content",
+        "output": "fieldsets.png",
+        "width": "1025",
+    },
+    "raw_id_fields": {
+        "path": "screenshot_admin/news/rawidfields/1/change/?_user=admin",
+        "selector": "div#content form fieldset.aligned",
+        "output": "raw_id_fields.png",
+        "width": "800",
+    },
 }
 
 
@@ -144,6 +156,13 @@ DISPLAY_SCREENSHOT_LIST_DATA = {
     "admin_filter": {
         "names": ["list_filter"],
         "link": "https://docs.djangoproject.com/en/dev/ref/contrib/admin/filters/",
+    },
+    "admin_index": {
+        "names": [
+            "fieldsets",
+            "raw_id_fields",
+        ],
+        "link": "https://docs.djangoproject.com/en/dev/ref/contrib/admin/",
     },
 }
 
@@ -208,5 +227,13 @@ DJANGO_DOCS_SCREENSHOT_DATA = {
     "list_filter": {
         "path": "docs/ref/contrib/admin/_images/list_filter.png",
         "width": 954,
+    },
+    "fieldsets": {
+        "path": "docs/ref/contrib/admin/_images/fieldsets.png",
+        "width": 833,
+    },
+    "raw_id_fields": {
+        "path": "docs/ref/contrib/admin/_images/raw_id_fields.png",
+        "width": 398,
     },
 }

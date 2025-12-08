@@ -53,6 +53,29 @@
     }
 },
 {
+    "model": "news.newspaper",
+    "pk": 1,
+    "fields": {
+        "name": "Wall Street Journal",
+        "description": ".."
+    }
+},
+{
+    "model": "news.newspaper",
+    "pk": 2,
+    "fields": {
+        "name": "Bloomberg",
+        "description": ".."
+    }
+},
+{
+    "model": "news.rawidfields",
+    "pk": 1,
+    "fields": {
+        "newspaper": [1, 2]
+    }
+},
+{
     "model": "users.userforscreenshot",
     "pk": 1,
     "fields": {

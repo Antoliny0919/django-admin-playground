@@ -3,7 +3,7 @@ from django.utils.translation import ngettext
 
 from docs.admin import screenshot_site
 
-from .models import Article
+from .models import Article, NewsPaper, RawIDFields
 
 
 class ArticleAdmin(admin.ModelAdmin):
@@ -26,4 +26,10 @@ class ArticleAdmin(admin.ModelAdmin):
         )
 
 
+class RawIDFieldsAdmin(admin.ModelAdmin):
+    raw_id_fields = ["newspaper"]
+
+
 screenshot_site.register(Article, ArticleAdmin)
+screenshot_site.register(NewsPaper)
+screenshot_site.register(RawIDFields, RawIDFieldsAdmin)

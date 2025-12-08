@@ -87,6 +87,7 @@ For examples of where these images are used, see the following links:
 - [Django Tutorial Part2](https://docs.djangoproject.com/en/5.2/intro/tutorial02/)
 - [Django Tutorial Part7](https://docs.djangoproject.com/en/5.2/intro/tutorial07/)
 - [ModelAdmin List Filters](https://docs.djangoproject.com/en/5.2/ref/contrib/admin/filters/)
+- [Django Admin Site](https://docs.djangoproject.com/en/dev/ref/contrib/admin/)
 
 ### Installation
 

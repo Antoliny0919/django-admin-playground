@@ -44,6 +44,7 @@ ADMIN_APPS = [
     "docs.polls",
     "docs.users",
     "docs.news",
+    "docs.flatpages",
 ]
 
 INSTALLED_APPS = CORE_APPS + THIRD_PARTY_APPS + ADMIN_APPS
