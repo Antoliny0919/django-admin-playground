@@ -24,6 +24,7 @@ register.simple_tag(paginator_number, name="paginator_number")
 @register.tag(name="pagination")
 def pagination_tag(parser, token):
     return InclusionCompareAdminNode(
+        "pagination",
         parser,
         token,
         func=pagination,
@@ -35,6 +36,7 @@ def pagination_tag(parser, token):
 @register.tag(name="result_list")
 def result_list_tag(parser, token):
     return InclusionCompareAdminNode(
+        "result_list",
         parser,
         token,
         func=result_list,
@@ -46,6 +48,7 @@ def result_list_tag(parser, token):
 @register.tag(name="date_hierarchy")
 def date_hierarchy_tag(parser, token):
     return InclusionCompareAdminNode(
+        "date_hierarchy",
         parser,
         token,
         func=date_hierarchy,
@@ -57,6 +60,7 @@ def date_hierarchy_tag(parser, token):
 @register.tag(name="search_form")
 def search_form_tag(parser, token):
     return InclusionCompareAdminNode(
+        "search_form",
         parser,
         token,
         func=search_form,
@@ -80,6 +84,7 @@ def admin_list_filter(cl, spec):
 @register.tag(name="admin_actions")
 def admin_actions_tag(parser, token):
     return InclusionCompareAdminNode(
+        "admin_actions",
         parser,
         token,
         func=admin_actions,
@@ -91,6 +96,7 @@ def admin_actions_tag(parser, token):
 def change_list_object_tools_tag(parser, token):
     """Display the row of change list object tools."""
     return InclusionCompareAdminNode(
+        "change_list_object_tools",
         parser,
         token,
         func=lambda context: context,

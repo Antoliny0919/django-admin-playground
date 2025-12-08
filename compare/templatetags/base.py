@@ -1,29 +1,8 @@
-from inspect import getfullargspec
+from django.contrib.admin.templatetags.base import InclusionAdminNode
+from django.template.library import InclusionNode
 
-from django.template.library import InclusionNode, parse_bits
 
-
-class InclusionCompareAdminNode(InclusionNode):
-    def __init__(self, parser, token, func, template_name, takes_context=True):
-        self.template_name = template_name
-        params, varargs, varkw, defaults, kwonly, kwonly_defaults, _ = getfullargspec(
-            func,
-        )
-        bits = token.split_contents()
-        args, kwargs = parse_bits(
-            parser,
-            bits[1:],
-            params,
-            varargs,
-            varkw,
-            defaults,
-            kwonly,
-            kwonly_defaults,
-            takes_context,
-            bits[0],
-        )
-        super().__init__(func, takes_context, args, kwargs, filename=None)
-
+class InclusionCompareAdminNode(InclusionAdminNode):
     def render(self, context):
         opts = context["opts"]
         app_label = opts.app_label.lower()
@@ -38,4 +17,4 @@ class InclusionCompareAdminNode(InclusionNode):
                 f"{site_template_prefix}/{self.template_name}",
             ],
         )
-        return super().render(context)
+        return InclusionNode.render(self, context)
