@@ -1,4 +1,4 @@
-ruff==0.14.8
+ruff==0.14.9
 pre-commit==4.5.0
 django-browser-reload==1.21.0
 shot-scraper==1.8
