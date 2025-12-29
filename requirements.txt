@@ -1,5 +1,5 @@
 ruff==0.14.10
 pre-commit==4.5.1
 django-browser-reload==1.21.0
-shot-scraper==1.8
+shot-scraper==1.9
 Pillow==12.0.0
