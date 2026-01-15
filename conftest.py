@@ -2,9 +2,8 @@ import os
 from pathlib import Path
 
 import pytest
-from playwright.sync_api import expect, sync_playwright
 from django.contrib.auth.models import User
-
+from playwright.sync_api import expect, sync_playwright
 
 expect.set_options(timeout=5_000)
 
@@ -28,17 +27,18 @@ def browser(request, playwright):
 
 @pytest.fixture
 def user(db):
-    user = User.objects.create_superuser(
-        username="super", email="super@admin.com", password="password"
+    return User.objects.create_superuser(
+        username="super",
+        email="super@admin.com",
+        password="password",
     )
-    return user
 
 
 @pytest.fixture
 def auth_storage_state(live_server, browser, user):
     if AUTHENTICATION_STATE_FILE_PATH.exists():
         # Skip authentication if auth data already exists
-        return
+        return None
 
     context = browser.new_context()
     page = context.new_page()
