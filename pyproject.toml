@@ -1,3 +1,14 @@
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "main.settings"
+addopts = "-m 'not playwright' --reuse-db --import-mode=importlib"
+python_files = [
+  "tests.py",
+  "test_*.py",
+]
+markers = [
+  "playwright: mark test that requires playwright",
+]
+
 [tool.ruff]
 target-version = "py311"
 line-length = 88

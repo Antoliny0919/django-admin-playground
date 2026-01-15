@@ -331,3 +331,5 @@ antoliny_daily/theme/static/css/dist/styles.css
 .envs/*
 .idea
 db.sqlite3
+
+playwright/.auth
