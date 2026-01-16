@@ -166,3 +166,28 @@ used in the django documentation, please refer to the following document:
    If you have any ideas or items that could improve the contribution environment, don’t hesitate to create an Issue.
 
 Finally, I would like to thank everyone who has contributed to Django and django-admin-playground ❤️
+
+## Testing
+
+Tests can be written using [Django's TestCase syntax](https://docs.djangoproject.com/en/5.2/topics/testing/overview/#running-tests) or using [pytest](https://docs.pytest.org/en/stable/how-to/usage.html).
+
+To run the tests:
+
+```sh
+python manage.py test
+
+OR
+
+pytest
+```
+There are also [Playwright](https://playwright.dev/python/docs/intro) tests that can be run. To run these tests:
+
+```sh
+# Running Playwright requires a one-time browser installation process.
+playwright install
+
+# This is the actual test command
+pytest -m playwright
+# Run the tests in headed mode (so you can see the browser)
+pytest -m playwright --headed
+```
