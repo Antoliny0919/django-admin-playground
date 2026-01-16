@@ -332,4 +332,4 @@ antoliny_daily/theme/static/css/dist/styles.css
 .idea
 db.sqlite3
 
-playwright/.auth
+playwright/.auth/state.json
