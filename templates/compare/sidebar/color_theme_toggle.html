@@ -21,8 +21,8 @@
     updateTheme() {
         const isDark = this.theme === 'dark' || (this.theme === 'auto' && this.isSystemDark);
         for (const doc of this.documents) {
-            doc.classList.toggle('dark', isDark);
-            doc.dataset.theme = isDark ? 'dark' : 'light';
+          doc.classList.toggle('dark', isDark);
+          doc.dataset.theme = this.theme;
         }
     },
     currentIcon() {
@@ -31,7 +31,7 @@
         return 'auto';
     },
   }">
-  <button class="group relative inline-flex items-center justify-start rounded-lg w-full h-10 cursor-pointer duration-200 ease-in-out transition-color bg-green-900 text-white hover:bg-green-800"
+  <button data-testid="theme-toggle-button" class="group relative inline-flex items-center justify-start rounded-lg w-full h-10 cursor-pointer duration-200 ease-in-out transition-color bg-green-900 text-white hover:bg-green-800"
   @click="
     if (currentIcon() === 'light') {
         setTheme('dark');
