@@ -4,7 +4,6 @@ from playwright.sync_api import expect
 
 @pytest.mark.playwright
 class TestCompareSidebarButtons:
-
     def get_frame_htmls(self, auth_page):
         before_frame = auth_page.locator("iframe#before").content_frame
         after_frame = auth_page.locator("iframe#after").content_frame
