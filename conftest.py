@@ -38,7 +38,7 @@ def user(db):
 def auth_storage_state(live_server, browser, user):
     # if AUTHENTICATION_STATE_FILE_PATH.exists():
     #     # Skip authentication if auth data already exists
-    #     return None
+    #     return None  # noqa: ERA001
 
     context = browser.new_context()
     page = context.new_page()
