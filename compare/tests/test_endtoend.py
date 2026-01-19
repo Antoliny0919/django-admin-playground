@@ -30,3 +30,12 @@ class TestCompareSidebarButtons:
         theme_change_button.click()
         expect(before_html).to_have_attribute("data-theme", "auto")
         expect(after_html).to_have_attribute("data-theme", "auto")
+
+    def test_initial_theme_from_local_storage(self, auth_page, live_server):
+        auth_page.goto(f"{live_server.url}/compare")
+        auth_page.evaluate("() => localStorage.setItem('theme', 'dark')")
+        auth_page.reload()
+
+        before_html, after_html = self.get_frame_htmls(auth_page)
+        expect(after_html).to_have_attribute("data-theme", "dark")
+        expect(before_html).to_have_attribute("data-theme", "dark")
