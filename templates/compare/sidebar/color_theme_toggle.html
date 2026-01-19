@@ -1,10 +1,10 @@
 <div class="flex w-full items-center p-2" x-data="{
     theme: localStorage.getItem('theme'),
     isSystemDark: localStorage.getItem('isSystemDark') === 'true',
+    documents: [document.documentElement],
     init() {
         const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
         const iframes = document.querySelectorAll('iframe');
-        this.documents = [document.documentElement]
         iframes.forEach((iframe) => {
             iframe.addEventListener('load', () => {
                 this.documents.push(iframe.contentDocument.documentElement);

@@ -13,23 +13,24 @@ class TestCompareSidebarButtons:
     def test_theme_change(self, auth_page, live_server):
         auth_page.goto(f"{live_server.url}/compare")
 
-        before_html, after_html = self.get_frame_htmls(auth_page)
+        htmls = self.get_frame_htmls(auth_page)
+        htmls.append(auth_page.locator("html"))
 
-        expect(before_html).to_have_attribute("data-theme", "auto")
-        expect(after_html).to_have_attribute("data-theme", "auto")
+        def htmls_have_attribute(htmls, value):
+            for html in htmls:
+                expect(html).to_have_attribute("data-theme", value)
+
+        htmls_have_attribute(htmls, "auto")
         theme_change_button = auth_page.get_by_test_id("theme-toggle-button")
 
         theme_change_button.click()
-        expect(before_html).to_have_attribute("data-theme", "light")
-        expect(after_html).to_have_attribute("data-theme", "light")
+        htmls_have_attribute(htmls, "light")
 
         theme_change_button.click()
-        expect(before_html).to_have_attribute("data-theme", "dark")
-        expect(after_html).to_have_attribute("data-theme", "dark")
+        htmls_have_attribute(htmls, "dark")
 
         theme_change_button.click()
-        expect(before_html).to_have_attribute("data-theme", "auto")
-        expect(after_html).to_have_attribute("data-theme", "auto")
+        htmls_have_attribute(htmls, "auto")
 
     def test_initial_theme_from_local_storage(self, auth_page, live_server):
         auth_page.goto(f"{live_server.url}/compare")
