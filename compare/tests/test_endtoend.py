@@ -40,3 +40,22 @@ class TestCompareSidebarButtons:
         before_html, after_html = self.get_frame_htmls(auth_page)
         expect(after_html).to_have_attribute("data-theme", "dark")
         expect(before_html).to_have_attribute("data-theme", "dark")
+
+    def test_layout_direction_change(self, auth_page, live_server):
+        auth_page.goto(f"{live_server.url}/compare")
+
+        before_html, after_html = self.get_frame_htmls(auth_page)
+
+        layout_direction_change_button = auth_page.locator(
+            "button#layout-direction-toggle-button",
+        )
+        expect(after_html).to_have_attribute("dir", "ltr")
+        expect(before_html).to_have_attribute("dir", "ltr")
+
+        layout_direction_change_button.click()
+        expect(after_html).to_have_attribute("dir", "rtl")
+        expect(before_html).to_have_attribute("dir", "rtl")
+
+        layout_direction_change_button.click()
+        expect(after_html).to_have_attribute("dir", "ltr")
+        expect(before_html).to_have_attribute("dir", "ltr")

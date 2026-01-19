@@ -1,8 +1,8 @@
 <div class="flex w-full items-center p-2" x-data="{
     layoutDirection: localStorage.getItem('layout-direction'),
+    documents: [],
     init() {
         const iframes = document.querySelectorAll('iframe');
-        this.documents = []
         iframes.forEach((iframe) => {
             iframe.addEventListener('load', () => {
                 this.documents.push(iframe.contentDocument.documentElement);
@@ -26,7 +26,9 @@
         else return 'rtl';
     },
   }">
-  <button class="group relative inline-flex items-center justify-start rounded-lg w-full h-10 cursor-pointer duration-200 ease-in-out transition-color bg-green-900 text-white hover:bg-green-800"
+  <button
+    id="layout-direction-toggle-button"
+    class="group relative inline-flex items-center justify-start rounded-lg w-full h-10 cursor-pointer duration-200 ease-in-out transition-color bg-green-900 text-white hover:bg-green-800"
     @click="
     if (currentIcon() === 'ltr') {
         setLayoutDirection('rtl');
