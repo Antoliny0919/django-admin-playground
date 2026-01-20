@@ -2,28 +2,27 @@
     layoutDirection: localStorage.getItem('layout-direction'),
     documents: [],
     init() {
-        const iframes = document.querySelectorAll('iframe');
-        iframes.forEach((iframe) => {
-            iframe.addEventListener('load', () => {
-                this.documents.push(iframe.contentDocument.documentElement);
-            });
-        });
-        const direction = this.layoutDirection ?? document.documentElement.dir;
-        this.setLayoutDirection(direction)
+      const iframes = document.querySelectorAll('iframe');
+      iframes.forEach((iframe) => {
+        iframe.addEventListener('load', () => {
+          this.documents.push(iframe.contentDocument.documentElement);
+        })
+      });
+      this.layoutDirection ? this.setLayoutDirection(this.layoutDirection) : this.setLayoutDirection(document.documentElement.dir);
     },
     setLayoutDirection(newDirection) {
-        this.layoutDirection = newDirection;
-        localStorage.setItem('layout-direction', newDirection);
-        this.updateLayoutDirection();
+      this.layoutDirection = newDirection;
+      localStorage.setItem('layout-direction', newDirection);
+      this.updateLayoutDirection();
     },
     updateLayoutDirection() {
-        for (const doc of this.documents) {
-            doc.dir = this.layoutDirection;
-        }
+      for (const doc of this.documents) {
+        doc.dir = this.layoutDirection;
+      }
     },
     currentIcon() {
-        if (this.layoutDirection === 'ltr') return 'ltr';
-        else return 'rtl';
+      if (this.layoutDirection === 'ltr') return 'ltr';
+      return 'rtl';
     },
   }">
   <button
@@ -31,9 +30,9 @@
     class="group relative inline-flex items-center justify-start rounded-lg w-full h-10 cursor-pointer duration-200 ease-in-out transition-color bg-green-900 text-white hover:bg-green-800"
     @click="
     if (currentIcon() === 'ltr') {
-        setLayoutDirection('rtl');
+      setLayoutDirection('rtl');
     } else {
-        setLayoutDirection('ltr');
+      setLayoutDirection('ltr');
     }
   ">
     <div class="flex flex-row items-center px-2" :class="$store.sidebar.isOpen ? 'gap-0' : 'gap-4'">
