@@ -59,3 +59,12 @@ class TestCompareSidebarButtons:
         layout_direction_change_button.click()
         expect(after_html).to_have_attribute("dir", "ltr")
         expect(before_html).to_have_attribute("dir", "ltr")
+
+    def test_initial_layout_direction_from_local_storage(self, auth_page, live_server):
+        auth_page.goto(f"{live_server.url}/compare")
+        auth_page.evaluate("() => localStorage.setItem('layout-direction', 'rtl')")
+        auth_page.reload()
+
+        before_html, after_html = self.get_frame_htmls(auth_page)
+        expect(before_html).to_have_attribute("dir", "rtl")
+        expect(after_html).to_have_attribute("dir", "rtl")
