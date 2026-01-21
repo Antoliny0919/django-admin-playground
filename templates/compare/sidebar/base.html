@@ -6,23 +6,23 @@
   :class="$store.sidebar.isOpen ? 'w-[18rem]' : 'w-[3.5rem]'"
   >
     <nav
-    class="fixed top-0 left-0 flex flex-col h-screen bg-gray-100 duration-300 border-r border-gray-300 ease-in-out shadow-sidebar"
+    class="fixed top-0 left-0 flex flex-col h-screen bg-gray-100 duration-300 border-r border-gray-300 ease-in-out shadow-sidebar dark:bg-zinc-800 dark:border-zinc-600"
     :class="$store.sidebar.isOpen ? 'w-[18rem]' : 'w-[3.5rem]'"
     >
       <div class="flex w-full items-center p-2">
         <button
-        class="group inline-flex items-center justify-center rounded-lg p-2 cursor-pointer hover:bg-gray-300"
+        class="group inline-flex items-center justify-center rounded-lg p-2 cursor-pointer hover:bg-gray-300 dark:hover:bg-zinc-500"
         aria-label="Sidebar Toggle"
         :aria-pressed="$store.sidebar.isOpen"
         @click="$store.sidebar.toggle()"
-        :class="$store.sidebar.isOpen && 'bg-gray-300'"
+        :class="$store.sidebar.isOpen ? 'bg-gray-300 dark:bg-zinc-500' : 'dark:bg-zinc-600'"
         >
           <div
           class="absolute px-4 text-xs py-2 hidden left-16 bg-help-text-bg text-help-text-fg whitespace-nowrap rounded-lg opacity-0 font-base duration-300 group-hover:opacity-100"
           aria-hidden="true"
           :class="$store.sidebar.isOpen && 'hidden'"
           >Toggle Sidebar</div>
-          <svg class="" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg class="text-black dark:text-white" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <rect x="4" y="6" width="16" height="12" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/>
             <line x1="8" y1="6" x2="8" y2="18" stroke="currentColor" stroke-width="1.5"/>
           </svg>
@@ -31,16 +31,16 @@
         class="flex gap-1 items-center ml-4 whitespace-nowrap font-title font-bold text-lg duration-300"
         :class="!$store.sidebar.isOpen && 'hidden'"
         >
-          <span class="text-red-600">P</span>
-          <span class="text-teal-600">L</span>
-          <span class="text-indigo-600">A</span>
-          <span class="text-purple-600">Y</span>
-          <span class="text-amber-600">G</span>
-          <span class="text-emerald-600">R</span>
-          <span class="text-indigo-600">O</span>
-          <span class="text-zinc-600">U</span>
-          <span class="text-rose-600">N</span>
-          <span class="text-lime-600">D</span>
+          <span class="text-red-600 dark:text-red-500">P</span>
+          <span class="text-teal-600 dark:text-teal-500">L</span>
+          <span class="text-indigo-600 dark:text-indigo-500">A</span>
+          <span class="text-purple-600 dark:text-purple-500">Y</span>
+          <span class="text-amber-600 dark:text-amber-500">G</span>
+          <span class="text-emerald-600 dark:text-emerald-500">R</span>
+          <span class="text-indigo-600 dark:text-indigo-500">O</span>
+          <span class="text-zinc-600 dark:text-zinc-500">U</span>
+          <span class="text-rose-600 dark:text-rose-500">N</span>
+          <span class="text-lime-600 dark:text-lime-500">D</span>
           <img class="ml-1 w-[32px] h-[32px]" src="{% static 'compare/img/playground.png' %}">
         </h1>
       </div>
@@ -56,13 +56,13 @@
       </div>
       {% if request.user.is_authenticated %}
         <h2 class="px-4 py-2 mt-12 font-title text-base whitespace-nowrap" x-show="$store.sidebar.isOpen">
-          <span>Select</span>
-          <span class="text-indigo-600">M</span><span class="text-lime-600">o</span><span class="text-rose-600">d</span><span class="text-neutral-600">e</span><span class="text-orange-600">l</span>
+          <span class="dark:text-white">Select</span>
+          <span class="text-indigo-600 dark:text-indigo-500">M</span><span class="text-lime-600 dark:text-lime-500">o</span><span class="text-rose-600 dark:text-rose-500">d</span><span class="text-neutral-600 dark:text-neutral-500">e</span><span class="text-orange-600 dark:text-orange-500">l</span>
         </h2>
         <div class="overflow-scroll px-2 h-full" x-show="$store.sidebar.isOpen">
           {% include 'compare/sidebar/app_list.html' %}
         </div>
-        <div class="relative p-2 shadow-sidebar duration-300 transition-color" :class="$store.sidebar.isOpen && 'shadow-sidebar bg-green-900/20'">
+        <div class="relative p-2 shadow-sidebar duration-300 transition-color" :class="$store.sidebar.isOpen && 'shadow-sidebar bg-green-900/20 dark:bg-green-300/30'">
           {% include 'compare/sidebar/profile.html' %}
         </div>
       {% endif %}

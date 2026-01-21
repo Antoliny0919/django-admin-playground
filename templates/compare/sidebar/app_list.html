@@ -1,8 +1,8 @@
 {% for app in app_list %}
 <div x-data="{showModelList: true}">
-  <div class="font-base bg-green-800/40">
+  <div class="font-base bg-green-800/40 dark:bg-green-300/40 dark:text-white">
     <h3 class="flex flex-row items-center justify-between">
-      <a class="block p-2 whitespace-nowrap w-[90%] text-ellipsis fade-text overflow-hidden hover:bg-green-800/50 duration-300 transition-color" href="{{ app.app_url }}">{{ app.name }}</a>
+      <a class="block p-2 whitespace-nowrap w-[90%] text-ellipsis fade-text overflow-hidden duration-300 transition-color hover:bg-green-800/50 dark:hover:bg-green-300/20" href="{{ app.app_url }}">{{ app.name }}</a>
       <button class="cursor-pointer" type="button" @click="showModelList = !showModelList">
         <svg
         class="duration-300 transition-transform"
@@ -19,14 +19,15 @@
     </h3>
   </div>
   <ul
+  class="dark:text-white"
   x-show="showModelList"
   x-collapse
   >
   {% for model in app.models %}
-    <li class="flex flex-row items-center [&:not(:last-child)]:border-b-2 border-dotted hover:bg-green-800/20 duration-300 transition-color">
+    <li class="flex flex-row items-center [&:not(:last-child)]:border-b-2 border-dotted hover:bg-green-800/20 duration-300 transition-color dark:hover:bg-green-300/20">
       <a href="{{ model.admin_url }}" class="block px-4 py-2 whitespace-nowrap w-[90%] overflow-hidden text-ellipsis fade-text">{{ model.name }}</a>
       <a href="{{ model.add_url }}" class="cursor-pointer scale-90 hover:scale-100">
-        <svg fill="#000000" width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <svg class="fill-black dark:fill-white" width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <g data-name="Layer 2">
           <g data-name="plus-square">
           <rect width="24" height="24" opacity="0"/>

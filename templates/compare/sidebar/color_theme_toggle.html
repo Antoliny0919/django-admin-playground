@@ -31,7 +31,9 @@
         return 'auto';
     },
   }">
-  <button data-testid="theme-toggle-button" class="group relative inline-flex items-center justify-start rounded-lg w-full h-10 cursor-pointer duration-200 ease-in-out transition-color bg-green-900 text-white hover:bg-green-800"
+  <button
+  data-testid="theme-toggle-button"
+  class="group relative inline-flex items-center justify-start rounded-lg w-full h-10 cursor-pointer duration-200 ease-in-out transition-color bg-green-900 text-white hover:bg-green-800"
   @click="
     if (currentIcon() === 'light') {
         setTheme('dark');
