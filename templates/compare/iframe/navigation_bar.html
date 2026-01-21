@@ -1,5 +1,6 @@
 <nav
 class="flex flex-row items-center px-4 py-2 bg-gray-100 border-b-2 border-gray-300"
+id="{{ iframe_id }}-browser-toolbar"
 data-iframe-id="{{ iframe_id }}"
 x-data="{
   init() {
@@ -50,7 +51,7 @@ x-data="{
       this.iframe.src = this.url.value;
   }
 }">
-    <div class="flex gap-2">
+    <div id="{{ iframe_id }}-browser-control" class="flex gap-2">
         <button
         class="group w-8 h-8 flex items-center justify-center transition-color duration-200 bg-gray-50 rounded-md"
         :class="!canGoPrevious() ? 'bg-gray-50/70' : 'hover:bg-blue-100 cursor-pointer'"
