@@ -59,3 +59,83 @@ class TestCompareSidebarButtons:
         layout_direction_change_button.click()
         expect(after_html).to_have_attribute("dir", "ltr")
         expect(before_html).to_have_attribute("dir", "ltr")
+
+
+@pytest.mark.playwright
+class TestIframeNavbar:
+    def get_browser_control_buttons(self, auth_page):
+        return auth_page.locator("#before-browser-control button").all()
+
+    def test_browser_control_buttons_initial_state(self, auth_page, live_server):
+        auth_page.goto(f"{live_server.url}/compare")
+
+        previous, next, refresh = self.get_browser_control_buttons(auth_page)
+
+        expect(previous).to_be_disabled()
+        expect(next).to_be_disabled()
+        expect(refresh).to_be_enabled()
+
+    def test_browser_control_buttons_change_state(self, auth_page, live_server):
+        auth_page.goto(f"{live_server.url}/compare")
+
+        previous, next, refresh = self.get_browser_control_buttons(auth_page)
+
+        before_frame = auth_page.locator("iframe#before").content_frame
+        before_frame.get_by_role("link", name="Changelist", exact=True).click()
+        expect(previous).to_be_enabled()
+        expect(next).to_be_disabled()
+
+        before_frame.get_by_role("link", name="Paginations", exact=True).click()
+        expect(previous).to_be_enabled()
+        expect(next).to_be_disabled()
+
+        previous.click()
+        expect(previous).to_be_enabled()
+        expect(next).to_be_enabled()
+
+        refresh.click()
+        expect(previous).to_be_enabled()
+        expect(next).to_be_enabled()
+
+        next.click()
+        expect(previous).to_be_enabled()
+        expect(next).to_be_disabled()
+
+        previous.click()
+        previous.click()
+        expect(previous).to_be_disabled()
+        expect(next).to_be_enabled()
+
+    def test_browser_control_button_state_reset(self, auth_page, live_server):
+        auth_page.goto(f"{live_server.url}/compare")
+
+        previous, next, _ = self.get_browser_control_buttons(auth_page)
+
+        before_frame = auth_page.locator("iframe#before").content_frame
+        before_frame.get_by_role("link", name="Changelist", exact=True).click()
+        expect(previous).to_be_enabled()
+        expect(next).to_be_disabled()
+
+        auth_page.reload()
+        previous, next, _ = self.get_browser_control_buttons(auth_page)
+        expect(previous).to_be_disabled()
+        expect(next).to_be_disabled()
+
+    def test_browser_url_value(self, auth_page, live_server):
+        auth_page.goto(f"{live_server.url}/compare")
+
+        browser_control_buttons = self.get_browser_control_buttons(auth_page)
+        before_frame = auth_page.locator("iframe#before").content_frame
+        previous = browser_control_buttons[0]
+
+        url = auth_page.locator("#before-browser-toolbar input")
+        expect(url).to_have_value(f"{live_server.url}/before_admin/")
+
+        before_frame.get_by_role("link", name="Changelist", exact=True).click()
+        expect(url).to_have_value(f"{live_server.url}/before_admin/changelist/")
+
+        before_frame.get_by_role("link", name="Change password", exact=True).click()
+        expect(url).to_have_value(f"{live_server.url}/before_admin/password_change/")
+
+        previous.click()
+        expect(url).to_have_value(f"{live_server.url}/before_admin/changelist/")

@@ -71,4 +71,5 @@ lint.ignore = [
   "SIM102", # sometimes it's better to nest
   "TRY003", # Avoid specifying long messages outside the exception class
   "PT009", # Use a regular assert instead of unittest-style
+  "A001",
 ]
