@@ -230,5 +230,50 @@
         "m2m_2": [],
         "m2m_3": []
     }
+},
+{
+    "model": "form.horizontalmultiplefields",
+    "pk": 1,
+    "fields": {
+        "char": "SiHyunLee",
+        "integer": 100,
+        "datetime": "2026-02-19T10:05:37Z",
+        "url": "https://www.djangoproject.com/",
+        "date": "2026-02-19",
+        "time": "10:05:55",
+        "m2m": [
+            3
+        ]
+    }
+},
+{
+    "model": "form.horizontalmultiplefields",
+    "pk": 2,
+    "fields": {
+        "char": "Jacob",
+        "integer": 50,
+        "datetime": "2026-02-19T10:06:02Z",
+        "url": "https://www.djangoproject.com/",
+        "date": "2026-02-19",
+        "time": "10:06:07",
+        "m2m": [
+            2
+        ]
+    }
+},
+{
+    "model": "form.horizontalmultiplefields",
+    "pk": 3,
+    "fields": {
+        "char": "Clifford",
+        "integer": 20,
+        "datetime": "2026-02-19T10:06:15Z",
+        "url": "https://www.djangoproject.com/",
+        "date": "2026-02-19",
+        "time": "10:06:22",
+        "m2m": [
+            3
+        ]
+    }
 }
 ]
