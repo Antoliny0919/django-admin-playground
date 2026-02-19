@@ -15,6 +15,7 @@ from .models import (
     RawID,
     ReadOnly,
     VerboseName,
+    HorizontalMultipleFields,
 )
 
 
@@ -91,6 +92,13 @@ class AllManyToManyAdmin(admin.ModelAdmin):
     filter_horizontal = ("m2m_3",)
 
 
+class HorizontalMultipleFieldsAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None, {"fields": (("char", "date", "datetime",),)}),
+        ("fieldset1", {"fields": (("integer", "url", "m2m", "time",),),}),
+    ]
+
+
 register(Common, BaseFormAdmin)
 register(Prepopulated, PrepopulatedAdmin)
 register(ReadOnly, ReadOnlyAdmin)
@@ -102,3 +110,4 @@ register(RawID, RawIDAdmin)
 register(AutoComplete, AutocompleteAdmin)
 register(AllManyToMany, AllManyToManyAdmin)
 register(FieldError)
+register(HorizontalMultipleFields, HorizontalMultipleFieldsAdmin)

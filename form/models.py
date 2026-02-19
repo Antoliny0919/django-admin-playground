@@ -119,3 +119,16 @@ class FieldError(models.Model):
 
     def clean(self):
         raise ValidationError("Non Field Errors")
+
+
+class HorizontalMultipleFields(models.Model):
+    char = models.CharField(max_length=128)
+    integer = models.IntegerField()
+    datetime = models.DateTimeField()
+    url = models.URLField()
+    date = models.DateField()
+    time = models.TimeField()
+    m2m = models.ManyToManyField(Common, blank=True)
+
+    def __str__(self):
+        return self.char
