@@ -64,7 +64,12 @@ class ManyToManyInline(models.Model):
     m2m_2 = models.ManyToManyField("self", blank=True)
     m2m_3 = models.ManyToManyField("self", blank=True)
     fk = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
-    fk2 = models.ForeignKey(FieldsetInline, on_delete=models.SET_NULL, null=True, blank=True)
+    fk2 = models.ForeignKey(
+        FieldsetInline,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
 
     def __str__(self):
         return self.char
