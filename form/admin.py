@@ -11,11 +11,11 @@ from .models import (
     FieldError,
     Fieldset,
     HelpText,
+    HorizontalMultipleFields,
     Prepopulated,
     RawID,
     ReadOnly,
     VerboseName,
-    HorizontalMultipleFields,
 )
 
 
@@ -94,8 +94,8 @@ class AllManyToManyAdmin(admin.ModelAdmin):
 
 class HorizontalMultipleFieldsAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None, {"fields": (("char", "date", "datetime",),)}),
-        ("fieldset1", {"fields": (("integer", "url", "m2m", "time",),),}),
+        (None, {"fields": (("char", "date", "datetime"),)}),
+        ("fieldset1", {"fields": (("integer", "url", "m2m", "time"),)}),
     ]
 
 

@@ -73,7 +73,12 @@ class ForFk2Field(models.Model):
 
 class ForFkField(models.Model):
     char = models.CharField(max_length=128, verbose_name="for fk verbose name")
-    fk = models.ForeignKey(ForFk2Field, on_delete=models.SET_NULL, null=True, blank=True)
+    fk = models.ForeignKey(
+        ForFk2Field,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
 
 
 class ForManyToManyField(models.Model):
