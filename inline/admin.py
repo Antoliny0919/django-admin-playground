@@ -134,6 +134,7 @@ class CustomWidgetStackedInline(admin.StackedInline):
 
 class ManyToManyFieldTabularInline(admin.TabularInline):
     model = ManyToManyInline
+    fields = ["fk2", "char", "m2m_1", "m2m_2", "m2m_3"]
     verbose_name = "ManyToMany Field Tabular Inline"
     extra = 1
     filter_vertical = ["m2m_2"]
