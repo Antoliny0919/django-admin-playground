@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent
         },
     ],
 )
-class CustomIncludeTagTests(TestCase):
+class CustomLoaderTagTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.factory = RequestFactory()
@@ -73,4 +73,43 @@ class CustomIncludeTagTests(TestCase):
         self.assertEqual(
             rendered,
             "<h1>Hello World Before Admin!</h1>\n\n<div>have include!</div>\n",
+        )
+
+    def test_after_admin_extends_tag_render(self):
+        request = self.factory.get("/after_admin/some_path/")
+        rendered = self.render_template(
+            "{% extends 'admin/test_extends_tag.html' %}"
+            "{% block some %}{{ block.super }}<span>render</span>{% endblock %}",
+            request,
+        )
+        self.assertEqual(
+            rendered,
+            "<h1>Hello World After Admin!</h1><span>render</span>\n",
+        )
+
+    def test_before_admin_extends_tag_render(self):
+        request = self.factory.get("/before_admin/some_path/")
+        rendered = self.render_template(
+            "{% extends 'admin/test_extends_tag.html' %}"
+            "{% block some%}{{ block.super }}<span>render</span>{% endblock %}",
+            request,
+        )
+        self.assertEqual(
+            rendered,
+            "<h1>Hello World Before Admin!</h1><span>render</span>"
+            "\n<div>chicken!</div>\n",
+        )
+
+    def test_before_admin_extends_tag_chain_render(self):
+        request = self.factory.get("/before_admin/some_path/")
+        rendered = self.render_template(
+            "{% extends 'admin/test_extends_chain.html' %}"
+            "{% block some %}<h1>Hello Antoliny!</h1>{% block inner_some %}"
+            "<div>I love chicken</div>{% endblock %}{% endblock %}"
+            "{% block another %}{% endblock %}",
+            request,
+        )
+        self.assertEqual(
+            rendered,
+            "<h1>Hello Antoliny!</h1><div>I love chicken</div>\n\n",
         )

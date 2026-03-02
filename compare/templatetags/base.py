@@ -3,7 +3,13 @@ import contextlib
 from django.contrib.admin.templatetags.base import InclusionAdminNode
 from django.template import Library, TemplateDoesNotExist
 from django.template.library import InclusionNode
-from django.template.loader_tags import IncludeNode, construct_relative_path, do_include
+from django.template.loader_tags import (
+    ExtendsNode,
+    IncludeNode,
+    construct_relative_path,
+    do_extends,
+    do_include,
+)
 
 register = Library()
 
@@ -55,3 +61,17 @@ def custon_do_include(parser, token):
         extra_context=node.extra_context,
         isolated_context=node.isolated_context,
     )
+
+
+class CustomExtendsNode(ExtendsNode):
+    def find_template(self, template_name, context):
+        path = context.request.path
+        if "before_admin" in path and template_name.startswith("admin"):
+            template_name = template_name.replace("admin", "before_admin", 1)
+        return super().find_template(template_name, context)
+
+
+@register.tag("extends")
+def custom_do_extends(parser, token):
+    node = do_extends(parser, token)
+    return CustomExtendsNode(node.nodelist, node.parent_name)
