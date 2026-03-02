@@ -54,7 +54,7 @@ class CustomIncludeNode(IncludeNode):
 
 
 @register.tag("include")
-def custon_do_include(parser, token):
+def custom_do_include(parser, token):
     node = do_include(parser, token)
     return CustomIncludeNode(
         node.template,
