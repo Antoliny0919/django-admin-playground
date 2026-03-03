@@ -3,22 +3,23 @@
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}" dir="{{ LANGUAGE_BIDI|yesno:'rtl,ltr,auto' }}">
 <head>
 <title>{% block title %}{% endblock %}</title>
-<link rel="stylesheet" href="{% block stylesheet %}{% static "before_admin/css/base.css" %}{% endblock %}">
+<meta name="color-scheme" content="light dark" />
+<link rel="stylesheet" href="{% block stylesheet %}{% static "admin/css/base.css" %}{% endblock %}">
 {% block dark-mode-vars %}
-  <link rel="stylesheet" href="{% static "before_admin/css/dark_mode.css" %}">
-  <script src="{% static "before_admin/js/theme.js" %}"></script>
+  <link rel="stylesheet" href="{% static "admin/css/dark_mode.css" %}">
+  <script src="{% static "admin/js/theme.js" %}"></script>
 {% endblock %}
 {% if not is_popup and is_nav_sidebar_enabled %}
-  <link rel="stylesheet" href="{% static "before_admin/css/nav_sidebar.css" %}">
-  <script src="{% static 'before_admin/js/nav_sidebar.js' %}" defer></script>
+  <link rel="stylesheet" href="{% static "admin/css/nav_sidebar.css" %}">
+  <script src="{% static 'admin/js/nav_sidebar.js' %}" defer></script>
 {% endif %}
 {% block extrastyle %}{% endblock %}
-{% if LANGUAGE_BIDI %}<link rel="stylesheet" href="{% block stylesheet_rtl %}{% static "before_admin/css/rtl.css" %}{% endblock %}">{% endif %}
+{% if LANGUAGE_BIDI %}<link rel="stylesheet" href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}">{% endif %}
 {% block extrahead %}{% endblock %}
 {% block responsive %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static "before_admin/css/responsive.css" %}">
-    {% if LANGUAGE_BIDI %}<link rel="stylesheet" href="{% static "before_admin/css/responsive_rtl.css" %}">{% endif %}
+    <link rel="stylesheet" href="{% static "admin/css/responsive.css" %}">
+    {% if LANGUAGE_BIDI %}<link rel="stylesheet" href="{% static "admin/css/responsive_rtl.css" %}">{% endif %}
 {% endblock %}
 {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE">{% endblock %}
 </head>
@@ -60,7 +61,7 @@
                     {% csrf_token %}
                     <button type="submit">{% translate 'Log out' %}</button>
                 </form>
-                {% include "before_admin/color_theme_toggle.html" %}
+                {% include "admin/color_theme_toggle.html" %}
             {% endblock %}
         </div>
         {% endif %}
@@ -72,10 +73,10 @@
     {% block nav-breadcrumbs %}
       <nav aria-label="{% translate 'Breadcrumbs' %}">
         {% block breadcrumbs %}
-          <div class="breadcrumbs">
-            <a href="{% url 'admin:index' %}">{% translate 'Home' %}</a>
-            {% if title %} &rsaquo; {{ title }}{% endif %}
-          </div>
+          <ol class="breadcrumbs">
+            <li><a href="{% url 'admin:index' %}">{% translate 'Home' %}</a></li>
+            {% if title %}<li aria-current="page">{{ title }}</li>{% endif %}
+          </ol>
         {% endblock %}
       </nav>
     {% endblock %}
@@ -84,7 +85,7 @@
     <div class="main" id="main">
       {% if not is_popup and is_nav_sidebar_enabled %}
         {% block nav-sidebar %}
-          {% include "before_admin/nav_sidebar.html" %}
+          {% include "admin/nav_sidebar.html" %}
         {% endblock %}
       {% endif %}
       <main id="content-start" class="content" tabindex="-1">
