@@ -1,4 +1,4 @@
-{% extends "before_admin/change_form.html" %}
+{% extends "admin/change_form.html" %}
 {% load i18n static %}
 
 {% block form_top %}
@@ -8,5 +8,5 @@
 {% endblock %}
 {% block extrahead %}
   {{ block.super }}
-  <link rel="stylesheet" href="{% static 'before_admin/css/unusable_password_field.css' %}">
+  <link rel="stylesheet" href="{% static 'admin/css/unusable_password_field.css' %}">
 {% endblock %}

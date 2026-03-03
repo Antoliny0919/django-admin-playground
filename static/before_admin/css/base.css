@@ -498,9 +498,6 @@ input, textarea, select, .form-row p, form .button {
     font-weight: normal;
     font-size: 0.8125rem;
 }
-.form-row div.help {
-    padding: 2px 3px;
-}
 
 textarea {
     vertical-align: top;
@@ -700,7 +697,7 @@ ul.messagelist li.error {
 }
 
 ul.errorlist {
-    margin: 0 0 4px;
+    margin: 0;
     padding: 0;
     color: var(--error-fg);
     background: var(--body-bg);
@@ -709,7 +706,6 @@ ul.errorlist {
 ul.errorlist li {
     font-size: 0.8125rem;
     display: block;
-    margin-bottom: 4px;
     overflow-wrap: break-word;
 }
 
@@ -731,17 +727,6 @@ td ul.errorlist li {
     margin: 0;
 }
 
-.form-row.errors {
-    margin: 0;
-    border: none;
-    border-bottom: 1px solid var(--hairline-color);
-    background: none;
-}
-
-.form-row.errors ul.errorlist li {
-    padding-left: 0;
-}
-
 .errors input, .errors select, .errors textarea,
 td ul.errorlist + input, td ul.errorlist + select, td ul.errorlist + textarea {
     border: 1px solid var(--error-fg);
@@ -754,19 +739,36 @@ td ul.errorlist + input, td ul.errorlist + select, td ul.errorlist + textarea {
 
 /* BREADCRUMBS */
 
-div.breadcrumbs {
+ol.breadcrumbs {
     background: var(--breadcrumbs-bg);
     padding: 10px 40px;
     border: none;
     color: var(--breadcrumbs-fg);
-    text-align: left;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
-div.breadcrumbs a {
+ol.breadcrumbs li {
+    display: inline-block;
+    font-size: 0.875rem;
+    padding: 0;
+}
+
+ol.breadcrumbs li:not([aria-current="page"])::after {
+    content: ' \203A ' / '';
+}
+
+ol.breadcrumbs li a[aria-current="page"] {
+    color: var(--breadcrumbs-fg);
+    text-decoration: none !important;
+    cursor: default;
+}
+
+ol.breadcrumbs a {
     color: var(--breadcrumbs-link-fg);
 }
 
-div.breadcrumbs a:focus, div.breadcrumbs a:hover {
+ol.breadcrumbs a:focus, ol.breadcrumbs a:hover {
     color: var(--breadcrumbs-fg);
 }
 
@@ -789,7 +791,7 @@ div.breadcrumbs a:focus, div.breadcrumbs a:hover {
 
 .changelink, .inlinechangelink {
     padding-left: 16px;
-    background: url(../img/icon-changelink.svg) 0 1px no-repeat;
+    background: url(../img/icon-changelink.svg) 0 2px no-repeat;
 }
 
 .deletelink {
