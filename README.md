@@ -1,3 +1,5 @@
+
+
 <!-- ABOUT THE PROJECT -->
 
 # django-admin-playground
@@ -30,6 +32,7 @@ It provides the following features:
    ```sh
    cd django
    git clone https://github.com/Antoliny0919/django-admin-playground.git
+   cd django-admin-playground
    ```
 
 > [!WARNING]
